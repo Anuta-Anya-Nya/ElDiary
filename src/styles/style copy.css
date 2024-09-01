@@ -33,7 +33,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #1E959B;
+  color: #1e959b;
 }
 .header__logo {
   font-size: 5vh;
@@ -67,7 +67,7 @@ main {
 }
 
 .title {
-  background-color: #1E959B;
+  background-color: #1e959b;
 }
 .title-container {
   text-align: center;
@@ -81,7 +81,7 @@ main {
   font-size: 20px;
 }
 .homework__title {
-  color: #1E959B;
+  color: #1e959b;
   margin-bottom: 10px;
 }
 .homework__area {
@@ -109,7 +109,10 @@ main {
 
 .table {
   display: grid;
-  grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(400px, max-content) minmax(min-content, 70px);
+  grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(
+      400px,
+      max-content
+    ) minmax(min-content, 70px);
   color: #3c3c3c;
   background-color: #ffffff;
 }
@@ -135,7 +138,9 @@ main {
 .table__cell:nth-child(4n) {
   border-width: 1px 1px 0 1px;
 }
-.table__cell:nth-last-child(2), .table__cell:nth-last-child(3), .table__cell:nth-last-child(4) {
+.table__cell:nth-last-child(2),
+.table__cell:nth-last-child(3),
+.table__cell:nth-last-child(4) {
   border-width: 1px 0 1px 1px;
 }
 .table__cell:last-child {
@@ -171,7 +176,7 @@ main {
 }
 .card__title {
   font-weight: 700;
-  color: #1E959B;
+  color: #1e959b;
   margin-bottom: 0.5em;
   text-align: center;
 }
@@ -224,7 +229,7 @@ main {
   font-size: 1.5em;
   border-radius: 10px;
   padding: 5px 10px;
-  background-color: #1E959B;
+  background-color: #1e959b;
   flex: 1;
   border: 1px solid #3c3c3c;
   box-shadow: 6px 3px 10px 0px rgba(30, 149, 155, 0.5);
@@ -232,7 +237,7 @@ main {
   transition: all 0.3s;
 }
 .autoriz__buttons button:hover {
-  color: #1E959B;
+  color: #1e959b;
   background-color: #f0ffff;
 }
 
@@ -241,7 +246,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #1E959B;
+    color: #1e959b;
   }
   .header__menu {
     list-style: none;
@@ -270,7 +275,10 @@ main {
   }
   .table {
     display: grid;
-    grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, max-content) minmax(min-content, 70px);
+    grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(
+        min-content,
+        max-content
+      ) minmax(min-content, 70px);
   }
   .table__cell-task {
     padding: 2px;
@@ -294,4 +302,4 @@ main {
     width: 80%;
     gap: 0.5em;
   }
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */

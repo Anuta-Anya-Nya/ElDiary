@@ -1,0 +1,91 @@
+@media (max-width: 767px) {
+    .header {
+        &-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: $colorFirst;
+
+        }
+
+        &__menu {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: end;
+
+            gap: 5px 0.5em;
+
+            &-item {
+                display: flex;
+                align-items: center;
+                font-size: 2em;
+            }
+
+            &-item:first-child {
+                grid-column: span 3;
+                font-size: 1.2em;
+                align-self: end;
+                display: flex;
+                justify-content: flex-end
+            }
+        }
+    }
+
+    .card-title {
+        display: none
+    }
+
+    .homework {
+        &-container {
+            font-size: 16px;
+        }
+    }
+
+    .table {
+        display: grid;
+        grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, max-content) minmax(min-content, 70px);
+
+        &__cell {
+            &-task {
+                padding: 2px;
+            }
+        }
+    }
+
+    .homework__icons {
+        display: none;
+    }
+
+    .buttons__box {
+        gap: 8px;
+    }
+
+    .card__about {
+        display: none;
+    }
+
+
+    .autoriz {
+
+
+        &__form {
+            font-size: 12px;
+
+            input {
+                width: 80%;
+            }
+        }
+
+        &__buttons {
+
+            width: 80%;
+            gap: 0.5em;
+
+
+            button {}
+
+        }
+    }
+
+}

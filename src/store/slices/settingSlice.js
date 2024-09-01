@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import moment from "moment/min/moment-with-locales.min";
 
 const settingSlice = createSlice({
   name: "setting",

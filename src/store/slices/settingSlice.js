@@ -3,13 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const settingSlice = createSlice({
   name: "setting",
   initialState: {
-    lessons: {
-      1: { title: "Русский", teachers: [1] },
-      2: { title: "Математика", teachers: [2] },
-      3: { title: "Литература", teachers: [1] },
-      4: { title: "История", teachers: [null] },
-    },
-
     teachers: [
       {
         id: 1,

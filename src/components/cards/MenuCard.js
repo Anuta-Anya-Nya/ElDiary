@@ -1,6 +1,6 @@
-// card = {icon.path, icon.alt, title, text}
+const MenuCard = (card) => {
+  const { title, text, icon } = card.card;
 
-const MenuCard = ({ icon, title, text }) => {
   return (
     <div className="card">
       <div className="card__pic">

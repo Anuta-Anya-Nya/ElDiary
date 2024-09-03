@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { updateHomework } from "../../store/slices/homeworksSlice";
 import { buildTask } from "../../utils/services";
 import { useDispatch, useSelector } from "react-redux";

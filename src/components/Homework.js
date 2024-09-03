@@ -6,6 +6,7 @@ import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import homeworkIcon from "../assets/icons/ic-homework.svg";
 import { useSelector } from "react-redux";
+import MenuCardBox from "./cards/MenuCardBox";
 
 function Homework() {
   moment.locale("ru");
@@ -13,20 +14,16 @@ function Homework() {
   const [displayDate, setDisplayData] = useState(
     currentDate.clone().add(1, "days")
   );
-  // const [displaySchedule, setDisplayShedule] = useState({
-  //   id: null,
-  //   date: "",
-  //   lessonsList: [],
-  //   notes: null,
-  //   vacation: false,
-  //   holiday: false,
-  // });
+  const titleCardId = 6;
+  const titleCard = useSelector((state) =>
+    state.content.menuButtons.find((el) => el.id === titleCardId)
+  );
+  console.log(titleCard);
 
   const displaySchedule = useSelector(
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
-  console.log(displaySchedule);
 
   useEffect(() => {
     //если они пустые, нужно добавить записи в расписание на текущую неделю в зависимости от заданного расписания уроков
@@ -46,18 +43,20 @@ function Homework() {
   };
 
   return (
-    <>
+    <main>
       <section className="title">
         <div className="container title-container">
           <div className="card card-title">
             <div className="card__pic">
               <img
                 className="card__img"
-                src={homeworkIcon}
-                alt="домашняя работа"
+                src={titleCard.icon.path}
+                alt={titleCard.icon.alt}
               />
             </div>
-            <div className="card__title cart-title__title">Домашняя работа</div>
+            <div className="card__title cart-title__title">
+              {titleCard.title}
+            </div>
           </div>
           <h2>
             Сегодня {currentDate.format("dddd")},
@@ -96,7 +95,8 @@ function Homework() {
           </div>
         </div>
       </section>
-    </>
+      <MenuCardBox titleCardId={titleCardId} />
+    </main>
   );
 }
 

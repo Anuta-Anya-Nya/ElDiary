@@ -16,7 +16,7 @@ function Test() {
 
   const [displayDayForHomework, setDisplayDayForHomework] = useState(null);
   const [diaryWeek, setDiaryWeek] = useState([]);
-  const [lessons, setLessons] = useState([
+  const [lessons] = useState([
     { id: 1, title: "Русский", teachers: [null] },
     { id: 2, title: "Математика", teachers: [null] },
     { id: 3, title: "Литература", teachers: [null] },

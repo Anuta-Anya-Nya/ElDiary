@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Homework from "./components/Homework";
 import Example from "./components/example";
+import Note from "./components/Note";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homework />} />
         <Route path="/example" element={<Example />} />
-        {/* <Route path="/list" element={<DataList />} />  */}
+        <Route path="/note" element={<Note />} />
       </Routes>
       <Footer />
     </div>

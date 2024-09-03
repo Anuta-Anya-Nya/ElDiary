@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { settingReducer } from "../store/slices/settingSlice";
-import { sheduleReducer } from "../store/slices/sheduleSlice";
-import { noteReducer } from "./slices/noteSlice";
 import { combineReducers } from "redux";
 
+import { lessonsReducer } from "./slices/lessonsSlice";
+import { homeworksReducer } from "./slices/homeworksSlice";
+import { dailySchedulesReducer } from "./slices/dailySchedulesSlice";
+import { noteReducer } from "./slices/noteSlice";
+
 const reducer = combineReducers({
-  setting: settingReducer,
-  shedule: sheduleReducer,
+  lessons: lessonsReducer,
+  homeworks: homeworksReducer,
+  dailySchedules: dailySchedulesReducer,
   note: noteReducer,
 });
 

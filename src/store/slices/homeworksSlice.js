@@ -58,11 +58,11 @@ const homeworksSlice = createSlice({
         homework: [
           {
             task: "232",
-            page: null,
+            page: "12 - 23",
             notes: null,
           },
         ],
-        isDone: false,
+        isDone: true,
       },
       6: {
         id: 6,
@@ -97,6 +97,28 @@ const homeworksSlice = createSlice({
         ],
         isDone: false,
       },
+      9: {
+        id: 9,
+        homework: [
+          {
+            task: "232",
+            page: "uiuiui",
+            notes: null,
+          },
+        ],
+        isDone: false,
+      },
+      10: {
+        id: 10,
+        homework: [
+          {
+            task: "232",
+            page: "uiuiui",
+            notes: null,
+          },
+        ],
+        isDone: false,
+      },
     },
   },
   reducers: {
@@ -106,6 +128,7 @@ const homeworksSlice = createSlice({
     },
     updateHomework: (state, action) => {
       Object.assign(state.homeworksList[action.payload.id], action.payload);
+      console.log(state.homeworksList[action.payload.id]);
     },
   },
   //   редьюсеры для thunk функций

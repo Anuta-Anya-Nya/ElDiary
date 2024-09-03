@@ -10,19 +10,19 @@ const dailySchedulesSlice = createSlice({
         lessonsList: [
           {
             lessonId: 2,
-            hwId: 1,
+            homeworkId: 1,
             mark: null,
             teacherId: 2,
           },
           {
             lessonId: 1,
-            hwId: 2,
+            homeworkId: 2,
             mark: null,
             teacherId: 1,
           },
           {
             lessonId: 1,
-            hwId: 3,
+            homeworkId: 3,
             mark: null,
             teacherId: 1,
           },
@@ -37,13 +37,25 @@ const dailySchedulesSlice = createSlice({
         lessonsList: [
           {
             lessonId: 1,
-            hwId: 4,
+            homeworkId: 4,
             mark: null,
             teacherId: 2,
           },
           {
             lessonId: 4,
-            hwId: 5,
+            homeworkId: 5,
+            mark: null,
+            teacherId: null,
+          },
+          {
+            lessonId: 6,
+            homeworkId: 9,
+            mark: null,
+            teacherId: null,
+          },
+          {
+            lessonId: 7,
+            homeworkId: 10,
             mark: null,
             teacherId: null,
           },
@@ -56,22 +68,27 @@ const dailySchedulesSlice = createSlice({
         id: 3122223,
         date: "2024-09-04",
         lessonsList: [
-          null,
+          {
+            lessonId: null,
+            homeworkId: null,
+            mark: null,
+            teacherId: null,
+          },
           {
             lessonId: 2,
-            hwId: 6,
+            homeworkId: 6,
             mark: null,
             teacherId: 2,
           },
           {
             lessonId: 2,
-            hwId: 7,
+            homeworkId: 7,
             mark: null,
             teacherId: 2,
           },
           {
             lessonId: 1,
-            hwId: 8,
+            homeworkId: 8,
             mark: null,
             teacherId: 1,
           },
@@ -101,4 +118,4 @@ const dailySchedulesSlice = createSlice({
   //   },
 });
 export const { addSchedule } = dailySchedulesSlice.actions;
-export const dayliScheduleReducer = dailySchedulesSlice.reducer;
+export const dailySchedulesReducer = dailySchedulesSlice.reducer;

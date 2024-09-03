@@ -9,8 +9,8 @@ const lessonsSlice = createSlice({
       3: { lessonId: 3, title: "Литература", teachers: [1] },
       4: { lessonId: 4, title: "История", teachers: [null] },
       5: { lessonId: 5, title: "География", teachers: [null] },
-      6: { lessonId: 4, title: "Биология", teachers: [null] },
-      7: { lessonId: 4, title: "Английский", teachers: [3, 4] },
+      6: { lessonId: 6, title: "Биология", teachers: [null] },
+      7: { lessonId: 7, title: "Английский", teachers: [3, 4] },
     },
   },
   reducers: {

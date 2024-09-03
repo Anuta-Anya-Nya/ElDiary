@@ -135,11 +135,17 @@ main {
 .table__cell:nth-child(4n) {
   border-width: 1px 1px 0 1px;
 }
-.table__cell:nth-last-child(2), .table__cell:nth-last-child(3), .table__cell:nth-last-child(4) {
-  border-width: 1px 0 1px 1px;
-}
 .table__cell:last-child {
-  border-width: 1px 1px 1px 1px;
+  border-width: 1px;
+  justify-content: flex-start;
+}
+.table__cell-notes {
+  margin-right: 5px;
+  color: #9a1d36;
+  font-weight: 700;
+}
+.table__notes {
+  grid-column: 1/-1;
 }
 
 .buttons .buttons__box {

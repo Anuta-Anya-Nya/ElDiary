@@ -159,16 +159,33 @@ main {
             border-width: 1px 1px 0 1px;
         }
 
-        &:nth-last-child(2),
-        &:nth-last-child(3),
-        &:nth-last-child(4) {
-            border-width: 1px 0 1px 1px;
-        }
+        // &:nth-last-child(2),
+        // &:nth-last-child(3) {
+        //     border-width: 1px 0 1px 1px;
+        // }        
+        // &:nth-last-child(4) {
+
+        // }
 
         &:last-child {
-            border-width: 1px 1px 1px 1px;
+            border-width: 1px;
+            justify-content: flex-start
         }
+
+        &-notes {
+            margin-right: 5px;
+            color: $colorButton;
+            font-weight: 700;
+        }
+
+
     }
+
+    &__notes {
+        grid-column: 1/-1;
+    }
+
+
 }
 
 .buttons {

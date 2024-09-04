@@ -4,7 +4,6 @@ import moment from "moment/min/moment-with-locales.min";
 import TableHomework from "./tables/TableHomework";
 import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
-import homeworkIcon from "../assets/icons/ic-homework.svg";
 import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
 
@@ -18,7 +17,6 @@ function Homework() {
   const titleCard = useSelector((state) =>
     state.content.menuButtons.find((el) => el.id === titleCardId)
   );
-  console.log(titleCard);
 
   const displaySchedule = useSelector(
     (state) =>

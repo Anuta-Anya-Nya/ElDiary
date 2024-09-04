@@ -10,8 +10,9 @@ const contentSlice = createSlice({
           path: require("../../assets/icons/ic-book.svg").default,
           alt: "дневник",
         },
-        title: "Показать дневник",
+        title: "Дневник",
         text: "Здесь ты можешь просмотреть дневник, записать в него домашнее задание и поставить свои оценки",
+        link: "/diary",
       },
       {
         id: 2,
@@ -21,6 +22,7 @@ const contentSlice = createSlice({
         },
         title: "Учителя",
         text: "Здесь ты можешь просмотреть и записать информацию о твоих учителях",
+        link: "/teachers",
       },
       {
         id: 3,
@@ -31,6 +33,7 @@ const contentSlice = createSlice({
         },
         title: "Расписание звонков",
         text: "Здесь отображается расписание твоих звонков",
+        link: "/rings",
       },
       {
         id: 4,
@@ -40,6 +43,7 @@ const contentSlice = createSlice({
         },
         title: "Итоговые оценки",
         text: "Если ты выставляешь в свой дневник оценки, то тут найдешь свои оценки, которые могут получиться в четверти",
+        link: "/grades",
       },
       {
         id: 5,
@@ -49,6 +53,7 @@ const contentSlice = createSlice({
         },
         title: "Блокнот",
         text: "Здесь ты можешь хранить свои записи",
+        link: "/note",
       },
       {
         id: 6,
@@ -58,6 +63,7 @@ const contentSlice = createSlice({
         },
         title: "Домашняя работа",
         text: "Здесь ты увидишь свою домашку и сможешь отметить то, что уже выполнено",
+        link: "/",
       },
     ],
   },

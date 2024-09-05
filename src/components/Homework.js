@@ -6,11 +6,12 @@ import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
+import { toChangeDate } from "../utils/services";
 
 function Homework() {
   moment.locale("ru");
   const currentDate = moment("2024-09-02");
-  const [displayDate, setDisplayData] = useState(
+  const [displayDate, setDisplayDate] = useState(
     currentDate.clone().add(1, "days")
   );
   const titleCardId = 6;
@@ -28,17 +29,6 @@ function Homework() {
     // загрузить с БД все дневные расписания
     // setDiaryWeek(findDiaryWeek(currentDate));
   }, []);
-
-  const toChangeDisplayDate = (count) => {
-    const step = 1;
-    if (count > 0) {
-      setDisplayData(displayDate.clone().add(step, "days"));
-      console.log("add");
-    } else {
-      setDisplayData(displayDate.clone().subtract(step, "days"));
-      console.log("subtract");
-    }
-  };
 
   return (
     <main>
@@ -75,7 +65,7 @@ function Homework() {
                 src={arrowLeft}
                 alt="left"
                 onClick={() => {
-                  toChangeDisplayDate(-1);
+                  toChangeDate(-1, setDisplayDate, 1, displayDate);
                 }}
               />
             </div>
@@ -86,7 +76,7 @@ function Homework() {
                 src={arrowRight}
                 alt="right"
                 onClick={() => {
-                  toChangeDisplayDate(1);
+                  toChangeDate(1, setDisplayDate, 1, displayDate);
                 }}
               />
             </div>

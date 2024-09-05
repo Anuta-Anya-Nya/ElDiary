@@ -155,17 +155,11 @@ main {
             background-color: rgba(154, 29, 54, 0.1);
         }
 
+
+
         &:nth-child(4n) {
             border-width: 1px 1px 0 1px;
         }
-
-        // &:nth-last-child(2),
-        // &:nth-last-child(3) {
-        //     border-width: 1px 0 1px 1px;
-        // }        
-        // &:nth-last-child(4) {
-
-        // }
 
         &:last-child {
             border-width: 1px;
@@ -186,6 +180,10 @@ main {
     }
 
 
+}
+
+input[type=checkbox] {
+    transform: scale(1.5);
 }
 
 .buttons {

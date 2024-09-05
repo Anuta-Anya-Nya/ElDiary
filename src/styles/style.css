@@ -148,6 +148,10 @@ main {
   grid-column: 1/-1;
 }
 
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
 .buttons .buttons__box {
   display: grid;
   grid-template-columns: repeat(5, minmax(1px, 250px));
@@ -241,6 +245,56 @@ main {
 .autoriz__buttons button:hover {
   color: #1E959B;
   background-color: #f0ffff;
+}
+
+.diary__area {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 5px 10px;
+  justify-items: center;
+}
+.diary__title {
+  color: #1E959B;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.diary__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+}
+.diary__table {
+  display: grid;
+  grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(400px, max-content) minmax(min-content, 70px);
+  color: #3c3c3c;
+  background-color: #ffffff;
+}
+.diary__cell {
+  padding: 2px 4px;
+  border-color: #3c3c3c;
+  border-style: solid;
+  border-width: 1px 0px 0px 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.diary__cell-task {
+  padding: 2px 4px;
+}
+.diary__cell:nth-child(4n) {
+  border-width: 1px 1px 0 1px;
+}
+.diary__cell:last-child {
+  border-width: 1px;
+  justify-content: flex-start;
+}
+.diary__cell-long {
+  grid-column: 1/-1;
+  border-width: 0;
+}
+.diary__icons {
+  width: 1em;
 }
 
 @media (max-width: 767px) {

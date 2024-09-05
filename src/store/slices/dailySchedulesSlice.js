@@ -101,7 +101,11 @@ const dailySchedulesSlice = createSlice({
   },
   reducers: {
     addSchedule: (state, action) => {
-      state.schedulesList[action.payload.date] = action.payload;
+      // state.schedulesList[action.payload.date] = action.payload;
+      return {
+        ...state,
+        schedulesList: { ...state.schedulesList, ...action.payload },
+      };
     },
     // updateDailySchedule: (state, action) => {
     //   const {date}

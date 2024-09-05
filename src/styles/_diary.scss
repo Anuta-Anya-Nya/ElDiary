@@ -1,0 +1,63 @@
+.diary {
+    &__area {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: 5px 10px;
+        justify-items: center;
+    }
+
+    &__title {
+        color: $colorFirst;
+        margin-bottom: 10px;
+        text-align: center;
+
+    }
+
+    &__header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3em;
+    }
+
+    &__table {
+        display: grid;
+        grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(400px, max-content) minmax(min-content, 70px);
+        color: $colorText;
+        background-color: $colorBackgroundSecond;
+    }
+
+    &__cell {
+        padding: 2px 4px;
+        border-color: $colorText;
+        border-style: solid;
+        border-width: 1px 0px 0px 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-task {
+            padding: 2px 4px;
+        }
+
+        &:nth-child(4n) {
+            border-width: 1px 1px 0 1px;
+        }
+
+        &:last-child {
+            border-width: 1px;
+            justify-content: flex-start
+        }
+
+        &-long {
+            grid-column: 1/-1;
+            border-width: 0;
+        }
+    }
+
+    &__icons {
+        width: 1em;
+    }
+
+
+}

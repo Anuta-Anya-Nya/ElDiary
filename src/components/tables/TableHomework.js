@@ -12,7 +12,7 @@ const TableHomework = ({ displaySchedule, editIsDone }) => {
       ))}
       <div className="table__cell table__notes">
         <span className="table__cell-notes">Заметки:</span>{" "}
-        {displaySchedule.notes}
+        {displaySchedule?.notes}
       </div>
     </div>
   );

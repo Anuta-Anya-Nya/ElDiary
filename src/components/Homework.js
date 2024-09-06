@@ -7,6 +7,9 @@ import arrowRight from "../assets/icons/arrow-right.svg";
 import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
 import { toChangeDate } from "../utils/services";
+import { checkWeeklySchedule } from "../utils/services";
+import { useDispatch } from "react-redux";
+import { addSchedule } from "../store/slices/dailySchedulesSlice";
 
 function Homework() {
   moment.locale("ru");
@@ -18,6 +21,8 @@ function Homework() {
   const titleCard = useSelector((state) =>
     state.content.menuButtons.find((el) => el.id === titleCardId)
   );
+  const schedules = useSelector((state) => state.dailySchedules.schedulesList);
+  const dispatch = useDispatch();
 
   const displaySchedule = useSelector(
     (state) =>
@@ -27,8 +32,10 @@ function Homework() {
   useEffect(() => {
     //если они пустые, нужно добавить записи в расписание на текущую неделю в зависимости от заданного расписания уроков
     // загрузить с БД все дневные расписания
-    // setDiaryWeek(findDiaryWeek(currentDate));
   }, []);
+  useEffect(() => {
+    checkWeeklySchedule(displayDate, schedules, dispatch, addSchedule);
+  }, [displayDate]);
 
   return (
     <main>

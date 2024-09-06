@@ -41,6 +41,8 @@
 
     &__logo {
         font-size: 5vh;
+        text-decoration: none;
+        color: $colorFirst;
 
         &-bold {
             font-weight: 700;

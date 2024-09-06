@@ -10,6 +10,8 @@ const TableDayRow = ({ currentNumber, lessonItem }) => {
 
   const dispatch = useDispatch();
 
+  const addLesson = () => {};
+
   return (
     <>
       <div className="diary__cell">{currentNumber + 1}.</div>

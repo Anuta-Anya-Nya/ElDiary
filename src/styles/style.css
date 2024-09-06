@@ -37,6 +37,8 @@
 }
 .header__logo {
   font-size: 5vh;
+  text-decoration: none;
+  color: #1E959B;
 }
 .header__logo-bold {
   font-weight: 700;

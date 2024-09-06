@@ -4,7 +4,6 @@ import moment from "moment/min/moment-with-locales.min";
 import TableDayRow from "./TableDayRow";
 
 const TableDayDiary = ({ day, position }) => {
-  moment.locale("ru");
   const gridColumn = () => {
     if (position === 1) {
       return "diary__day diary__day-tuesday";
@@ -30,11 +29,6 @@ const TableDayDiary = ({ day, position }) => {
         {day.lessonsList.map((el, ind) => {
           return <TableDayRow currentNumber={ind} lessonItem={el} key={ind} />;
         })}
-
-        {/* <div className="diary__cell">
-          <img className="diary__icons" src={add} alt="добавить" />
-        </div> */}
-
         <div className="diary__cell diary__cell-long">
           Заметки
           <img className="diary__icons" src={add} alt="добавить" />

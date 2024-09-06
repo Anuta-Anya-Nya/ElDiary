@@ -22,7 +22,7 @@ const dailySchedulesSlice = createSlice({
           },
           {
             lessonId: 1,
-            homeworkId: 3,
+            homeworkId: null,
             grade: null,
             teacherId: 1,
           },

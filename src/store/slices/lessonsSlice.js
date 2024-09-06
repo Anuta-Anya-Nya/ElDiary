@@ -4,13 +4,13 @@ const lessonsSlice = createSlice({
   name: "lessons",
   initialState: {
     lessons: {
-      1: { lessonId: 1, title: "Русский", teachers: [1] },
-      2: { lessonId: 2, title: "Математика", teachers: [2] },
-      3: { lessonId: 3, title: "Литература", teachers: [1] },
-      4: { lessonId: 4, title: "История", teachers: [null] },
-      5: { lessonId: 5, title: "География", teachers: [null] },
-      6: { lessonId: 6, title: "Биология", teachers: [null] },
-      7: { lessonId: 7, title: "Английский", teachers: [3, 4] },
+      1: { lessonId: 1, title: "Русский", teachers: [1], class: [] },
+      2: { lessonId: 2, title: "Математика", teachers: [2], class: [] },
+      3: { lessonId: 3, title: "Литература", teachers: [1], class: [] },
+      4: { lessonId: 4, title: "История", teachers: [], class: [] },
+      5: { lessonId: 5, title: "География", teachers: [], class: [] },
+      6: { lessonId: 6, title: "Биология", teachers: [], class: [] },
+      7: { lessonId: 7, title: "Английский", teachers: [3, 4], class: [] },
     },
   },
   reducers: {

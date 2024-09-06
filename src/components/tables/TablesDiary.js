@@ -14,7 +14,6 @@ const TablesDiary = ({ week, currentDate }) => {
 
       startWeek.add(1, "days");
     }
-    console.log(weekArr);
     return weekArr;
   };
   return (

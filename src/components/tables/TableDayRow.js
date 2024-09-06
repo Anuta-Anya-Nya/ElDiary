@@ -19,7 +19,7 @@ const TableDayRow = ({ currentNumber, lessonItem }) => {
       <div className="diary__cell table__cell-task">
         {!lessonItem.lessonId ? "" : buildTask(homework.homework)}
       </div>
-      <div className="diary__cell">{lessonItem.lessonId.grade}</div>
+      <div className="diary__cell">{lessonItem.lessonId?.grade}</div>
     </>
   );
 };

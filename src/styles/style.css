@@ -247,15 +247,31 @@ input[type=checkbox] {
   background-color: #f0ffff;
 }
 
+.diary {
+  flex-grow: 1;
+}
+.diary-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .diary__area {
   display: grid;
   grid-template-columns: repeat(2, auto);
   gap: 5px 10px;
   justify-items: center;
 }
+.diary__day-tuesday {
+  grid-column: 1;
+  grid-row: 2;
+}
+.diary__day-wednesday {
+  grid-column: 1;
+  grid-row: 3;
+}
 .diary__title {
   color: #1E959B;
-  margin-bottom: 10px;
   text-align: center;
 }
 .diary__header {
@@ -263,6 +279,7 @@ input[type=checkbox] {
   justify-content: center;
   align-items: center;
   gap: 3em;
+  margin-bottom: 1.5em;
 }
 .diary__table {
   display: grid;

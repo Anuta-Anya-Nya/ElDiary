@@ -9,6 +9,7 @@ import { addSchedule } from "../store/slices/dailySchedulesSlice";
 import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
+import { ModalAddLesson } from "../components/customModal/ModalAddLesson";
 
 const Diary = () => {
   moment.locale("ru");
@@ -22,6 +23,8 @@ const Diary = () => {
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const dispatch = useDispatch();
+
+  const [modalAddLessonIsOpen, setModalAddLessonIsOpen] = useState(false);
 
   const findDiaryWeek = (currentDate, schedules) => {
     const selectedDates = getWeekDaysInStore(currentDate, schedules);
@@ -69,6 +72,13 @@ const Diary = () => {
             </div>
           </div>
           <h2>Дневник</h2>
+          <button
+            onClick={() => {
+              setModalAddLessonIsOpen(true);
+            }}
+          >
+            Открыть модальное окно
+          </button>
         </div>
       </section>
       <section className="diary">
@@ -100,6 +110,21 @@ const Diary = () => {
             <TablesDiary week={diaryWeek} currentDate={currentDate} />
           )}
         </div>
+        <ModalAddLesson
+          isOpen={modalAddLessonIsOpen}
+          onClose={() => {
+            setModalAddLessonIsOpen(false);
+          }}
+          submitButton="Добавить урок"
+        >
+          <h4>Добавить урок:</h4>
+          <select name="selectLesson" size="3" multiple>
+            <option value="math">Математика</option>
+            <option value="rus">Русский язык</option>
+            <option value="lit">Литература</option>
+            <option value="addLes">Добавить новый урок...</option>
+          </select>
+        </ModalAddLesson>
       </section>
       <MenuCardBox titleCardId={titleCardId} />
     </main>

@@ -1,7 +1,12 @@
 import moment from "moment/min/moment-with-locales.min";
 import TableDayDiary from "./TableDayDiary";
 
-const TablesDiary = ({ week, currentDate }) => {
+const TablesDiary = ({
+  week,
+  currentDate,
+  setModalAddLessonIsOpen,
+  setAddLessonData,
+}) => {
   moment.locale("ru");
   const weekArr = (currentDate) => {
     const weekArr = [];
@@ -19,7 +24,13 @@ const TablesDiary = ({ week, currentDate }) => {
   return (
     <div className="diary__area">
       {weekArr(currentDate).map((day, ind) => (
-        <TableDayDiary day={day} key={ind} position={ind} />
+        <TableDayDiary
+          day={day}
+          key={ind}
+          position={ind}
+          setModalAddLessonIsOpen={setModalAddLessonIsOpen}
+          setAddLessonData={setAddLessonData}
+        />
       ))}
     </div>
   );

@@ -20,11 +20,15 @@ const Diary = () => {
 
   const [currentDate, setCurrentDate] = useState(moment("2024-09-02"));
   const [diaryWeek, setDiaryWeek] = useState({});
+  const [modalAddLessonIsOpen, setModalAddLessonIsOpen] = useState(false);
+  const [addLessonData, setAddLessonData] = useState({
+    date: "",
+    number: null,
+  });
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
-  const dispatch = useDispatch();
 
-  const [modalAddLessonIsOpen, setModalAddLessonIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const findDiaryWeek = (currentDate, schedules) => {
     const selectedDates = getWeekDaysInStore(currentDate, schedules);
@@ -107,7 +111,12 @@ const Diary = () => {
             </div>
           </div>
           {Object.keys(diaryWeek).length > 0 && (
-            <TablesDiary week={diaryWeek} currentDate={currentDate} />
+            <TablesDiary
+              week={diaryWeek}
+              currentDate={currentDate}
+              setModalAddLessonIsOpen={setModalAddLessonIsOpen}
+              setAddLessonData={setAddLessonData}
+            />
           )}
         </div>
         <ModalAddLesson
@@ -115,16 +124,8 @@ const Diary = () => {
           onClose={() => {
             setModalAddLessonIsOpen(false);
           }}
-          submitButton="Добавить урок"
-        >
-          <h4>Добавить урок:</h4>
-          <select name="selectLesson" size="3" multiple>
-            <option value="math">Математика</option>
-            <option value="rus">Русский язык</option>
-            <option value="lit">Литература</option>
-            <option value="addLes">Добавить новый урок...</option>
-          </select>
-        </ModalAddLesson>
+          addLessonData={addLessonData}
+        />
       </section>
       <MenuCardBox titleCardId={titleCardId} />
     </main>

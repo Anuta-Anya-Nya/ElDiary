@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { updateHomework } from "../../store/slices/homeworksSlice";
 import { buildTask } from "../../utils/services";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const TableHomeworkRow = ({ currentNumber, lessonItem }) => {
   const { lessons } = useSelector((state) => state.lessons);
@@ -11,14 +11,12 @@ const TableHomeworkRow = ({ currentNumber, lessonItem }) => {
   const dispatch = useDispatch();
 
   const isAttenshion = () => {
-    if (!lessonItem.lessonId) return "";
-    if (homework.isDone) return "";
-    else {
+    if (lessonItem.lessonId && homework && !homework.isDone)
       return "table__cell-attent";
+    else {
+      return "";
     }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -31,16 +29,22 @@ const TableHomeworkRow = ({ currentNumber, lessonItem }) => {
           : lessons[lessonItem.lessonId]?.title}
       </div>
       <div className={`table__cell table__cell-task ${isAttenshion()}`}>
-        {!lessonItem.lessonId ? "" : buildTask(homework.homework)}
+        {!lessonItem.lessonId
+          ? ""
+          : homework
+          ? buildTask(homework.homework)
+          : ""}
       </div>
       <div className={`table__cell ${isAttenshion()}`}>
         <input
           type="checkbox"
-          checked={!lessonItem.lessonId ? false : homework.isDone}
+          checked={
+            !lessonItem.lessonId ? false : homework ? homework.isDone : false
+          }
           onChange={() => {
             dispatch(updateHomework({ ...homework, isDone: !homework.isDone }));
           }}
-          disabled={!lessonItem.lessonId}
+          disabled={!lessonItem.lessonId || !homework}
         />
       </div>
     </>

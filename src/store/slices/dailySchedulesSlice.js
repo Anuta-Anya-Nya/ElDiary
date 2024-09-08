@@ -107,9 +107,11 @@ const dailySchedulesSlice = createSlice({
         schedulesList: { ...state.schedulesList, ...action.payload },
       };
     },
-    // updateDailySchedule: (state, action) => {
-    //   const {date}
-    // },
+    updateDailySchedule: (state, action) => {
+      state.schedulesList[action.payload.date].lessonsList[
+        action.payload.number
+      ].lessonId = action.payload.lessonId;
+    },
   },
   //   редьюсеры для thunk функций
   //   extraReducers: (builder) => {
@@ -121,5 +123,5 @@ const dailySchedulesSlice = createSlice({
   //     });
   //   },
 });
-export const { addSchedule } = dailySchedulesSlice.actions;
+export const { addSchedule, updateDailySchedule } = dailySchedulesSlice.actions;
 export const dailySchedulesReducer = dailySchedulesSlice.reducer;

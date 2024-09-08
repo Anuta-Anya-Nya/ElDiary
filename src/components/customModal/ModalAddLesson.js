@@ -1,8 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { updateDailySchedule } from "../../store/slices/dailySchedulesSlice";
 
-export const ModalAddLesson = ({ isOpen, onClose, submitButton, children }) => {
+export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
+  const lessons = useSelector((state) => state.lessons.lessons);
+  const [selectValue, setSelectValue] = useState("");
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+
+  const toCloseAndRefreshData = () => {
+    setError(false);
+    setSelectValue("");
+    onClose();
+  };
+  const addLessonToShedule = () => {
+    if (!selectValue) {
+      setError(true);
+      return;
+    } else {
+      dispatch(
+        updateDailySchedule({
+          date: addLessonData.date,
+          number: addLessonData.number,
+          lessonId: Number(selectValue),
+        })
+      );
+      toCloseAndRefreshData();
+    }
+  };
+
   return (
     <div>
       <Modal
@@ -11,18 +39,43 @@ export const ModalAddLesson = ({ isOpen, onClose, submitButton, children }) => {
         className="modal-content"
         ariaHideApp={false}
         closeTimeoutMS={300}
-        onRequestClose={() => onClose()}
+        onRequestClose={() => toCloseAndRefreshData()}
       >
-        <button className="modal-close-button" onClick={() => onClose()}>
+        <button
+          className="modal-close-button"
+          onClick={() => toCloseAndRefreshData()}
+        >
           <CloseIcon />
         </button>
+        <h4>Добавить урок:</h4>
 
-        {children}
-        {submitButton && (
-          <button className="modal-submit-button" onClick={() => onClose()}>
-            {submitButton}
-          </button>
-        )}
+        <select
+          name="selectLesson"
+          size="3"
+          multiple
+          onChange={(e) => {
+            setSelectValue(e.target.value);
+            if (e.target.value) {
+              setError(false);
+            }
+          }}
+        >
+          {Object.values(lessons).map((lesson) => (
+            <option value={lesson.lessonId} key={lesson.lessonId}>
+              {lesson.title}
+            </option>
+          ))}
+          <option value="addLes">Добавить новый урок...</option>
+        </select>
+        {error && <div>Урок не выбран!</div>}
+        <button
+          className="modal-submit-button"
+          onClick={() => {
+            addLessonToShedule();
+          }}
+        >
+          Добавить урок
+        </button>
       </Modal>
     </div>
   );

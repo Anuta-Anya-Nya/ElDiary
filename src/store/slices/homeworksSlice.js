@@ -123,8 +123,7 @@ const homeworksSlice = createSlice({
   },
   reducers: {
     addHomework: (state, action) => {
-      const homework = action.payload;
-      state.homeworksList[homework.id] = homework;
+      state.homeworksList[action.payload.id] = action.payload;
     },
     updateHomework: (state, action) => {
       Object.assign(state.homeworksList[action.payload.id], action.payload);

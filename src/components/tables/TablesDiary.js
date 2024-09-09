@@ -6,6 +6,7 @@ const TablesDiary = ({
   currentDate,
   setModalAddLessonIsOpen,
   setAddLessonData,
+  setModalAddHomeworkIsOpen,
 }) => {
   moment.locale("ru");
   const weekArr = (currentDate) => {
@@ -30,6 +31,7 @@ const TablesDiary = ({
           position={ind}
           setModalAddLessonIsOpen={setModalAddLessonIsOpen}
           setAddLessonData={setAddLessonData}
+          setModalAddHomeworkIsOpen={setModalAddHomeworkIsOpen}
         />
       ))}
     </div>

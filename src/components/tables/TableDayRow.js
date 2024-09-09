@@ -1,5 +1,5 @@
 import { buildTask } from "../../utils/services";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import add from "../../assets/icons/circle-plus.svg";
 
 const TableDayRow = ({
@@ -8,13 +8,12 @@ const TableDayRow = ({
   setModalAddLessonIsOpen,
   setAddLessonData,
   sheduleDate,
+  setModalAddHomeworkIsOpen,
 }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
     (state) => state.homeworks.homeworksList[lessonItem.homeworkId]
   );
-
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -38,7 +37,15 @@ const TableDayRow = ({
         {!lessonItem.lessonId ? (
           ""
         ) : !lessonItem.homeworkId ? (
-          <img className="diary__icons" src={add} alt="добавить" />
+          <img
+            className="diary__icons"
+            src={add}
+            alt="добавить"
+            onClick={() => {
+              setModalAddHomeworkIsOpen(true);
+              setAddLessonData({ date: sheduleDate, number: currentNumber });
+            }}
+          />
         ) : (
           buildTask(homework.homework)
         )}

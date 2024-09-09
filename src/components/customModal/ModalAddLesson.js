@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { updateDailySchedule } from "../../store/slices/dailySchedulesSlice";
+import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlice";
 
 export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
@@ -21,7 +21,7 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
       return;
     } else {
       dispatch(
-        updateDailySchedule({
+        updateDailyScheduleLesson({
           date: addLessonData.date,
           number: addLessonData.number,
           lessonId: Number(selectValue),

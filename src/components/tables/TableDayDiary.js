@@ -8,6 +8,7 @@ const TableDayDiary = ({
   position,
   setModalAddLessonIsOpen,
   setAddLessonData,
+  setModalAddHomeworkIsOpen,
 }) => {
   const gridColumn = () => {
     if (position === 1) {
@@ -40,6 +41,7 @@ const TableDayDiary = ({
               setModalAddLessonIsOpen={setModalAddLessonIsOpen}
               setAddLessonData={setAddLessonData}
               sheduleDate={day.date}
+              setModalAddHomeworkIsOpen={setModalAddHomeworkIsOpen}
             />
           );
         })}

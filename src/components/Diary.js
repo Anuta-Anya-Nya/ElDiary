@@ -10,6 +10,7 @@ import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
 import { ModalAddLesson } from "../components/customModal/ModalAddLesson";
+import { ModalAddHomework } from "./customModal/ModalAddHomework";
 
 const Diary = () => {
   moment.locale("ru");
@@ -25,6 +26,7 @@ const Diary = () => {
     date: "",
     number: null,
   });
+  const [modalAddHomeworkIsOpen, setModalAddHomeworkIsOpen] = useState(false);
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
 
@@ -78,7 +80,7 @@ const Diary = () => {
           <h2>Дневник</h2>
           <button
             onClick={() => {
-              setModalAddLessonIsOpen(true);
+              setModalAddHomeworkIsOpen(true);
             }}
           >
             Открыть модальное окно
@@ -116,6 +118,7 @@ const Diary = () => {
               currentDate={currentDate}
               setModalAddLessonIsOpen={setModalAddLessonIsOpen}
               setAddLessonData={setAddLessonData}
+              setModalAddHomeworkIsOpen={setModalAddHomeworkIsOpen}
             />
           )}
         </div>
@@ -123,6 +126,13 @@ const Diary = () => {
           isOpen={modalAddLessonIsOpen}
           onClose={() => {
             setModalAddLessonIsOpen(false);
+          }}
+          addLessonData={addLessonData}
+        />
+        <ModalAddHomework
+          isOpen={modalAddHomeworkIsOpen}
+          onClose={() => {
+            setModalAddHomeworkIsOpen(false);
           }}
           addLessonData={addLessonData}
         />

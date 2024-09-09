@@ -11,20 +11,23 @@ const dailySchedulesSlice = createSlice({
           {
             lessonId: 2,
             homeworkId: 1,
-            grade: null,
+            grade: 5,
             teacherId: 2,
+            class: null,
           },
           {
             lessonId: 1,
             homeworkId: 2,
             grade: null,
             teacherId: 1,
+            class: null,
           },
           {
             lessonId: 1,
             homeworkId: null,
             grade: null,
             teacherId: 1,
+            class: null,
           },
         ],
         notes: "qwerty",
@@ -40,24 +43,28 @@ const dailySchedulesSlice = createSlice({
             homeworkId: 4,
             grade: null,
             teacherId: 2,
+            class: null,
           },
           {
             lessonId: 4,
             homeworkId: 5,
             grade: null,
             teacherId: null,
+            class: null,
           },
           {
             lessonId: 6,
             homeworkId: 9,
             grade: null,
             teacherId: null,
+            class: null,
           },
           {
             lessonId: 7,
             homeworkId: 10,
             grade: null,
             teacherId: null,
+            class: null,
           },
         ],
         notes: "qwerty",
@@ -73,24 +80,28 @@ const dailySchedulesSlice = createSlice({
             homeworkId: null,
             grade: null,
             teacherId: null,
+            class: null,
           },
           {
             lessonId: 2,
             homeworkId: 6,
             grade: null,
             teacherId: 2,
+            class: null,
           },
           {
             lessonId: 2,
             homeworkId: 7,
             grade: null,
             teacherId: 2,
+            class: null,
           },
           {
             lessonId: 1,
             homeworkId: 8,
             grade: null,
             teacherId: 1,
+            class: null,
           },
         ],
         notes: null,
@@ -110,12 +121,20 @@ const dailySchedulesSlice = createSlice({
     updateDailyScheduleLesson: (state, action) => {
       state.schedulesList[action.payload.date].lessonsList[
         action.payload.number
-      ].lessonId = action.payload.lessonId;
+      ] = action.payload.lesson;
     },
     updateDailyScheduleHomework: (state, action) => {
       state.schedulesList[action.payload.date].lessonsList[
         action.payload.number
       ].homeworkId = action.payload.homeworkId;
+    },
+    updateDailyScheduleGrade: (state, action) => {
+      state.schedulesList[action.payload.date].lessonsList[
+        action.payload.number
+      ].grade = action.payload.grade;
+    },
+    updateDailyScheduleNote: (state, action) => {
+      state.schedulesList[action.payload.date].notes = action.payload.notes;
     },
   },
   //   редьюсеры для thunk функций
@@ -132,5 +151,7 @@ export const {
   addSchedule,
   updateDailyScheduleLesson,
   updateDailyScheduleHomework,
+  updateDailyScheduleGrade,
+  updateDailyScheduleNote,
 } = dailySchedulesSlice.actions;
 export const dailySchedulesReducer = dailySchedulesSlice.reducer;

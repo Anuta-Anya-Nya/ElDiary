@@ -11,6 +11,8 @@ import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
 import { ModalAddLesson } from "../components/customModal/ModalAddLesson";
 import { ModalAddHomework } from "./customModal/ModalAddHomework";
+import { ModalAddGrade } from "./customModal/ModalAddGrade";
+import { ModalAddNotes } from "./customModal/ModalAddNotes";
 
 const Diary = () => {
   moment.locale("ru");
@@ -27,6 +29,8 @@ const Diary = () => {
     number: null,
   });
   const [modalAddHomeworkIsOpen, setModalAddHomeworkIsOpen] = useState(false);
+  const [modalAddGradeIsOpen, setModalAddGradeIsOpen] = useState(false);
+  const [modalAddNotesIsOpen, setModalAddNotesIsOpen] = useState(false);
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
 
@@ -78,13 +82,6 @@ const Diary = () => {
             </div>
           </div>
           <h2>Дневник</h2>
-          <button
-            onClick={() => {
-              setModalAddHomeworkIsOpen(true);
-            }}
-          >
-            Открыть модальное окно
-          </button>
         </div>
       </section>
       <section className="diary">
@@ -119,6 +116,8 @@ const Diary = () => {
               setModalAddLessonIsOpen={setModalAddLessonIsOpen}
               setAddLessonData={setAddLessonData}
               setModalAddHomeworkIsOpen={setModalAddHomeworkIsOpen}
+              setModalAddGradeIsOpen={setModalAddGradeIsOpen}
+              setModalAddNotesIsOpen={setModalAddNotesIsOpen}
             />
           )}
         </div>
@@ -133,6 +132,20 @@ const Diary = () => {
           isOpen={modalAddHomeworkIsOpen}
           onClose={() => {
             setModalAddHomeworkIsOpen(false);
+          }}
+          addLessonData={addLessonData}
+        />
+        <ModalAddGrade
+          isOpen={modalAddGradeIsOpen}
+          onClose={() => {
+            setModalAddGradeIsOpen(false);
+          }}
+          addLessonData={addLessonData}
+        />
+        <ModalAddNotes
+          isOpen={modalAddNotesIsOpen}
+          onClose={() => {
+            setModalAddNotesIsOpen(false);
           }}
           addLessonData={addLessonData}
         />

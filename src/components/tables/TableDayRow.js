@@ -9,6 +9,7 @@ const TableDayRow = ({
   setAddLessonData,
   sheduleDate,
   setModalAddHomeworkIsOpen,
+  setModalAddGradeIsOpen,
 }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
@@ -53,10 +54,18 @@ const TableDayRow = ({
       <div className="diary__cell">
         {!lessonItem.lessonId ? (
           ""
-        ) : !lessonItem.lessonId.grade ? (
-          <img className="diary__icons" src={add} alt="добавить" />
+        ) : !lessonItem.grade ? (
+          <img
+            className="diary__icons"
+            src={add}
+            alt="добавить"
+            onClick={() => {
+              setModalAddGradeIsOpen(true);
+              setAddLessonData({ date: sheduleDate, number: currentNumber });
+            }}
+          />
         ) : (
-          lessonItem.lessonId.grade
+          lessonItem.grade
         )}
       </div>
     </>

@@ -3,20 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const settingSlice = createSlice({
   name: "setting",
   initialState: {
-    teachers: [
-      {
-        id: 1,
-        name: "Иванова Мария Михайловна",
-        tel: "(905)123-22-33",
-        teachingLessons: [1, 3],
-      },
-      {
-        id: 2,
-        name: "Петрова Лилия Григорьевна",
-        tel: "(905)111-22-33",
-        teachingLessons: [2],
-      },
-    ],
     shedule: {
       1: [1, 3, 2, 2, 4], //понедельник и массив id уроков
       2: [3, 3, 2, 1],

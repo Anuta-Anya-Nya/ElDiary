@@ -2,6 +2,7 @@ import add from "../../assets/icons/circle-plus.svg";
 import edit from "../../assets/icons/edit-pen.svg";
 import moment from "moment/min/moment-with-locales.min";
 import TableDayRow from "./TableDayRow";
+import { useSelector } from "react-redux";
 
 const TableDayDiary = ({
   day,
@@ -9,6 +10,8 @@ const TableDayDiary = ({
   setModalAddLessonIsOpen,
   setAddLessonData,
   setModalAddHomeworkIsOpen,
+  setModalAddGradeIsOpen,
+  setModalAddNotesIsOpen,
 }) => {
   const gridColumn = () => {
     if (position === 1) {
@@ -42,12 +45,27 @@ const TableDayDiary = ({
               setAddLessonData={setAddLessonData}
               sheduleDate={day.date}
               setModalAddHomeworkIsOpen={setModalAddHomeworkIsOpen}
+              setModalAddGradeIsOpen={setModalAddGradeIsOpen}
             />
           );
         })}
         <div className="diary__cell diary__cell-long">
-          Заметки
-          <img className="diary__icons" src={add} alt="добавить" />
+          <div>Заметки: </div>
+          <div>
+            {day.notes ? (
+              day.notes
+            ) : (
+              <img
+                className="diary__icons"
+                src={add}
+                alt="добавить"
+                onClick={() => {
+                  setModalAddNotesIsOpen(true);
+                  setAddLessonData({ date: day.date, number: null });
+                }}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

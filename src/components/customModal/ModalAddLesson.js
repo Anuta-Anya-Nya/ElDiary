@@ -6,17 +6,22 @@ import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlic
 
 export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
-  const [selectValue, setSelectValue] = useState("");
+  const teachers = useSelector((state) => state.teachers.teachersList);
+  const [selectLessonId, setSelectLessonId] = useState("");
+  const [selectTeacher, setSelectTeacher] = useState("");
+  const [selectClass, setSelectClass] = useState("");
   const [error, setError] = useState(false);
+
   const dispatch = useDispatch();
 
   const toCloseAndRefreshData = () => {
     setError(false);
-    setSelectValue("");
+    setSelectLessonId("");
     onClose();
   };
+
   const addLessonToShedule = () => {
-    if (!selectValue) {
+    if (!selectLessonId) {
       setError(true);
       return;
     } else {
@@ -24,10 +29,34 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
         updateDailyScheduleLesson({
           date: addLessonData.date,
           number: addLessonData.number,
-          lessonId: Number(selectValue),
+          lesson: {
+            lessonId: Number(selectLessonId),
+            homeworkId: null,
+            grade: null,
+            teacherId: Number(selectTeacher) || null,
+            class: Number(selectClass) || null,
+          },
         })
       );
       toCloseAndRefreshData();
+    }
+  };
+
+  const findTeacherForSelectLesson = () => {
+    const teachersThisLesson = lessons[selectLessonId].teachers;
+    console.log(teachersThisLesson);
+    if (!teachersThisLesson) {
+      console.log(
+        Object.values(teachers).filter((teacher) =>
+          teacher.teachingLessons.includes(selectLessonId)
+        )
+      );
+
+      return Object.values(teachers).filter((teacher) =>
+        teacher.teachingLessons.includes(selectLessonId)
+      );
+    } else {
+      return teachersThisLesson;
     }
   };
 
@@ -52,12 +81,12 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
         <select
           name="selectLesson"
           size="3"
-          multiple
           onChange={(e) => {
-            setSelectValue(e.target.value);
+            setSelectLessonId(e.target.value);
             if (e.target.value) {
               setError(false);
             }
+            setSelectTeacher("");
           }}
         >
           {Object.values(lessons).map((lesson) => (
@@ -67,6 +96,46 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
           ))}
           <option value="addLes">Добавить новый урок...</option>
         </select>
+        {selectLessonId && (
+          <>
+            <div>
+              <h4>Учитель:</h4>
+              <select
+                name="selectTeacher"
+                size="2"
+                onChange={(e) => {
+                  setSelectTeacher(e.target.value);
+                }}
+              >
+                {findTeacherForSelectLesson().map((teacherId) => (
+                  <option value={teacherId} key={teacherId}>
+                    {teachers[teacherId].name}
+                  </option>
+                ))}
+                <option>Добавить нового учителя...</option>
+              </select>
+            </div>
+            <div>
+              <h4>Кабинет:</h4>
+              <select
+                name="selectClass"
+                size="2"
+                onChange={(e) => {
+                  setSelectClass(e.target.value);
+                }}
+              >
+                {lessons[selectLessonId].class.map((classItem, ind) => (
+                  <option value={classItem} key={ind}>
+                    {classItem}
+                  </option>
+                ))}
+
+                <option>Добавить новый кабинет...</option>
+              </select>
+            </div>
+          </>
+        )}
+
         {error && <div>Урок не выбран!</div>}
         <button
           className="modal-submit-button"

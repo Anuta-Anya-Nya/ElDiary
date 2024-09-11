@@ -38,7 +38,7 @@ export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
         overlayClassName={"modal-overlay"}
         className="modal-content"
         ariaHideApp={false}
-        closeTimeoutMS={300}
+        closeTimeoutMS={100}
         onRequestClose={() => toCloseAndRefreshData()}
       >
         <button
@@ -47,61 +47,72 @@ export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
         >
           <CloseIcon />
         </button>
-        <h4>Добавить оценку:</h4>
+        <h3>Добавить оценку:</h3>
 
-        <div>
-          <input
-            type="radio"
-            name="grade"
-            value="5"
-            id="gradeChoice1"
-            checked={radioValue === "5"}
-            onChange={(el) => {
-              setRadioValue(el.target.value);
-              setError(false);
-            }}
-          />
-          <label htmlFor="gradeChoice1">5</label>
-
-          <input
-            type="radio"
-            name="grade"
-            value="4"
-            id="gradeChoice2"
-            checked={radioValue === "4"}
-            onChange={(el) => {
-              setRadioValue(el.target.value);
-              setError(false);
-            }}
-          />
-          <label htmlFor="gradeChoice2">4</label>
-          <input
-            type="radio"
-            name="grade"
-            value="3"
-            id="gradeChoice3"
-            checked={radioValue === "3"}
-            onChange={(el) => {
-              setRadioValue(el.target.value);
-              setError(false);
-            }}
-          />
-          <label htmlFor="gradeChoice3">3</label>
-          <input
-            type="radio"
-            name="grade"
-            value="2"
-            id="gradeChoice4"
-            checked={radioValue === "2"}
-            onChange={(el) => {
-              setRadioValue(el.target.value);
-              setError(false);
-            }}
-          />
-          <label htmlFor="gradeChoice4">2</label>
+        <div className="modal-content-choice modal-content-choice-grade">
+          <div className="modal-content-choise-item">
+            <input
+              className="modal-content-radio"
+              type="radio"
+              name="grade"
+              value="5"
+              id="gradeChoice1"
+              checked={radioValue === "5"}
+              onChange={(el) => {
+                setRadioValue(el.target.value);
+                setError(false);
+              }}
+            />
+            <label htmlFor="gradeChoice1">5</label>
+          </div>
+          <div modal-content-choise-item>
+            <input
+              className="modal-content-radio"
+              type="radio"
+              name="grade"
+              value="4"
+              id="gradeChoice2"
+              checked={radioValue === "4"}
+              onChange={(el) => {
+                setRadioValue(el.target.value);
+                setError(false);
+              }}
+            />
+            <label htmlFor="gradeChoice2">4</label>
+          </div>
+          <div modal-content-choise-item>
+            <input
+              className="modal-content-radio"
+              type="radio"
+              name="grade"
+              value="3"
+              id="gradeChoice3"
+              checked={radioValue === "3"}
+              onChange={(el) => {
+                setRadioValue(el.target.value);
+                setError(false);
+              }}
+            />
+            <label htmlFor="gradeChoice3">3</label>
+          </div>
+          <div modal-content-choise-item>
+            <input
+              className="modal-content-radio"
+              type="radio"
+              name="grade"
+              value="2"
+              id="gradeChoice4"
+              checked={radioValue === "2"}
+              onChange={(el) => {
+                setRadioValue(el.target.value);
+                setError(false);
+              }}
+            />
+            <label htmlFor="gradeChoice4">2</label>
+          </div>
         </div>
 
-        {error && <div>Оценка не выбрана!</div>}
+        {error && <div className="modal-content-error">Оценка не выбрана!</div>}
 
         <button
           className="modal-submit-button"

@@ -80,7 +80,10 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
         <h3>Добавить урок:</h3>
         <div className="modal-content-choice">
           {Object.values(lessons).map((lesson) => (
-            <div key={lesson.lessonId} className={Object.values(lessons)}>
+            <div
+              key={lesson.lessonId}
+              className={contentItemCount(Object.values(lessons))}
+            >
               <input
                 className="modal-content-radio"
                 type="radio"

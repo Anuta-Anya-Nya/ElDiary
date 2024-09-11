@@ -350,6 +350,9 @@ input[type=checkbox] {
   width: 100%;
   max-width: 40rem;
   padding: 20px;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
   color: #3c3c3c;
   background-color: #ffffff;
   border-radius: 16px;
@@ -370,6 +373,9 @@ input[type=checkbox] {
   font-size: 1em;
   color: #3c3c3c;
 }
+.modal-content-choice-grade {
+  grid-template-columns: repeat(1, auto);
+}
 
 .modal-content-choice-single {
   grid-column: 1/-1;
@@ -382,7 +388,12 @@ input[type=checkbox] {
 
 .modal-content-radio {
   transform: scale(1.2);
-  margin-right: 0.3em;
+  margin-right: 0.5em;
+}
+
+.modal-content-choise-item {
+  display: flex;
+  align-items: center;
 }
 
 .ReactModal__Content--after-open {

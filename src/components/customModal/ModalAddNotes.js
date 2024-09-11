@@ -46,12 +46,14 @@ export const ModalAddNotes = ({ isOpen, onClose, addLessonData }) => {
         >
           <CloseIcon />
         </button>
-        <h4>Добавить заметку:</h4>
+        <h3>Добавить заметку:</h3>
 
-        <div>
+        <div className="modal-content__inputBox">
           <input
+            className="modal-content-input"
             type="text"
             value={note}
+            placeholder="Введите запись"
             onChange={(el) => {
               setNote(el.target.value);
               setError(false);
@@ -59,7 +61,7 @@ export const ModalAddNotes = ({ isOpen, onClose, addLessonData }) => {
           />
         </div>
 
-        {error && <div>Заметка пустая!</div>}
+        {error && <div className="modal-content-error">Заметка пустая!</div>}
 
         <button
           className="modal-submit-button"

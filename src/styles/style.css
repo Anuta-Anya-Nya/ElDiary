@@ -391,6 +391,20 @@ input[type=checkbox] {
   margin-right: 0.5em;
 }
 
+.modal-content__inputBox {
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.modal-content-input {
+  font-size: 1em;
+  padding: 5px 10px;
+  color: #3c3c3c;
+  border: 1px solid #3c3c3c;
+  border-radius: 7px;
+  width: 100%;
+}
+
 .modal-content-choise-item {
   display: flex;
   align-items: center;
@@ -421,11 +435,15 @@ input[type=checkbox] {
 }
 
 .modal-submit-button {
-  padding: 0.5em 16px;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  line-height: 1em;
+  padding: 0.5em 1.2em;
   border: none;
   background-color: #1E959B;
   border-radius: 8px;
-  font-size: 1em;
+  font-size: 1.2em;
   color: #ffffff;
   filter: drop-shadow(3px 3px 7px rgba(30, 149, 155, 0.5));
   border: 1px solid #1E959B;

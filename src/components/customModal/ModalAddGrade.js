@@ -50,7 +50,7 @@ export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
         <h3>Добавить оценку:</h3>
 
         <div className="modal-content-choice modal-content-choice-grade">
-          <div className="modal-content-choise-item">
+          <div className="modal-content-choice-item">
             <input
               className="modal-content-radio"
               type="radio"
@@ -65,7 +65,7 @@ export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
             />
             <label htmlFor="gradeChoice1">5</label>
           </div>
-          <div modal-content-choise-item>
+          <div modal-content-choice-item>
             <input
               className="modal-content-radio"
               type="radio"
@@ -80,7 +80,7 @@ export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
             />
             <label htmlFor="gradeChoice2">4</label>
           </div>
-          <div modal-content-choise-item>
+          <div modal-content-choice-item>
             <input
               className="modal-content-radio"
               type="radio"
@@ -95,7 +95,7 @@ export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
             />
             <label htmlFor="gradeChoice3">3</label>
           </div>
-          <div modal-content-choise-item>
+          <div modal-content-choice-item>
             <input
               className="modal-content-radio"
               type="radio"

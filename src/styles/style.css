@@ -346,7 +346,7 @@ input[type=checkbox] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4em;
+  gap: 1.4em;
   width: 100%;
   max-width: 40rem;
   padding: 20px;
@@ -363,7 +363,17 @@ input[type=checkbox] {
 .modal-content h3 {
   color: #9a1d36;
 }
-
+.modal-content-box {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-content__input-hw {
+  display: flex;
+  justify-content: baseline;
+  gap: 10px;
+}
 .modal-content-choice {
   display: grid;
   grid-template-columns: repeat(2, auto);
@@ -376,26 +386,25 @@ input[type=checkbox] {
 .modal-content-choice-grade {
   grid-template-columns: repeat(1, auto);
 }
-
 .modal-content-choice-single {
   grid-column: 1/-1;
 }
-
+.modal-content-choice-item {
+  display: flex;
+  align-items: center;
+}
 .modal-content-error {
   font-size: 1.5em;
-  color: #9a1d36;
+  color: #1E959B;
 }
-
 .modal-content-radio {
   transform: scale(1.2);
   margin-right: 0.5em;
 }
-
 .modal-content__inputBox {
   width: 80%;
   margin-bottom: 10px;
 }
-
 .modal-content-input {
   font-size: 1em;
   padding: 5px 10px;
@@ -403,11 +412,6 @@ input[type=checkbox] {
   border: 1px solid #3c3c3c;
   border-radius: 7px;
   width: 100%;
-}
-
-.modal-content-choise-item {
-  display: flex;
-  align-items: center;
 }
 
 .ReactModal__Content--after-open {
@@ -429,7 +433,6 @@ input[type=checkbox] {
   stroke: #3c3c3c;
   transition: stroke 0.3s;
 }
-
 .modal-close-button:hover {
   stroke: #9a1d36;
 }
@@ -441,19 +444,24 @@ input[type=checkbox] {
   line-height: 1em;
   padding: 0.5em 1.2em;
   border: none;
-  background-color: #1E959B;
+  background-color: #9a1d36;
   border-radius: 8px;
   font-size: 1.2em;
   color: #ffffff;
   filter: drop-shadow(3px 3px 7px rgba(30, 149, 155, 0.5));
-  border: 1px solid #1E959B;
+  border: 1px solid #9a1d36;
   transition: all 0.3s;
 }
-
 .modal-submit-button:hover {
-  color: #1E959B;
+  color: #9a1d36;
   background-color: #ffffff;
-  border: 1px solid #1E959B;
+  border: 1px solid #9a1d36;
+}
+
+.modal-button {
+  align-self: center;
+  padding: 0.5em 1em;
+  font-size: 1em;
 }
 
 @media (max-width: 767px) {

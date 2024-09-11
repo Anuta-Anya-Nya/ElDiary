@@ -70,30 +70,37 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
         >
           <CloseIcon />
         </button>
-        <h4>Добавить домашнее задание:</h4>
-        {homeworkData.map((hw, ind) => (
-          <div key={ind}>
-            {hw.task ? "упр. " : ""}
-            {hw.task || ""}
-            {hw.page ? " стр. " : ""}
-            {hw.page || ""} {hw.notes || ""}
-          </div>
-        ))}
+        <h3>Добавить домашнее задание:</h3>
         <div>
-          <label>
-            Упражнение:{" "}
+          {homeworkData.map((hw, ind) => (
+            <div key={ind}>
+              {hw.task ? "упр. " : ""}
+              {hw.task || ""}
+              {hw.page ? " стр. " : ""}
+              {hw.page || ""} {hw.notes || ""}
+              {","}
+            </div>
+          ))}
+        </div>
+
+        <div className="modal-content-box">
+          <div className="modal-content__input-hw">
+            <label htmlFor="taskInput">Упражнение:</label>
             <input
+              className="modal-content-input"
               type="text"
+              id="taskInput"
               value={task}
               onChange={(el) => {
                 setTask(el.target.value);
                 setError(false);
               }}
             />
-          </label>
-          <label>
-            Страницы:{" "}
+          </div>
+          <div className="modal-content__input-hw">
+            <label>Страницы:</label>
             <input
+              className="modal-content-input"
               type="text"
               value={page}
               onChange={(el) => {
@@ -101,10 +108,11 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
                 setError(false);
               }}
             />
-          </label>
-          <label>
-            Заметки:{" "}
+          </div>
+          <div className="modal-content__input-hw">
+            <label>Заметки:</label>
             <input
+              className="modal-content-input"
               type="text"
               value={note}
               onChange={(el) => {
@@ -112,8 +120,10 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
                 setError(false);
               }}
             />
-          </label>
+          </div>
+
           <button
+            className="modal-submit-button modal-button"
             onClick={() => {
               addAnotherHW();
             }}
@@ -122,7 +132,11 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
           </button>
         </div>
 
-        {error && <div>Домашнее задание не введено!</div>}
+        {error && (
+          <div className="modal-content-error">
+            Домашнее задание не введено!
+          </div>
+        )}
 
         <button className="modal-submit-button" onClick={() => saveHomework()}>
           Сохранить домашнее задание

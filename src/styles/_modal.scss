@@ -30,7 +30,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4em;
+    gap: 1.4em;
     width: 100%;
     max-width: 40rem;
     padding: 20px;
@@ -47,53 +47,67 @@
     & h3 {
         color: $colorButton;
     }
-}
 
-.modal-content-choice {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    width: 100%;
-    justify-content: center;
-    gap: 0.3em 1.2em;
-    font-size: 1em;
-    color: $colorText;
-
-    &-grade {
-        grid-template-columns: repeat(1, auto);
+    &-box {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
-}
 
-.modal-content-choice-single {
-    grid-column: 1 / -1;
-}
+    &__input-hw {
+        display: flex;
+        justify-content: baseline;
+        gap: 10px;
+    }
 
-.modal-content-error {
-    font-size: 1.5em;
-    color: $colorButton;
-}
+    &-choice {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        width: 100%;
+        justify-content: center;
+        gap: 0.3em 1.2em;
+        font-size: 1em;
+        color: $colorText;
 
-.modal-content-radio {
-    transform: scale(1.2);
-    margin-right: 0.5em;
-}
+        &-grade {
+            grid-template-columns: repeat(1, auto);
+        }
 
-.modal-content__inputBox {
-    width: 80%;
-    margin-bottom: 10px;
-}
+        &-single {
+            grid-column: 1 / -1;
+        }
 
-.modal-content-input {
-    font-size: 1em;
-    padding: 5px 10px;
-    color: $colorText;
-    border: 1px solid $colorText;
-    border-radius: 7px;
-    width: 100%;
-}
+        &-item {
+            display: flex;
+            align-items: center;
+        }
+    }
 
-.modal-content-choise-item {
-    display: flex;
-    align-items: center;
+    &-error {
+        font-size: 1.5em;
+        color: $colorFirst;
+    }
+
+    &-radio {
+        transform: scale(1.2);
+        margin-right: 0.5em;
+    }
+
+    &__inputBox {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    &-input {
+        font-size: 1em;
+        padding: 5px 10px;
+        color: $colorText;
+        border: 1px solid $colorText;
+        border-radius: 7px;
+        width: 100%;
+    }
+
 }
 
 .ReactModal__Content--after-open {
@@ -106,7 +120,6 @@
 
 .modal-close-button {
     position: absolute;
-
     border: none;
     background-color: $colorBackgroundSecond;
     top: 20px;
@@ -115,10 +128,10 @@
     height: 30px;
     stroke: $colorText;
     transition: stroke 0.3s;
-}
 
-.modal-close-button:hover {
-    stroke: $colorButton;
+    &:hover {
+        stroke: $colorButton;
+    }
 }
 
 .modal-submit-button {
@@ -128,17 +141,23 @@
     line-height: 1em;
     padding: 0.5em 1.2em;
     border: none;
-    background-color: $colorFirst;
+    background-color: $colorButton;
     border-radius: 8px;
     font-size: 1.2em;
     color: $colorBackgroundSecond;
     filter: drop-shadow(3px 3px 7px rgba(30, 149, 155, 0.5));
-    border: 1px solid $colorFirst;
+    border: 1px solid $colorButton;
     transition: all 0.3s;
+
+    &:hover {
+        color: $colorButton;
+        background-color: $colorBackgroundSecond;
+        border: 1px solid $colorButton;
+    }
 }
 
-.modal-submit-button:hover {
-    color: $colorFirst;
-    background-color: $colorBackgroundSecond;
-    border: 1px solid $colorFirst;
+.modal-button {
+    align-self: center;
+    padding: 0.5em 1em;
+    font-size: 1em;
 }

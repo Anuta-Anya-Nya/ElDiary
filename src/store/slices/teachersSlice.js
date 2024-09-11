@@ -28,6 +28,18 @@ const teachersSlice = createSlice({
         tel: "(905)123-22-33",
         teachingLessons: [7],
       },
+      5: {
+        id: 5,
+        name: "Валентинова Валентина Михайловна",
+        tel: "(905)123-22-33",
+        teachingLessons: [5],
+      },
+      6: {
+        id: 6,
+        name: "Михайлова Валентина Михайловна",
+        tel: "(905)123-22-33",
+        teachingLessons: [5],
+      },
     },
   },
   reducers: {

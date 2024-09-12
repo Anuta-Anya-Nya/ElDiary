@@ -127,7 +127,6 @@ const homeworksSlice = createSlice({
     },
     updateHomework: (state, action) => {
       Object.assign(state.homeworksList[action.payload.id], action.payload);
-      console.log(state.homeworksList[action.payload.id]);
     },
   },
   //   редьюсеры для thunk функций

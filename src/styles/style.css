@@ -276,6 +276,13 @@ input[type=checkbox] {
   color: #1E959B;
   text-align: center;
 }
+.diary__title-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8em;
+  margin-bottom: 0.4em;
+}
 .diary__header {
   display: flex;
   justify-content: center;
@@ -313,7 +320,11 @@ input[type=checkbox] {
   border-width: 0;
 }
 .diary__icons {
-  width: 1em;
+  width: 1.2em;
+  cursor: pointer;
+}
+.diary__notes {
+  margin-right: 0.5em;
 }
 
 .modal-overlay {

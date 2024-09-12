@@ -26,10 +26,13 @@ const TableDayDiary = ({
 
   return (
     <div className={gridColumn()}>
-      <h3 className="diary__date diary__title">
-        {moment(day.date).format("dddd, DD MMMM")}
+      <div className="diary__title-box">
+        <h3 className="diary__title">
+          {moment(day.date).format("dddd, DD MMMM")}
+        </h3>
         <img className="diary__icons" src={edit} alt="редактировать" />
-      </h3>
+      </div>
+
       <div className="diary__table">
         <div className="diary__cell table__cell-title"></div>
         <div className="diary__cell table__cell-title">Предмет</div>
@@ -50,22 +53,21 @@ const TableDayDiary = ({
           );
         })}
         <div className="diary__cell diary__cell-long">
-          <div>Заметки: </div>
-          <div>
-            {day.notes ? (
-              day.notes
-            ) : (
-              <img
-                className="diary__icons"
-                src={add}
-                alt="добавить"
-                onClick={() => {
-                  setModalAddNotesIsOpen(true);
-                  setAddLessonData({ date: day.date, number: null });
-                }}
-              />
-            )}
-          </div>
+          <div className="diary__notes">Заметки: </div>
+
+          {day.notes ? (
+            <p>{day.notes}</p>
+          ) : (
+            <img
+              className="diary__icons"
+              src={add}
+              alt="добавить"
+              onClick={() => {
+                setModalAddNotesIsOpen(true);
+                setAddLessonData({ date: day.date, number: null });
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

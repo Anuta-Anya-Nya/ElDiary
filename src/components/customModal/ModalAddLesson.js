@@ -7,6 +7,7 @@ import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlic
 export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
   const teachers = useSelector((state) => state.teachers.teachersList);
+  const modalData = useSelector((state) => state.content.openModal.modalData);
   const [selectLessonId, setSelectLessonId] = useState(null);
   const [selectTeacher, setSelectTeacher] = useState(null);
   const [selectClass, setSelectClass] = useState(null);
@@ -29,8 +30,8 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
     } else {
       dispatch(
         updateDailyScheduleLesson({
-          date: addLessonData.date,
-          number: addLessonData.number,
+          date: modalData.date,
+          number: modalData.number,
           lesson: {
             lessonId: selectLessonId,
             homeworkId: null,

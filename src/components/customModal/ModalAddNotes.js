@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateDailyScheduleNote } from "../../store/slices/dailySchedulesSlice";
 
-export const ModalAddNotes = ({ isOpen, onClose, addLessonData }) => {
+export const ModalAddNotes = ({ isOpen, onClose }) => {
   const [note, setNote] = useState("");
   const [error, setError] = useState(false);
+  const modalData = useSelector((state) => state.content.openModal.modalData);
 
   const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ export const ModalAddNotes = ({ isOpen, onClose, addLessonData }) => {
     } else {
       dispatch(
         updateDailyScheduleNote({
-          date: addLessonData.date,
+          date: modalData.date,
           notes: note,
         })
       );

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateDailyScheduleGrade } from "../../store/slices/dailySchedulesSlice";
 
 export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
   const [radioValue, setRadioValue] = useState("");
   const [error, setError] = useState(false);
+  const modalData = useSelector((state) => state.content.openModal.modalData);
 
   const dispatch = useDispatch();
 
@@ -22,8 +23,8 @@ export const ModalAddGrade = ({ isOpen, onClose, addLessonData }) => {
     } else {
       dispatch(
         updateDailyScheduleGrade({
-          date: addLessonData.date,
-          number: addLessonData.number,
+          date: modalData.date,
+          number: modalData.number,
           grade: Number(radioValue),
         })
       );

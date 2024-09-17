@@ -1,20 +1,13 @@
 import { buildTask } from "../../utils/services";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import add from "../../assets/icons/circle-plus.svg";
-
-const TableDayRow = ({
-  currentNumber,
-  lessonItem,
-  setModalAddLessonIsOpen,
-  setAddLessonData,
-  sheduleDate,
-  setModalAddHomeworkIsOpen,
-  setModalAddGradeIsOpen,
-}) => {
+import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
+const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
     (state) => state.homeworks.homeworksList[lessonItem.homeworkId]
   );
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -26,8 +19,10 @@ const TableDayRow = ({
             src={add}
             alt="добавить"
             onClick={() => {
-              setModalAddLessonIsOpen(true);
-              setAddLessonData({ date: sheduleDate, number: currentNumber });
+              dispatch(openCloseModal({ lessonModal: true }));
+              dispatch(
+                saveModalData({ date: sheduleDate, number: currentNumber })
+              );
             }}
           />
         ) : (
@@ -43,8 +38,10 @@ const TableDayRow = ({
             src={add}
             alt="добавить"
             onClick={() => {
-              setModalAddHomeworkIsOpen(true);
-              setAddLessonData({ date: sheduleDate, number: currentNumber });
+              dispatch(openCloseModal({ homeWorkModal: true }));
+              dispatch(
+                saveModalData({ date: sheduleDate, number: currentNumber })
+              );
             }}
           />
         ) : (
@@ -60,12 +57,14 @@ const TableDayRow = ({
             src={add}
             alt="добавить"
             onClick={() => {
-              setModalAddGradeIsOpen(true);
-              setAddLessonData({ date: sheduleDate, number: currentNumber });
+              dispatch(openCloseModal({ gradeModal: true }));
+              dispatch(
+                saveModalData({ date: sheduleDate, number: currentNumber })
+              );
             }}
           />
         ) : (
-          lessonItem.grade
+          <div>{lessonItem.grade}</div>
         )}
       </div>
     </>

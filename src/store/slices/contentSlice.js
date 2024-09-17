@@ -66,10 +66,32 @@ const contentSlice = createSlice({
         link: "/",
       },
     ],
+    openModal: {
+      modalList: {
+        lessonModal: false,
+        homeWorkModal: false,
+        gradeModal: false,
+        notesModal: false,
+        editDayModal: false,
+      },
+      modalData: {
+        date: "",
+        number: null,
+      },
+    },
   },
   reducers: {
     addMenuButton: (state, action) => {
-      state.content.push(action.payload);
+      state.push(action.payload);
+    },
+    openCloseModal: (state, action) => {
+      Object.assign(state.openModal.modalList, action.payload);
+    },
+    saveModalData: (state, action) => {
+      return {
+        ...state,
+        openModal: { ...state.openModal, modalData: action.payload },
+      };
     },
   },
   //   редьюсеры для thunk функций
@@ -82,5 +104,6 @@ const contentSlice = createSlice({
   //     });
   //   },
 });
-export const { addMenuButton } = contentSlice.actions;
+export const { addMenuButton, openCloseModal, saveModalData } =
+  contentSlice.actions;
 export const contentReducer = contentSlice.reducer;

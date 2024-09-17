@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addHomework } from "../../store/slices/homeworksSlice";
 import { updateDailyScheduleHomework } from "../../store/slices/dailySchedulesSlice";
 
@@ -14,7 +14,7 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
   const [note, setNote] = useState("");
   const [homeworkData, setHomeworkData] = useState([]);
   const dispatch = useDispatch();
-
+  const modalData = useSelector((state) => state.content.openModal.modalData);
   const addAnotherHW = () => {
     setHomeworkData([...homeworkData, { task: task, page: page, notes: note }]);
     setTask("");
@@ -45,8 +45,8 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
       dispatch(addHomework({ id: homeworkId, homework: hw, isDone: false }));
       dispatch(
         updateDailyScheduleHomework({
-          date: addLessonData.date,
-          number: addLessonData.number,
+          date: modalData.date,
+          number: modalData.number,
           homeworkId: homeworkId,
         })
       );

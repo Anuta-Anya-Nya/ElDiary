@@ -13,6 +13,8 @@ import { ModalAddLesson } from "../components/customModal/ModalAddLesson";
 import { ModalAddHomework } from "./customModal/ModalAddHomework";
 import { ModalAddGrade } from "./customModal/ModalAddGrade";
 import { ModalAddNotes } from "./customModal/ModalAddNotes";
+import { ModalModifyDay } from "./customModal/ModalModifyDay";
+import { openCloseModal, saveModalData } from "../store/slices/contentSlice";
 
 const Diary = () => {
   moment.locale("ru");
@@ -23,17 +25,9 @@ const Diary = () => {
 
   const [currentDate, setCurrentDate] = useState(moment("2024-09-02"));
   const [diaryWeek, setDiaryWeek] = useState({});
-  const [modalAddLessonIsOpen, setModalAddLessonIsOpen] = useState(false);
-  const [addLessonData, setAddLessonData] = useState({
-    date: "",
-    number: null,
-  });
-  const [modalAddHomeworkIsOpen, setModalAddHomeworkIsOpen] = useState(false);
-  const [modalAddGradeIsOpen, setModalAddGradeIsOpen] = useState(false);
-  const [modalAddNotesIsOpen, setModalAddNotesIsOpen] = useState(false);
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
-
+  const openModal = useSelector((state) => state.content.openModal.modalList);
   const dispatch = useDispatch();
 
   const findDiaryWeek = (currentDate, schedules) => {
@@ -59,6 +53,7 @@ const Diary = () => {
 
   useEffect(() => {
     checkWeeklySchedule(currentDate, schedules, dispatch, addSchedule);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate]);
 
   useEffect(() => {
@@ -110,44 +105,43 @@ const Diary = () => {
             </div>
           </div>
           {Object.keys(diaryWeek).length > 0 && (
-            <TablesDiary
-              week={diaryWeek}
-              currentDate={currentDate}
-              setModalAddLessonIsOpen={setModalAddLessonIsOpen}
-              setAddLessonData={setAddLessonData}
-              setModalAddHomeworkIsOpen={setModalAddHomeworkIsOpen}
-              setModalAddGradeIsOpen={setModalAddGradeIsOpen}
-              setModalAddNotesIsOpen={setModalAddNotesIsOpen}
-            />
+            <TablesDiary week={diaryWeek} currentDate={currentDate} />
           )}
         </div>
         <ModalAddLesson
-          isOpen={modalAddLessonIsOpen}
+          isOpen={openModal.lessonModal}
           onClose={() => {
-            setModalAddLessonIsOpen(false);
+            dispatch(openCloseModal({ lessonModal: false }));
+            dispatch(saveModalData({ date: "", number: null }));
           }}
-          addLessonData={addLessonData}
         />
         <ModalAddHomework
-          isOpen={modalAddHomeworkIsOpen}
+          isOpen={openModal.homeWorkModal}
           onClose={() => {
-            setModalAddHomeworkIsOpen(false);
+            dispatch(openCloseModal({ homeWorkModal: false }));
+            dispatch(saveModalData({ date: "", number: null }));
           }}
-          addLessonData={addLessonData}
         />
         <ModalAddGrade
-          isOpen={modalAddGradeIsOpen}
+          isOpen={openModal.gradeModal}
           onClose={() => {
-            setModalAddGradeIsOpen(false);
+            dispatch(openCloseModal({ gradeModal: false }));
+            dispatch(saveModalData({ date: "", number: null }));
           }}
-          addLessonData={addLessonData}
         />
         <ModalAddNotes
-          isOpen={modalAddNotesIsOpen}
+          isOpen={openModal.notesModal}
           onClose={() => {
-            setModalAddNotesIsOpen(false);
+            dispatch(openCloseModal({ notesModal: false }));
+            dispatch(saveModalData({ date: "", number: null }));
           }}
-          addLessonData={addLessonData}
+        />
+        <ModalModifyDay
+          isOpen={openModal.editDayModal}
+          onClose={() => {
+            dispatch(openCloseModal({ editDayModal: false }));
+            dispatch(saveModalData({ date: "", number: null }));
+          }}
         />
       </section>
       <MenuCardBox titleCardId={titleCardId} />

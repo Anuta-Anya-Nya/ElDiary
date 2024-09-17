@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
-import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
+import { openCloseModal } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlice";
 
-export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
+export const ModalAddLesson = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
   const teachers = useSelector((state) => state.teachers.teachersList);
   const modalData = useSelector((state) => state.content.openModal.modalData);
@@ -20,7 +19,7 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
     setSelectLessonId(null);
     setSelectTeacher(null);
     setSelectClass(null);
-    onClose();
+    dispatch(openCloseModal({ lessonModal: false }));
   };
 
   const addLessonToShedule = () => {
@@ -64,119 +63,117 @@ export const ModalAddLesson = ({ isOpen, onClose, addLessonData }) => {
 
   return (
     <div>
-      <Modal
+      {/* <Modal
         isOpen={isOpen}
         overlayClassName={"modal-overlay"}
         className="modal-content"
         ariaHideApp={false}
         onRequestClose={() => toCloseAndRefreshData()}
         closeTimeoutMS={100}
-      >
-        <button
+      > */}
+      {/* <button
           className="modal-close-button"
           onClick={() => toCloseAndRefreshData()}
         >
           <CloseIcon />
-        </button>
-        <h3>Добавить урок:</h3>
-        <div className="modal-content-choice">
-          {Object.values(lessons).map((lesson) => (
-            <div
-              key={lesson.lessonId}
-              className={contentItemCount(Object.values(lessons))}
-            >
-              <input
-                className="modal-content-radio"
-                type="radio"
-                name="selectLesson"
-                value={lesson.lessonId}
-                id={`lesson${lesson.lessonId}`}
-                checked={selectLessonId === lesson.lessonId}
-                onChange={(el) => {
-                  setSelectLessonId(Number(el.target.value));
-                  setError(false);
-                }}
-              />
-              <label htmlFor={`lesson${lesson.lessonId}`}>{lesson.title}</label>
-            </div>
-          ))}
-        </div>
-        {selectLessonId && (
-          <>
-            <h3>Учитель:</h3>
-            <div className="modal-content-choice">
-              {findTeacherForSelectLesson().length ? (
-                findTeacherForSelectLesson().map((teacherId) => (
-                  <div
-                    key={teacherId}
-                    className={contentItemCount(findTeacherForSelectLesson())}
-                  >
-                    <input
-                      className="modal-content-radio"
-                      type="radio"
-                      name="selectTeacher"
-                      value={teacherId}
-                      id={`teacher${teacherId}`}
-                      checked={selectTeacher === teacherId}
-                      onChange={(el) => {
-                        setSelectTeacher(Number(el.target.value));
-                      }}
-                    />
-                    <label htmlFor={`teacher${teacherId}`}>
-                      {teachers[teacherId].name}
-                    </label>
-                  </div>
-                ))
-              ) : (
-                <div className={contentItemCount(findTeacherForSelectLesson())}>
-                  Учителей для этого урока не найдено
-                </div>
-              )}
-            </div>
-
-            <h3>Кабинет:</h3>
-            <div className="modal-content-choice">
-              {lessons[selectLessonId].class.length ? (
-                lessons[selectLessonId].class.map((classItem, ind) => (
-                  <div
-                    key={ind}
-                    className={contentItemCount(lessons[selectLessonId].class)}
-                  >
-                    <input
-                      className="modal-content-radio"
-                      type="radio"
-                      name="selectClass"
-                      value={classItem}
-                      id={`class${classItem}`}
-                      checked={selectClass === classItem}
-                      onChange={(el) => {
-                        setSelectClass(Number(el.target.value));
-                      }}
-                    />
-                    <label htmlFor={`class${classItem}`}>{classItem}</label>
-                  </div>
-                ))
-              ) : (
+        </button> */}
+      <h3>Добавить урок:</h3>
+      <div className="modal-content-choice">
+        {Object.values(lessons).map((lesson) => (
+          <div
+            key={lesson.lessonId}
+            className={contentItemCount(Object.values(lessons))}
+          >
+            <input
+              className="modal-content-radio"
+              type="radio"
+              name="selectLesson"
+              value={lesson.lessonId}
+              id={`lesson${lesson.lessonId}`}
+              checked={selectLessonId === lesson.lessonId}
+              onChange={(el) => {
+                setSelectLessonId(Number(el.target.value));
+                setError(false);
+              }}
+            />
+            <label htmlFor={`lesson${lesson.lessonId}`}>{lesson.title}</label>
+          </div>
+        ))}
+      </div>
+      {selectLessonId && (
+        <>
+          <h3>Учитель:</h3>
+          <div className="modal-content-choice">
+            {findTeacherForSelectLesson().length ? (
+              findTeacherForSelectLesson().map((teacherId) => (
                 <div
+                  key={teacherId}
+                  className={contentItemCount(findTeacherForSelectLesson())}
+                >
+                  <input
+                    className="modal-content-radio"
+                    type="radio"
+                    name="selectTeacher"
+                    value={teacherId}
+                    id={`teacher${teacherId}`}
+                    checked={selectTeacher === teacherId}
+                    onChange={(el) => {
+                      setSelectTeacher(Number(el.target.value));
+                    }}
+                  />
+                  <label htmlFor={`teacher${teacherId}`}>
+                    {teachers[teacherId].name}
+                  </label>
+                </div>
+              ))
+            ) : (
+              <div className={contentItemCount(findTeacherForSelectLesson())}>
+                Учителей для этого урока не найдено
+              </div>
+            )}
+          </div>
+
+          <h3>Кабинет:</h3>
+          <div className="modal-content-choice">
+            {lessons[selectLessonId].class.length ? (
+              lessons[selectLessonId].class.map((classItem, ind) => (
+                <div
+                  key={ind}
                   className={contentItemCount(lessons[selectLessonId].class)}
                 >
-                  Кабинетов для этого урока не найдено
+                  <input
+                    className="modal-content-radio"
+                    type="radio"
+                    name="selectClass"
+                    value={classItem}
+                    id={`class${classItem}`}
+                    checked={selectClass === classItem}
+                    onChange={(el) => {
+                      setSelectClass(Number(el.target.value));
+                    }}
+                  />
+                  <label htmlFor={`class${classItem}`}>{classItem}</label>
                 </div>
-              )}
-            </div>
-          </>
-        )}
-        {error && <div className="modal-content-error">Урок не выбран!</div>}
+              ))
+            ) : (
+              <div className={contentItemCount(lessons[selectLessonId].class)}>
+                Кабинетов для этого урока не найдено
+              </div>
+            )}
+          </div>
+        </>
+      )}
+      {error && <div className="modal-content-error">Урок не выбран!</div>}
 
-        <button
-          className="modal-submit-button"
-          onClick={() => {
-            addLessonToShedule();
-          }}
-        >
-          Добавить урок
-        </button>
-      </Modal>
+      <button
+        className="modal-submit-button"
+        onClick={() => {
+          addLessonToShedule();
+        }}
+      >
+        Добавить урок
+      </button>
+      {/* </Modal> */}
     </div>
   );
 };

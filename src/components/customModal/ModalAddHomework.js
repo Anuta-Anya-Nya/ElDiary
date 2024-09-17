@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
-import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { addHomework } from "../../store/slices/homeworksSlice";
 import { updateDailyScheduleHomework } from "../../store/slices/dailySchedulesSlice";
+import { openCloseModal } from "../../store/slices/contentSlice";
 
-export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
-  // const lessons = useSelector((state) => state.lessons.lessons);
-  // const [selectValue, setSelectValue] = useState("");
+export const ModalAddHomework = () => {
   const [error, setError] = useState(false);
   const [task, setTask] = useState("");
   const [page, setPage] = useState("");
@@ -28,7 +25,7 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
     setTask("");
     setPage("");
     setNote("");
-    onClose();
+    dispatch(openCloseModal({ homeWorkModal: false }));
   };
 
   const saveHomework = () => {
@@ -56,92 +53,75 @@ export const ModalAddHomework = ({ isOpen, onClose, addLessonData }) => {
 
   return (
     <div>
-      <Modal
-        isOpen={isOpen}
-        overlayClassName={"modal-overlay"}
-        className="modal-content"
-        ariaHideApp={false}
-        closeTimeoutMS={300}
-        onRequestClose={() => toCloseAndRefreshData()}
-      >
-        <button
-          className="modal-close-button"
-          onClick={() => toCloseAndRefreshData()}
-        >
-          <CloseIcon />
-        </button>
-        <h3>Добавить домашнее задание:</h3>
-        <div>
-          {homeworkData.map((hw, ind) => (
-            <div key={ind}>
-              {hw.task ? "упр. " : ""}
-              {hw.task || ""}
-              {hw.page ? " стр. " : ""}
-              {hw.page || ""} {hw.notes || ""}
-              {","}
-            </div>
-          ))}
-        </div>
+      <h3>Добавить домашнее задание:</h3>
+      <div>
+        {homeworkData.map((hw, ind) => (
+          <div key={ind}>
+            {hw.task ? "упр. " : ""}
+            {hw.task || ""}
+            {hw.page ? " стр. " : ""}
+            {hw.page || ""} {hw.notes || ""}
+            {","}
+          </div>
+        ))}
+      </div>
 
-        <div className="modal-content-box">
-          <div className="modal-content__input-hw">
-            <label htmlFor="taskInput">Упражнение:</label>
-            <input
-              className="modal-content-input"
-              type="text"
-              id="taskInput"
-              value={task}
-              onChange={(el) => {
-                setTask(el.target.value);
-                setError(false);
-              }}
-            />
-          </div>
-          <div className="modal-content__input-hw">
-            <label>Страницы:</label>
-            <input
-              className="modal-content-input"
-              type="text"
-              value={page}
-              onChange={(el) => {
-                setPage(el.target.value);
-                setError(false);
-              }}
-            />
-          </div>
-          <div className="modal-content__input-hw">
-            <label>Заметки:</label>
-            <input
-              className="modal-content-input"
-              type="text"
-              value={note}
-              onChange={(el) => {
-                setNote(el.target.value);
-                setError(false);
-              }}
-            />
-          </div>
-
-          <button
-            className="modal-submit-button modal-button"
-            onClick={() => {
-              addAnotherHW();
+      <div className="modal-content-box">
+        <div className="modal-content__input-hw">
+          <label htmlFor="taskInput">Упражнение:</label>
+          <input
+            className="modal-content-input"
+            type="text"
+            id="taskInput"
+            value={task}
+            onChange={(el) => {
+              setTask(el.target.value);
+              setError(false);
             }}
-          >
-            Добавить еще задание
-          </button>
+          />
+        </div>
+        <div className="modal-content__input-hw">
+          <label>Страницы:</label>
+          <input
+            className="modal-content-input"
+            type="text"
+            value={page}
+            onChange={(el) => {
+              setPage(el.target.value);
+              setError(false);
+            }}
+          />
+        </div>
+        <div className="modal-content__input-hw">
+          <label>Заметки:</label>
+          <input
+            className="modal-content-input"
+            type="text"
+            value={note}
+            onChange={(el) => {
+              setNote(el.target.value);
+              setError(false);
+            }}
+          />
         </div>
 
-        {error && (
-          <div className="modal-content-error">
-            Домашнее задание не введено!
-          </div>
-        )}
-
-        <button className="modal-submit-button" onClick={() => saveHomework()}>
-          Сохранить домашнее задание
+        <button
+          className="modal-submit-button modal-button"
+          onClick={() => {
+            addAnotherHW();
+          }}
+        >
+          Добавить еще задание
         </button>
-      </Modal>
+      </div>
+
+      {error && (
+        <div className="modal-content-error">Домашнее задание не введено!</div>
+      )}
+
+      <button className="modal-submit-button" onClick={() => saveHomework()}>
+        Сохранить домашнее задание
+      </button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDailyScheduleGrade } from "../../store/slices/dailySchedulesSlice";
 import { openCloseModal } from "../../store/slices/contentSlice";
@@ -7,13 +7,18 @@ export const ModalAddGrade = () => {
   const [radioValue, setRadioValue] = useState("");
   const [error, setError] = useState(false);
   const modalData = useSelector((state) => state.content.openModal.modalData);
+  const modify = useSelector((state) => state.content.openModal.modify);
 
   const dispatch = useDispatch();
 
   const toCloseAndRefreshData = () => {
     setRadioValue("");
     setError(false);
-    dispatch(openCloseModal({ gradeModal: false }));
+    if (modify) {
+      dispatch(openCloseModal({ gradeModal: false, editDayModal: true }));
+    } else {
+      dispatch(openCloseModal({ gradeModal: false }));
+    }
   };
 
   const saveGrade = () => {
@@ -30,10 +35,17 @@ export const ModalAddGrade = () => {
       toCloseAndRefreshData();
     }
   };
+  useEffect(() => {
+    if (modify) {
+      setRadioValue(String(modalData.grade));
 
+      console.log(modalData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div>
-      <h3>Добавить оценку:</h3>
+      <h3>{modify ? "Изменить оценку" : "Добавить оценку"}</h3>
 
       <div className="modal-content-choice modal-content-choice-grade">
         <div className="modal-content-choice-item">
@@ -106,7 +118,7 @@ export const ModalAddGrade = () => {
           saveGrade();
         }}
       >
-        Сохранить оценку
+        {modify ? "Сохранить изменения" : "Добавить оценку"}
       </button>
     </div>
   );

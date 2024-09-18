@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { openCloseModal } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlice";
@@ -7,6 +7,8 @@ export const ModalAddLesson = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
   const teachers = useSelector((state) => state.teachers.teachersList);
   const modalData = useSelector((state) => state.content.openModal.modalData);
+  const modify = useSelector((state) => state.content.openModal.modify);
+
   const [selectLessonId, setSelectLessonId] = useState(null);
   const [selectTeacher, setSelectTeacher] = useState(null);
   const [selectClass, setSelectClass] = useState(null);
@@ -19,7 +21,11 @@ export const ModalAddLesson = () => {
     setSelectLessonId(null);
     setSelectTeacher(null);
     setSelectClass(null);
-    dispatch(openCloseModal({ lessonModal: false }));
+    if (modify) {
+      dispatch(openCloseModal({ lessonModal: false, editDayModal: true }));
+    } else {
+      dispatch(openCloseModal({ lessonModal: false }));
+    }
   };
 
   const addLessonToShedule = () => {
@@ -60,24 +66,19 @@ export const ModalAddLesson = () => {
     }
     return "";
   };
+  useEffect(() => {
+    if (modify) {
+      setSelectLessonId(modalData.lessonId);
+      setSelectTeacher(modalData.teacherId);
+      setSelectClass(modalData.class);
+      console.log(modalData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
-      {/* <Modal
-        isOpen={isOpen}
-        overlayClassName={"modal-overlay"}
-        className="modal-content"
-        ariaHideApp={false}
-        onRequestClose={() => toCloseAndRefreshData()}
-        closeTimeoutMS={100}
-      > */}
-      {/* <button
-          className="modal-close-button"
-          onClick={() => toCloseAndRefreshData()}
-        >
-          <CloseIcon />
-        </button> */}
-      <h3>Добавить урок:</h3>
+      <h3>{modify ? "Изменить" : "Добавить"} урок:</h3>
       <div className="modal-content-choice">
         {Object.values(lessons).map((lesson) => (
           <div
@@ -100,6 +101,17 @@ export const ModalAddLesson = () => {
           </div>
         ))}
       </div>
+      {modify && (
+        <button
+          onClick={() => {
+            setSelectLessonId(null);
+            setSelectTeacher(null);
+            setSelectClass(null);
+          }}
+        >
+          Удалить урок
+        </button>
+      )}
       {selectLessonId && (
         <>
           <h3>Учитель:</h3>
@@ -171,9 +183,8 @@ export const ModalAddLesson = () => {
           addLessonToShedule();
         }}
       >
-        Добавить урок
+        {modify ? "Сохранить изменения" : "Добавить урок"}
       </button>
-      {/* </Modal> */}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ModalAddLesson } from "./ModalAddLesson";
 import { ModalAddHomework } from "./ModalAddHomework";
 import { ModalAddGrade } from "./ModalAddGrade";
-import { openCloseModal } from "../../store/slices/contentSlice";
+import { openCloseModal, setModify } from "../../store/slices/contentSlice";
 import { ModalAddNotes } from "./ModalAddNotes";
 import { ModalModifyDay } from "./ModalModifyDay";
 
@@ -49,14 +49,17 @@ export const CustomModal = () => {
   const isOpen = () => {
     const entries = Object.entries(modalList);
     if (entries.filter((el) => el[1] === true).length === 1) {
-      console.log("найдено 1 открытое модальное окно");
       setOpen(true);
     } else if (!entries.filter((el) => el[1] === true).length) {
-      console.log("открытых модалок нет");
       setOpen(false);
     } else {
       console.log("ошибка! открытых модалок больше 1");
     }
+  };
+
+  const onClose = () => {
+    dispatch(openCloseModal(payload()));
+    dispatch(setModify(false));
   };
 
   useEffect(() => {
@@ -71,12 +74,11 @@ export const CustomModal = () => {
         className="modal-content"
         ariaHideApp={false}
         closeTimeoutMS={100}
-        onRequestClose={() => dispatch(openCloseModal(payload()))}
+        onRequestClose={() => {
+          onClose();
+        }}
       >
-        <button
-          className="modal-close-button"
-          onClick={() => dispatch(openCloseModal(payload()))}
-        >
+        <button className="modal-close-button" onClick={() => onClose()}>
           <CloseIcon />
         </button>
 

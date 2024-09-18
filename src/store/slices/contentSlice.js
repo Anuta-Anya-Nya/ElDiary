@@ -78,6 +78,7 @@ const contentSlice = createSlice({
         date: "",
         number: null,
       },
+      modify: false,
     },
   },
   reducers: {
@@ -93,6 +94,12 @@ const contentSlice = createSlice({
         openModal: { ...state.openModal, modalData: action.payload },
       };
     },
+    setModify: (state, action) => {
+      return {
+        ...state,
+        openModal: { ...state.openModal, modify: action.payload },
+      };
+    },
   },
   //   редьюсеры для thunk функций
   //   extraReducers: (builder) => {
@@ -104,6 +111,6 @@ const contentSlice = createSlice({
   //     });
   //   },
 });
-export const { addMenuButton, openCloseModal, saveModalData } =
+export const { addMenuButton, openCloseModal, saveModalData, setModify } =
   contentSlice.actions;
 export const contentReducer = contentSlice.reducer;

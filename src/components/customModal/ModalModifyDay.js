@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import TableDayDiary from "../tables/TableDayDiary";
-import { openCloseModal } from "../../store/slices/contentSlice";
+import { openCloseModal, setModify } from "../../store/slices/contentSlice";
 import { useDispatch } from "react-redux";
 
 export const ModalModifyDay = () => {
@@ -11,28 +11,22 @@ export const ModalModifyDay = () => {
   );
   const dispatch = useDispatch();
 
-  // const toCloseAndRefreshData = () => {
-  //   setRadioValue("");
-  //   setError(false);
-  //   onClose();
-  // };
+  useEffect(() => {
+    dispatch(setModify(true));
+  });
 
   return (
     <div>
       <h3>Внести изменения:</h3>
-      <TableDayDiary day={editDay} />
-
-      <div>{editDay?.date}</div>
-      <button onClick={() => console.log(editDay)}>
-        показать день для изменения
-      </button>
+      <TableDayDiary day={editDay} modify={true} />
       <button
         className="modal-submit-button"
         onClick={() => {
           dispatch(openCloseModal({ editDayModal: false }));
+          dispatch(setModify(false));
         }}
       >
-        Сохранить изменения
+        Готово
       </button>
     </div>
   );

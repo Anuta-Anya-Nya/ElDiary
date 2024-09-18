@@ -6,7 +6,7 @@ import { openCloseModal } from "../../store/slices/contentSlice";
 export const ModalAddNotes = ({ isOpen, onClose }) => {
   const [note, setNote] = useState("");
   const [error, setError] = useState(false);
-  const modalData = useSelector((state) => state.content.openModal.modalData);
+  const modalData = useSelector((state) => state.content.openModal.modify);
 
   const dispatch = useDispatch();
 

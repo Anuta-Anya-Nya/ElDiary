@@ -9,12 +9,7 @@ import { addSchedule } from "../store/slices/dailySchedulesSlice";
 import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
-// // import { ModalAddHomework } from "./customModal/ModalAddHomework";
-// import { ModalAddGrade } from "./customModal/ModalAddGrade";
-// import { ModalAddNotes } from "./customModal/ModalAddNotes";
-// import { ModalModifyDay } from "./customModal/ModalModifyDay";
 import { CustomModal } from "./customModal/CustomModal";
-import { openCloseModal, saveModalData } from "../store/slices/contentSlice";
 
 const Diary = () => {
   moment.locale("ru");
@@ -27,7 +22,6 @@ const Diary = () => {
   const [diaryWeek, setDiaryWeek] = useState({});
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
-  const openModal = useSelector((state) => state.content.openModal.modalList);
   const dispatch = useDispatch();
 
   const findDiaryWeek = (currentDate, schedules) => {
@@ -108,41 +102,6 @@ const Diary = () => {
             <TablesDiary week={diaryWeek} currentDate={currentDate} />
           )}
         </div>
-        {/* <ModalAddLesson
-          isOpen={openModal.lessonModal}
-          onClose={() => {
-            dispatch(openCloseModal({ lessonModal: false }));
-            dispatch(saveModalData({ date: "", number: null }));
-          }}
-        /> */}
-        {/* <ModalAddHomework
-          isOpen={openModal.homeWorkModal}
-          onClose={() => {
-            dispatch(openCloseModal({ homeWorkModal: false }));
-            dispatch(saveModalData({ date: "", number: null }));
-          }}
-        /> */}
-        {/* <ModalAddGrade
-          isOpen={openModal.gradeModal}
-          onClose={() => {
-            dispatch(openCloseModal({ gradeModal: false }));
-            dispatch(saveModalData({ date: "", number: null }));
-          }}
-        /> */}
-        {/* <ModalAddNotes
-          isOpen={openModal.notesModal}
-          onClose={() => {
-            dispatch(openCloseModal({ notesModal: false }));
-            dispatch(saveModalData({ date: "", number: null }));
-          }}
-        /> */}
-        {/* <ModalModifyDay
-          isOpen={openModal.editDayModal}
-          onClose={() => {
-            dispatch(openCloseModal({ editDayModal: false }));
-            dispatch(saveModalData({ date: "", number: null }));
-          }}
-        /> */}
         <CustomModal />
       </section>
       <MenuCardBox titleCardId={titleCardId} />

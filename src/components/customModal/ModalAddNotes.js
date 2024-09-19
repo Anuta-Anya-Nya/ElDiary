@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDailyScheduleNote } from "../../store/slices/dailySchedulesSlice";
 import { openCloseModal } from "../../store/slices/contentSlice";
@@ -6,14 +6,19 @@ import { openCloseModal } from "../../store/slices/contentSlice";
 export const ModalAddNotes = ({ isOpen, onClose }) => {
   const [note, setNote] = useState("");
   const [error, setError] = useState(false);
-  const modalData = useSelector((state) => state.content.openModal.modify);
+  const modalData = useSelector((state) => state.content.openModal.modalData);
+  const modify = useSelector((state) => state.content.openModal.modify);
 
   const dispatch = useDispatch();
 
   const toCloseAndRefreshData = () => {
     setNote("");
     setError(false);
-    dispatch(openCloseModal({ notesModal: false }));
+    if (modify) {
+      dispatch(openCloseModal({ notesModal: false, editDayModal: true }));
+    } else {
+      dispatch(openCloseModal({ notesModal: false }));
+    }
   };
 
   const saveNote = () => {
@@ -29,10 +34,15 @@ export const ModalAddNotes = ({ isOpen, onClose }) => {
       toCloseAndRefreshData();
     }
   };
+  useEffect(() => {
+    if (modify) {
+      setNote(modalData.note);
+    }
+  }, []);
 
   return (
     <div>
-      <h3>Добавить заметку:</h3>
+      <h3>{modify ? "Изменить заметку" : "Добавить заметку"}</h3>
 
       <div className="modal-content__inputBox">
         <input
@@ -55,7 +65,7 @@ export const ModalAddNotes = ({ isOpen, onClose }) => {
           saveNote();
         }}
       >
-        Сохранить запись
+        {modify ? "Сохранить изменения" : "Сохранить запись"}
       </button>
     </div>
   );

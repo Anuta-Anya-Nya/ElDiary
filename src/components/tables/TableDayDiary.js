@@ -99,14 +99,36 @@ const TableDayDiary = ({ day, position, modify }) => {
             <>
               <p>{day.notes}</p>
               {modify && (
-                <img
-                  className="diary__icons"
-                  src={del}
-                  alt="удалить"
-                  onClick={() => {
-                    delNote();
-                  }}
-                />
+                <>
+                  <img
+                    className="diary__icons"
+                    src={edit}
+                    alt="редактировать"
+                    onClick={() => {
+                      dispatch(
+                        openCloseModal({
+                          editDayModal: false,
+                          notesModal: true,
+                        })
+                      );
+                      dispatch(
+                        saveModalData({
+                          date: day.date,
+                          number: null,
+                          note: day.notes,
+                        })
+                      );
+                    }}
+                  />
+                  <img
+                    className="diary__icons"
+                    src={del}
+                    alt="удалить"
+                    onClick={() => {
+                      delNote();
+                    }}
+                  />
+                </>
               )}
             </>
           ) : (
@@ -115,7 +137,9 @@ const TableDayDiary = ({ day, position, modify }) => {
               src={add}
               alt="добавить"
               onClick={() => {
-                dispatch(openCloseModal({ notesModal: true }));
+                dispatch(
+                  openCloseModal({ notesModal: true, editDayModal: false })
+                );
                 dispatch(saveModalData({ date: day.date, number: null }));
               }}
             />

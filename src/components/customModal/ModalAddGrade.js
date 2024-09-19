@@ -38,8 +38,6 @@ export const ModalAddGrade = () => {
   useEffect(() => {
     if (modify) {
       setRadioValue(String(modalData.grade));
-
-      console.log(modalData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

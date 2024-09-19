@@ -71,7 +71,6 @@ export const ModalAddLesson = () => {
       setSelectLessonId(modalData.lessonId);
       setSelectTeacher(modalData.teacherId);
       setSelectClass(modalData.class);
-      console.log(modalData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -101,17 +100,7 @@ export const ModalAddLesson = () => {
           </div>
         ))}
       </div>
-      {modify && (
-        <button
-          onClick={() => {
-            setSelectLessonId(null);
-            setSelectTeacher(null);
-            setSelectClass(null);
-          }}
-        >
-          Удалить урок
-        </button>
-      )}
+
       {selectLessonId && (
         <>
           <h3>Учитель:</h3>

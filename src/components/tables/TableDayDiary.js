@@ -4,7 +4,7 @@ import del from "../../assets/icons/delete.svg";
 import moment from "moment/min/moment-with-locales.min";
 import TableDayRow from "./TableDayRow";
 import TableDayRowEdit from "./TableDayRowEdit";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 import {
   updateDailyScheduleNote,

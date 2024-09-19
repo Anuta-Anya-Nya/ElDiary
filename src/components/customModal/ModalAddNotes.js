@@ -38,6 +38,7 @@ export const ModalAddNotes = ({ isOpen, onClose }) => {
     if (modify) {
       setNote(modalData.note);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

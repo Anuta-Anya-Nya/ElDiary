@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import add from "../../assets/icons/circle-plus.svg";
 import edit from "../../assets/icons/edit-pen.svg";
 import del from "../../assets/icons/delete.svg";
-import {
-  openCloseModal,
-  saveModalData,
-  setModify,
-} from "../../store/slices/contentSlice";
+import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlice";
 import {
   updateDailyScheduleHomework,
@@ -121,13 +117,35 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
                 openCloseModal({ homeWorkModal: true, editDayModal: false })
               );
               dispatch(
-                saveModalData({ date: sheduleDate, number: currentNumber })
+                saveModalData({
+                  date: sheduleDate,
+                  number: currentNumber,
+                  homework: [],
+                })
               );
             }}
           />
         ) : (
           <>
             {buildTask(homework.homework)}
+            <img
+              className="diary__icons"
+              src={edit}
+              alt="изменить"
+              onClick={() => {
+                dispatch(
+                  openCloseModal({ homeWorkModal: true, editDayModal: false })
+                );
+
+                dispatch(
+                  saveModalData({
+                    date: sheduleDate,
+                    number: currentNumber,
+                    homework: homework.homework,
+                  })
+                );
+              }}
+            />
             <img
               className="diary__icons"
               src={del}

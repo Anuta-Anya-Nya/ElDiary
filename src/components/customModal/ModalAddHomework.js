@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import edit from "../../assets/icons/edit-pen.svg";
+import del from "../../assets/icons/delete.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { addHomework } from "../../store/slices/homeworksSlice";
 import { updateDailyScheduleHomework } from "../../store/slices/dailySchedulesSlice";
-import { openCloseModal } from "../../store/slices/contentSlice";
+import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 
 export const ModalAddHomework = () => {
   const [error, setError] = useState(false);
@@ -10,13 +12,23 @@ export const ModalAddHomework = () => {
   const [page, setPage] = useState("");
   const [note, setNote] = useState("");
   const [homeworkData, setHomeworkData] = useState([]);
+  const [editHW, setEditHW] = useState(false);
   const dispatch = useDispatch();
   const modalData = useSelector((state) => state.content.openModal.modalData);
+  const modify = useSelector((state) => state.content.openModal.modify);
+
   const addAnotherHW = () => {
-    setHomeworkData([...homeworkData, { task: task, page: page, notes: note }]);
-    setTask("");
-    setPage("");
-    setNote("");
+    if (task || page || note) {
+      setHomeworkData([
+        ...homeworkData,
+        { task: task, page: page, notes: note },
+      ]);
+      setTask("");
+      setPage("");
+      setNote("");
+    } else {
+      setError(true);
+    }
   };
 
   const toCloseAndRefreshData = () => {
@@ -25,7 +37,11 @@ export const ModalAddHomework = () => {
     setTask("");
     setPage("");
     setNote("");
-    dispatch(openCloseModal({ homeWorkModal: false }));
+    if (modify) {
+      dispatch(openCloseModal({ homeWorkModal: false, editDayModal: true }));
+    } else {
+      dispatch(openCloseModal({ homeWorkModal: false }));
+    }
   };
 
   const saveHomework = () => {
@@ -51,17 +67,58 @@ export const ModalAddHomework = () => {
     }
   };
 
+  const editHomeWork = (ind) => {
+    const newHW = [...homeworkData];
+    console.log(newHW);
+    newHW[ind] = { task: task, page: page, notes: note };
+    return newHW;
+  };
+
+  useEffect(() => {
+    if (modify) {
+      setHomeworkData(modalData.homework);
+    }
+    console.log(modalData.homework);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <h3>Добавить домашнее задание:</h3>
       <div>
         {homeworkData.map((hw, ind) => (
           <div key={ind}>
-            {hw.task ? "упр. " : ""}
-            {hw.task || ""}
-            {hw.page ? " стр. " : ""}
-            {hw.page || ""} {hw.notes || ""}
-            {","}
+            <div>
+              {hw.task ? "упр. " : ""}
+              {hw.task || ""}
+              {hw.page ? " стр. " : ""}
+              {hw.page || ""} {hw.notes || ""}
+              {","}
+            </div>
+            {modify && (
+              <>
+                <img
+                  className="diary__icons"
+                  src={edit}
+                  alt="изменить"
+                  onClick={() => {
+                    setEditHW(true);
+                    dispatch(
+                      saveModalData({ ...modalData, editHwNumber: ind })
+                    );
+                    setTask(hw.task || "");
+                    setPage(hw.page || "");
+                    setNote(hw.notes || "");
+                  }}
+                />
+                <img
+                  className="diary__icons"
+                  src={del}
+                  alt="удалить"
+                  onClick={() => {}}
+                />
+              </>
+            )}
           </div>
         ))}
       </div>
@@ -104,22 +161,40 @@ export const ModalAddHomework = () => {
             }}
           />
         </div>
-
-        <button
-          className="modal-submit-button modal-button"
-          onClick={() => {
-            addAnotherHW();
-          }}
-        >
-          Добавить еще задание
-        </button>
+        {editHW ? (
+          <button
+            className="modal-submit-button modal-button"
+            onClick={() => {
+              setEditHW(false);
+              setHomeworkData(editHomeWork(modalData.editHwNumber));
+              setTask("");
+              setPage("");
+              setNote("");
+            }}
+          >
+            Сохранить изменения
+          </button>
+        ) : (
+          <button
+            className="modal-submit-button modal-button"
+            onClick={() => {
+              addAnotherHW();
+            }}
+          >
+            Добавить еще задание
+          </button>
+        )}
       </div>
 
       {error && (
         <div className="modal-content-error">Домашнее задание не введено!</div>
       )}
 
-      <button className="modal-submit-button" onClick={() => saveHomework()}>
+      <button
+        className="modal-submit-button"
+        disabled={editHW}
+        onClick={() => saveHomework()}
+      >
         Сохранить домашнее задание
       </button>
     </div>

@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import TableDayDiary from "../tables/TableDayDiary";
-import { openCloseModal, setModify } from "../../store/slices/contentSlice";
+import {
+  openCloseModal,
+  setModify,
+  saveModalData,
+} from "../../store/slices/contentSlice";
 import { useDispatch } from "react-redux";
 
 export const ModalModifyDay = () => {
@@ -24,6 +28,12 @@ export const ModalModifyDay = () => {
         onClick={() => {
           dispatch(openCloseModal({ editDayModal: false }));
           dispatch(setModify(false));
+          dispatch(
+            saveModalData({
+              date: "",
+              number: null,
+            })
+          );
         }}
       >
         Готово

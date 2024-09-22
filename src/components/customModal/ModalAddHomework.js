@@ -73,6 +73,9 @@ export const ModalAddHomework = () => {
     newHW[ind] = { task: task, page: page, notes: note };
     return newHW;
   };
+  const delHomework = (ind) => {
+    setHomeworkData(homeworkData.filter((el, index) => index !== ind));
+  };
 
   useEffect(() => {
     if (modify) {
@@ -115,7 +118,9 @@ export const ModalAddHomework = () => {
                   className="diary__icons"
                   src={del}
                   alt="удалить"
-                  onClick={() => {}}
+                  onClick={() => {
+                    delHomework(ind);
+                  }}
                 />
               </>
             )}

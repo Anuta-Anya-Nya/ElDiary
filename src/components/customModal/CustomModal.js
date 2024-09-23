@@ -64,6 +64,7 @@ export const CustomModal = () => {
 
   useEffect(() => {
     isOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalList]);
 
   return (
@@ -71,7 +72,7 @@ export const CustomModal = () => {
       <Modal
         isOpen={open}
         overlayClassName={"modal-overlay"}
-        className="modal-content"
+        className="modal-box"
         ariaHideApp={false}
         closeTimeoutMS={100}
         onRequestClose={() => {

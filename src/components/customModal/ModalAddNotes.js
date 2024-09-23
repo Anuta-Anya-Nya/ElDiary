@@ -42,7 +42,7 @@ export const ModalAddNotes = ({ isOpen, onClose }) => {
   }, []);
 
   return (
-    <div>
+    <div className="modal-content">
       <h3>{modify ? "Изменить заметку" : "Добавить заметку"}</h3>
 
       <div className="modal-content__inputBox">

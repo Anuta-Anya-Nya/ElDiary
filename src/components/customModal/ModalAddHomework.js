@@ -81,12 +81,12 @@ export const ModalAddHomework = () => {
     if (modify) {
       setHomeworkData(modalData.homework);
     }
-    console.log(modalData.homework);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <div className="modal-content">
       <h3>Добавить домашнее задание:</h3>
       <div>
         {homeworkData.map((hw, ind) => (

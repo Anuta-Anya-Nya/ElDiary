@@ -76,7 +76,7 @@ export const ModalAddLesson = () => {
   }, []);
 
   return (
-    <div>
+    <div className="modal-content">
       <h3>{modify ? "Изменить" : "Добавить"} урок:</h3>
       <div className="modal-content-choice">
         {Object.values(lessons).map((lesson) => (

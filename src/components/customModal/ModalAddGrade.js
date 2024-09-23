@@ -42,7 +42,7 @@ export const ModalAddGrade = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div>
+    <div className="modal-content">
       <h3>{modify ? "Изменить оценку" : "Добавить оценку"}</h3>
 
       <div className="modal-content-choice modal-content-choice-grade">

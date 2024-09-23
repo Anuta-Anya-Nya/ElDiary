@@ -73,34 +73,36 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
             }}
           />
         ) : (
-          <div>
+          <div className="modal-content__edit-cell">
             {lessons[lessonItem.lessonId]?.title}
-            <img
-              className="diary__icons"
-              src={edit}
-              alt="изменить"
-              onClick={() => {
-                dispatch(
-                  openCloseModal({ lessonModal: true, editDayModal: false })
-                );
+            <div className="modal-content__edit-cell-icons">
+              <img
+                className="diary__icons edit-icon"
+                src={edit}
+                alt="изменить"
+                onClick={() => {
+                  dispatch(
+                    openCloseModal({ lessonModal: true, editDayModal: false })
+                  );
 
-                dispatch(
-                  saveModalData({
-                    date: sheduleDate,
-                    number: currentNumber,
-                    ...lessonItem,
-                  })
-                );
-              }}
-            />
-            <img
-              className="diary__icons"
-              src={del}
-              alt="удалить"
-              onClick={() => {
-                delLesson();
-              }}
-            />
+                  dispatch(
+                    saveModalData({
+                      date: sheduleDate,
+                      number: currentNumber,
+                      ...lessonItem,
+                    })
+                  );
+                }}
+              />
+              <img
+                className="diary__icons"
+                src={del}
+                alt="удалить"
+                onClick={() => {
+                  delLesson();
+                }}
+              />
+            </div>
           </div>
         )}
       </div>
@@ -126,35 +128,37 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
             }}
           />
         ) : (
-          <>
+          <div className="modal-content__edit-cell">
             {buildTask(homework.homework)}
-            <img
-              className="diary__icons"
-              src={edit}
-              alt="изменить"
-              onClick={() => {
-                dispatch(
-                  openCloseModal({ homeWorkModal: true, editDayModal: false })
-                );
+            <div className="modal-content__edit-cell-icons">
+              <img
+                className="diary__icons edit-icon"
+                src={edit}
+                alt="изменить"
+                onClick={() => {
+                  dispatch(
+                    openCloseModal({ homeWorkModal: true, editDayModal: false })
+                  );
 
-                dispatch(
-                  saveModalData({
-                    date: sheduleDate,
-                    number: currentNumber,
-                    homework: homework.homework,
-                  })
-                );
-              }}
-            />
-            <img
-              className="diary__icons"
-              src={del}
-              alt="удалить"
-              onClick={() => {
-                delHomeWork(homework.id);
-              }}
-            />
-          </>
+                  dispatch(
+                    saveModalData({
+                      date: sheduleDate,
+                      number: currentNumber,
+                      homework: homework.homework,
+                    })
+                  );
+                }}
+              />
+              <img
+                className="diary__icons"
+                src={del}
+                alt="удалить"
+                onClick={() => {
+                  delHomeWork(homework.id);
+                }}
+              />
+            </div>
+          </div>
         )}
       </div>
       <div className="diary__cell">
@@ -178,33 +182,35 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
             }}
           />
         ) : (
-          <div>
+          <div className="modal-content__edit-cell">
             <div>{lessonItem.grade}</div>
-            <img
-              className="diary__icons"
-              src={edit}
-              alt="изменить"
-              onClick={() => {
-                dispatch(
-                  openCloseModal({ gradeModal: true, editDayModal: false })
-                );
-                dispatch(
-                  saveModalData({
-                    date: sheduleDate,
-                    number: currentNumber,
-                    grade: lessonItem.grade,
-                  })
-                );
-              }}
-            />
-            <img
-              className="diary__icons"
-              src={del}
-              alt="удалить"
-              onClick={() => {
-                delGrade();
-              }}
-            />
+            <div className="modal-content__edit-cell-icons">
+              <img
+                className="diary__icons edit-icon"
+                src={edit}
+                alt="изменить"
+                onClick={() => {
+                  dispatch(
+                    openCloseModal({ gradeModal: true, editDayModal: false })
+                  );
+                  dispatch(
+                    saveModalData({
+                      date: sheduleDate,
+                      number: currentNumber,
+                      grade: lessonItem.grade,
+                    })
+                  );
+                }}
+              />
+              <img
+                className="diary__icons"
+                src={del}
+                alt="удалить"
+                onClick={() => {
+                  delGrade();
+                }}
+              />
+            </div>
           </div>
         )}
       </div>

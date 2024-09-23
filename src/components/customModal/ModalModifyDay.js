@@ -20,7 +20,7 @@ export const ModalModifyDay = () => {
   });
 
   return (
-    <div>
+    <div className="modal-content">
       <h3>Внести изменения:</h3>
       <TableDayDiary day={editDay} modify={true} />
       <button

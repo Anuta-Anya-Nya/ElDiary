@@ -264,6 +264,11 @@ input[type=checkbox] {
   gap: 5px 10px;
   justify-items: center;
 }
+.diary__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .diary__day-tuesday {
   grid-column: 1;
   grid-row: 2;
@@ -352,13 +357,8 @@ input[type=checkbox] {
   flex-grow: 1;
 }
 
-.modal-content {
+.modal-box {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.4em;
-  width: 100%;
   max-width: 40rem;
   padding: 20px;
   font-family: "Oswald", sans-serif;
@@ -368,8 +368,17 @@ input[type=checkbox] {
   background-color: #ffffff;
   border-radius: 16px;
   filter: drop-shadow(6px 10px 10px rgba(30, 149, 155, 0.5));
-  transform: translateY(50px);
+  transform: scale(0.5);
   transition: transform 0.3s;
+  width: 100%;
+  min-height: 70px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4em;
 }
 .modal-content h3 {
   color: #9a1d36;
@@ -424,13 +433,29 @@ input[type=checkbox] {
   border-radius: 7px;
   width: 100%;
 }
+.modal-content__edit-cell {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content__edit-cell-icons {
+  display: flex;
+  gap: 10px;
+}
+.modal-content__edit-cell-notes {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
 
 .ReactModal__Content--after-open {
-  transform: translateY(0);
+  transform: scale(1);
 }
 
 .ReactModal__Content--before-close {
-  transform: translateY(50px);
+  transform: scale(0.5);
 }
 
 .modal-close-button {
@@ -443,6 +468,7 @@ input[type=checkbox] {
   height: 30px;
   stroke: #3c3c3c;
   transition: stroke 0.3s;
+  cursor: pointer;
 }
 .modal-close-button:hover {
   stroke: #9a1d36;
@@ -462,17 +488,44 @@ input[type=checkbox] {
   filter: drop-shadow(3px 3px 7px rgba(30, 149, 155, 0.5));
   border: 1px solid #9a1d36;
   transition: all 0.3s;
+  cursor: pointer;
 }
 .modal-submit-button:hover {
   color: #9a1d36;
   background-color: #ffffff;
-  border: 1px solid #9a1d36;
+  border-color: #9a1d36;
+}
+.modal-submit-button:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+.modal-submit-button:disabled:hover {
+  color: #ffffff;
+  background-color: #9a1d36;
+  border-color: #9a1d36;
 }
 
 .modal-button {
   align-self: center;
   padding: 0.5em 1em;
   font-size: 1em;
+  background-color: #1E959B;
+  border-color: #1E959B;
+}
+.modal-button:hover {
+  color: #1E959B;
+  border-color: #1E959B;
+}
+
+.buttons-group {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 0.7em;
+}
+
+.edit-icon {
+  filter: brightness(0) saturate(100%) invert(45%) sepia(62%) saturate(540%) hue-rotate(134deg) brightness(94%) contrast(87%);
 }
 
 @media (max-width: 767px) {

@@ -17,6 +17,10 @@
     }
 
     &__day {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
         &-tuesday {
             grid-column: 1;
             grid-row: 2;

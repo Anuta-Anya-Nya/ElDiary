@@ -96,12 +96,12 @@ const TableDayDiary = ({ day, position, modify }) => {
           <div className="diary__notes">Заметки: </div>
 
           {day?.notes ? (
-            <>
+            <div className="modal-content__edit-cell-notes">
               <p>{day.notes}</p>
               {modify && (
-                <>
+                <div className="modal-content__edit-cell-icons">
                   <img
-                    className="diary__icons"
+                    className="diary__icons edit-icon"
                     src={edit}
                     alt="редактировать"
                     onClick={() => {
@@ -128,9 +128,9 @@ const TableDayDiary = ({ day, position, modify }) => {
                       delNote();
                     }}
                   />
-                </>
+                </div>
               )}
-            </>
+            </div>
           ) : (
             <img
               className="diary__icons"
@@ -147,40 +147,41 @@ const TableDayDiary = ({ day, position, modify }) => {
         </div>
       </div>
       {modify && (
-        <div>
-          <div>
-            <button onClick={() => addNewLessonArea()}>
-              Добавить еще урок
-            </button>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                dispatch(
-                  updateDailyScheduleHoliday({
-                    date: day.date,
-                    holiday: !day.holiday,
-                  })
-                );
-              }}
-            >
-              {day.holiday ? "Отменить выходной" : "Не учимся!"}
-            </button>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                dispatch(
-                  updateDailyScheduleVacation({
-                    date: day.date,
-                    vacation: !day.vacation,
-                  })
-                );
-              }}
-            >
-              {day.vacation ? "Отменить каникулы" : "Каникулы!!!"}
-            </button>
-          </div>
+        <div className="buttons-group">
+          <button
+            className="modal-submit-button modal-button"
+            onClick={() => addNewLessonArea()}
+          >
+            Добавить еще урок
+          </button>
+
+          <button
+            className="modal-submit-button modal-button"
+            onClick={() => {
+              dispatch(
+                updateDailyScheduleHoliday({
+                  date: day.date,
+                  holiday: !day.holiday,
+                })
+              );
+            }}
+          >
+            {day.holiday ? "Отменить выходной" : "Не учимся!"}
+          </button>
+
+          <button
+            className="modal-submit-button modal-button"
+            onClick={() => {
+              dispatch(
+                updateDailyScheduleVacation({
+                  date: day.date,
+                  vacation: !day.vacation,
+                })
+              );
+            }}
+          >
+            {day.vacation ? "Отменить каникулы" : "Каникулы!!!"}
+          </button>
         </div>
       )}
     </div>

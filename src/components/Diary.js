@@ -9,6 +9,7 @@ import { addSchedule } from "../store/slices/dailySchedulesSlice";
 import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
+import { CustomModal } from "./customModal/CustomModal";
 
 const Diary = () => {
   moment.locale("ru");
@@ -46,6 +47,7 @@ const Diary = () => {
 
   useEffect(() => {
     checkWeeklySchedule(currentDate, schedules, dispatch, addSchedule);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate]);
 
   useEffect(() => {
@@ -100,6 +102,7 @@ const Diary = () => {
             <TablesDiary week={diaryWeek} currentDate={currentDate} />
           )}
         </div>
+        <CustomModal />
       </section>
       <MenuCardBox titleCardId={titleCardId} />
     </main>

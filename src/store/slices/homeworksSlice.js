@@ -123,12 +123,31 @@ const homeworksSlice = createSlice({
   },
   reducers: {
     addHomework: (state, action) => {
-      const homework = action.payload;
-      state.homeworksList[homework.id] = homework;
+      state.homeworksList[action.payload.id] = action.payload;
     },
     updateHomework: (state, action) => {
       Object.assign(state.homeworksList[action.payload.id], action.payload);
-      console.log(state.homeworksList[action.payload.id]);
+    },
+    deleteHomework: (state, action) => {
+      // console.log(
+      //   Object.keys(state.homeworksList).filter(
+      //     (key) => Number(key) !== action.payload
+      //   )
+      // );
+      console.log(
+        Object.keys(state.homeworksList)
+          .filter((key) => Number(key) !== action.payload)
+          .reduce((obj, key) => {
+            obj[key] = state.homeworksList[key];
+            return obj;
+          }, {})
+      );
+      return Object.keys(state.homeworksList)
+        .filter((key) => Number(key) !== action.payload)
+        .reduce((obj, key) => {
+          obj[key] = state.homeworksList[key];
+          return obj;
+        }, {});
     },
   },
   //   редьюсеры для thunk функций
@@ -141,5 +160,6 @@ const homeworksSlice = createSlice({
   //     });
   //   },
 });
-export const { addHomework, updateHomework } = homeworksSlice.actions;
+export const { addHomework, updateHomework, deleteHomework } =
+  homeworksSlice.actions;
 export const homeworksReducer = homeworksSlice.reducer;

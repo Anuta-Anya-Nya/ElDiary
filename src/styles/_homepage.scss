@@ -41,6 +41,8 @@
 
     &__logo {
         font-size: 5vh;
+        text-decoration: none;
+        color: $colorFirst;
 
         &-bold {
             font-weight: 700;
@@ -120,7 +122,7 @@ main {
         box-shadow: -6px 3px 10px 0px rgba(30, 149, 155, 0.5);
     }
 
-    &__icons:active {
+    &__icons:hover {
         box-shadow: 0px 0px 10px 0px rgba(30, 149, 155, 0.5);
 
     }

@@ -1,13 +1,12 @@
 import { buildTask } from "../../utils/services";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import add from "../../assets/icons/circle-plus.svg";
-
-const TableDayRow = ({ currentNumber, lessonItem }) => {
+import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
+const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
     (state) => state.homeworks.homeworksList[lessonItem.homeworkId]
   );
-
   const dispatch = useDispatch();
 
   return (
@@ -15,7 +14,17 @@ const TableDayRow = ({ currentNumber, lessonItem }) => {
       <div className="diary__cell">{currentNumber + 1}.</div>
       <div className="diary__cell">
         {!lessonItem.lessonId ? (
-          <img className="diary__icons" src={add} alt="добавить" />
+          <img
+            className="diary__icons"
+            src={add}
+            alt="добавить"
+            onClick={() => {
+              dispatch(openCloseModal({ lessonModal: true }));
+              dispatch(
+                saveModalData({ date: sheduleDate, number: currentNumber })
+              );
+            }}
+          />
         ) : (
           lessons[lessonItem.lessonId]?.title
         )}
@@ -24,7 +33,17 @@ const TableDayRow = ({ currentNumber, lessonItem }) => {
         {!lessonItem.lessonId ? (
           ""
         ) : !lessonItem.homeworkId ? (
-          <img className="diary__icons" src={add} alt="добавить" />
+          <img
+            className="diary__icons"
+            src={add}
+            alt="добавить"
+            onClick={() => {
+              dispatch(openCloseModal({ homeWorkModal: true }));
+              dispatch(
+                saveModalData({ date: sheduleDate, number: currentNumber })
+              );
+            }}
+          />
         ) : (
           buildTask(homework.homework)
         )}
@@ -32,10 +51,20 @@ const TableDayRow = ({ currentNumber, lessonItem }) => {
       <div className="diary__cell">
         {!lessonItem.lessonId ? (
           ""
-        ) : !lessonItem.lessonId.grade ? (
-          <img className="diary__icons" src={add} alt="добавить" />
+        ) : !lessonItem.grade ? (
+          <img
+            className="diary__icons"
+            src={add}
+            alt="добавить"
+            onClick={() => {
+              dispatch(openCloseModal({ gradeModal: true }));
+              dispatch(
+                saveModalData({ date: sheduleDate, number: currentNumber })
+              );
+            }}
+          />
         ) : (
-          lessonItem.lessonId.grade
+          <div>{lessonItem.grade}</div>
         )}
       </div>
     </>

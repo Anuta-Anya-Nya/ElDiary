@@ -199,6 +199,9 @@ input[type=checkbox] {
   font-size: 0.8em;
   cursor: auto;
 }
+.card-title-icon {
+  max-width: 120px;
+}
 
 .footer {
   color: rgba(60, 60, 60, 0.5);

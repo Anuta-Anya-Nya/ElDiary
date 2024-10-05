@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment/min/moment-with-locales.min";
 import MenuCardBox from "./cards/MenuCardBox";
+import PageTitle from "./blocks/PageTitle";
 import TablesDiary from "./tables/TablesDiary";
 import { checkWeeklySchedule, getWeekDaysInStore } from "../utils/services";
 import { useDispatch } from "react-redux";
@@ -14,9 +15,6 @@ import { CustomModal } from "./customModal/CustomModal";
 const Diary = () => {
   moment.locale("ru");
   const titleCardId = 1;
-  const titleCard = useSelector((state) =>
-    state.content.menuButtons.find((el) => el.id === titleCardId)
-  );
 
   const [currentDate, setCurrentDate] = useState(moment("2024-09-02"));
   const [diaryWeek, setDiaryWeek] = useState({});
@@ -56,23 +54,7 @@ const Diary = () => {
 
   return (
     <main>
-      <section className="title">
-        <div className="container title-container">
-          <div className="card card-title">
-            <div className="card__pic">
-              <img
-                className="card__img"
-                src={titleCard.icon.path}
-                alt={titleCard.icon.alt}
-              />
-            </div>
-            <div className="card__title cart-title__title">
-              {titleCard.title}
-            </div>
-          </div>
-          <h2>Дневник</h2>
-        </div>
-      </section>
+      <PageTitle titleCardId={titleCardId} />
       <section className="diary">
         <div className="container diary-container">
           <div className="diary__header">

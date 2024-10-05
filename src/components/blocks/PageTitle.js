@@ -14,8 +14,6 @@ const PageTitle = ({ titleCardId }) => {
             src={titleCard.icon.path}
             alt={titleCard.icon.alt}
           />
-
-          {/* <div className="card__title cart-title__title">{titleCard.title}</div> */}
         </div>
         <h2>{titleCard.title}</h2>
       </div>

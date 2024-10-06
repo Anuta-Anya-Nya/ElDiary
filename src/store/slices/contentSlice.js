@@ -38,7 +38,7 @@ const contentSlice = createSlice({
       {
         id: 4,
         icon: {
-          path: require("../../assets/icons/ic-dino.svg").default,
+          path: require("../../assets/icons/grade.svg").default,
           alt: "оценки",
         },
         title: "Итоговые оценки",
@@ -64,6 +64,16 @@ const contentSlice = createSlice({
         title: "Домашняя работа",
         text: "Здесь ты увидишь свою домашку и сможешь отметить то, что уже выполнено",
         link: "/",
+      },
+      {
+        id: 7,
+        icon: {
+          path: require("../../assets/icons/ic-dino.svg").default,
+          alt: "расписание",
+        },
+        title: "Расписание уроков",
+        text: "Здесь твое расписание на неделю",
+        link: "/weekShedule",
       },
     ],
     openModal: {

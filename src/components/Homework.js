@@ -6,6 +6,7 @@ import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
+import PageTitle from "./blocks/PageTitle";
 import { toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
@@ -18,9 +19,7 @@ function Homework() {
     currentDate.clone().add(1, "days")
   );
   const titleCardId = 6;
-  const titleCard = useSelector((state) =>
-    state.content.menuButtons.find((el) => el.id === titleCardId)
-  );
+
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const dispatch = useDispatch();
 
@@ -39,27 +38,7 @@ function Homework() {
 
   return (
     <main>
-      <section className="title">
-        <div className="container title-container">
-          <div className="card card-title">
-            <div className="card__pic">
-              <img
-                className="card__img"
-                src={titleCard.icon.path}
-                alt={titleCard.icon.alt}
-              />
-            </div>
-            <div className="card__title cart-title__title">
-              {titleCard.title}
-            </div>
-          </div>
-          <h2>
-            Сегодня {currentDate.format("dddd")},
-            <br />
-            {currentDate.format("DD MMMM YYYY")}
-          </h2>
-        </div>
-      </section>
+      <PageTitle titleCardId={titleCardId} />
       <section className="homework">
         <div className="container homework-container">
           <h3 className="homework__title">

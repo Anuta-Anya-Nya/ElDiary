@@ -3,24 +3,46 @@ import { createSlice } from "@reduxjs/toolkit";
 const weeklyScheduleSlice = createSlice({
   name: "weeklySchedule",
   initialState: {
-    scheduleForWeek: [
-      {
+    scheduleForWeek: {
+      2024: {
         id: 123,
         startPeriod: "2024-09-01",
-        endPeriod: "2024-06-01",
-        понедельник: [1, 2, 3, 4, 4, 5],
-        вторник: [1, 2, 3, 4, 5, 6],
-        среда: [2, 2, 3, 4, 4],
-        четверг: [null, 5, 6, 4],
-        пятница: [1, null, 2],
-        суббота: [null],
+        endPeriod: "2025-06-01",
+        schedule: [
+          [
+            { lessonId: 1, cabinet: 23, teacherId: 1 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+            { lessonId: null, cabinet: null, teacherId: null },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+          ],
+          [
+            { lessonId: 1, cabinet: 23, teacherId: 1 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+          ],
+          [
+            { lessonId: 1, cabinet: 23, teacherId: 1 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+          ],
+          [
+            { lessonId: 1, cabinet: 23, teacherId: 1 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+          ],
+          [
+            { lessonId: 1, cabinet: 23, teacherId: 1 },
+            { lessonId: 2, cabinet: 23, teacherId: 2 },
+          ],
+          [{ lessonId: null, cabinet: null, teacherId: null }],
+        ],
       },
-    ],
+    },
   },
+
   reducers: {
     addWeeklySchedule: (state, action) => {
       console.log(action.payload);
-      state.scheduleForWeek.push(action.payload);
     },
     // updateDailySchedule: (state, action) => {
     //   const {date}

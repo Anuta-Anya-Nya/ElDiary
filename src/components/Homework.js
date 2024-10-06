@@ -14,9 +14,10 @@ import { addSchedule } from "../store/slices/dailySchedulesSlice";
 
 function Homework() {
   moment.locale("ru");
-  const currentDate = moment("2024-09-02");
+  const currentDate = moment();
+  const selectDisplay = useSelector((state) => state.settings.displayHomeWork);
   const [displayDate, setDisplayDate] = useState(
-    currentDate.clone().add(1, "days")
+    currentDate.clone().add(selectDisplay, "days")
   );
   const titleCardId = 6;
 

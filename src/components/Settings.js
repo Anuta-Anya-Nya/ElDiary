@@ -1,4 +1,5 @@
 import MenuCardBox from "./cards/MenuCardBox";
+import SettingDisplayHW from "./blocks/SettingDisplayHW";
 
 const Settings = () => {
   return (
@@ -10,7 +11,9 @@ const Settings = () => {
       </section>
 
       <section className="settings">
-        <div className="container"></div>
+        <div className="container">
+          <SettingDisplayHW />
+        </div>
       </section>
 
       <MenuCardBox />

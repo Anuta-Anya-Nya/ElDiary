@@ -1,0 +1,18 @@
+.schedule {
+    &__header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 1em;
+        flex-direction: column;
+    }
+
+    &__table {
+        display: grid;
+        grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, 140px) minmax(min-content, 350px);
+        color: #3c3c3c;
+        background-color: #ffffff;
+    }
+
+}

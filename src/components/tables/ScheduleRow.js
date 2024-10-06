@@ -6,7 +6,6 @@ const SheduleRow = ({ lessonInfo, index }) => {
   const teacher = useSelector(
     (state) => state.teachers.teachersList[teacherId]
   );
-  console.log(lesson);
 
   return (
     <>

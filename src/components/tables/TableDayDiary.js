@@ -92,7 +92,7 @@ const TableDayDiary = ({ day, position, modify }) => {
           );
         })}
 
-        <div className="diary__cell diary__cell-long">
+        <div className="diary__cell-long">
           <div className="diary__notes">Заметки: </div>
 
           {day?.notes ? (

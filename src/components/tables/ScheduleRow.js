@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-const SheduleRow = ({ lessonInfo, index }) => {
+const ScheduleRow = ({ lessonInfo, index }) => {
   const { lessonId, cabinet, teacherId } = lessonInfo;
   const lesson = useSelector((state) => state.lessons.lessons[lessonId]);
   const teacher = useSelector(
@@ -17,4 +17,4 @@ const SheduleRow = ({ lessonInfo, index }) => {
   );
 };
 
-export default SheduleRow;
+export default ScheduleRow;

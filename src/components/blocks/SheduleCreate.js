@@ -102,11 +102,16 @@ const ScheduleCreate = () => {
 
           <div className="diary__area">
             {schedule.map((day, ind) => (
-              <ScheduleTable daySchedule={day} index={ind} key={ind} />
+              <ScheduleTable
+                daySchedule={day}
+                index={ind}
+                key={ind}
+                create={false}
+              />
             ))}
           </div>
         </div>
-        <CustomModal />
+        <CustomModal data={day} />
       </section>
 
       <MenuCardBox titleCardId={titleCardId} />

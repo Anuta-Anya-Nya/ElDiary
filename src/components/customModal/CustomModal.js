@@ -10,7 +10,7 @@ import { ModalAddNotes } from "./ModalAddNotes";
 import { ModalModifyDay } from "./ModalModifyDay";
 import { ModalScheduleAddLesson } from "./ModalScheduleAddLesson";
 
-export const CustomModal = () => {
+export const CustomModal = ({ data }) => {
   const modalList = useSelector((state) => state.content.openModal.modalList);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export const CustomModal = () => {
       case "editDayModal":
         return <ModalModifyDay />;
       case "scheduleAddLesson":
-        return <ModalScheduleAddLesson />;
+        return <ModalScheduleAddLesson data={data} />;
       default:
         return null;
     }

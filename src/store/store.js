@@ -8,6 +8,7 @@ import { noteReducer } from "./slices/noteSlice";
 import { contentReducer } from "./slices/contentSlice";
 import { weeklyScheduleReducer } from "./slices/weeklyScheduleSlice";
 import { teacherReducer } from "./slices/teachersSlice";
+import { settingsReducer } from "./slices/settingSlice";
 
 const reducer = combineReducers({
   lessons: lessonsReducer,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   content: contentReducer,
   weeklySchedule: weeklyScheduleReducer,
   teachers: teacherReducer,
+  settings: settingsReducer,
 });
 
 const store = configureStore({ reducer });

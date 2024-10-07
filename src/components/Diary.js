@@ -16,7 +16,7 @@ const Diary = () => {
   moment.locale("ru");
   const titleCardId = 1;
 
-  const [currentDate, setCurrentDate] = useState(moment("2024-09-02"));
+  const [currentDate, setCurrentDate] = useState(moment());
   const [diaryWeek, setDiaryWeek] = useState({});
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);

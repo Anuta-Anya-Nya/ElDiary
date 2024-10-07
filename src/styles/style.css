@@ -559,6 +559,39 @@ input[type=checkbox] {
   background-color: #ffffff;
 }
 
+.settings__box {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  color: #3c3c3c;
+}
+.settings__item {
+  border: 1px solid #3c3c3c;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 5px 5px 2px rgba(30, 149, 155, 0.5);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding: 15px 20px;
+}
+.settings__title {
+  font-size: 1.2em;
+  color: #1E959B;
+}
+.settings input[type=radio] {
+  accent-color: #9a1d36;
+  margin-right: 10px;
+  transform: scale(1.5);
+  cursor: pointer;
+}
+.settings label {
+  font-size: 1.2em;
+}
+
 @media (max-width: 767px) {
   .header-container {
     display: flex;

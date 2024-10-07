@@ -1,16 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const settingSlice = createSlice({
-  name: "setting",
+  name: "settings",
   initialState: {
-    shedule: {
-      1: [1, 3, 2, 2, 4], //понедельник и массив id уроков
-      2: [3, 3, 2, 1],
-      3: [],
-      4: [],
-      5: [1, 2, 4],
-      6: [],
-    },
+    // отображение домашний работы: 0-текущий день, 1 - завтрашний день
+    displayHomeWork: 1,
     rings: [
       null,
       "8.00 - 8.40",
@@ -23,6 +17,9 @@ const settingSlice = createSlice({
     ],
   },
   reducers: {
+    changeDisplayHW: (state, action) => {
+      return { ...state, displayHomeWork: action.payload };
+    },
     addLesson: (state, action) => {
       state.lessons.push(action.payload);
       return state;
@@ -42,5 +39,6 @@ const settingSlice = createSlice({
   //     });
   //   },
 });
-export const { addLesson, removeLesson } = settingSlice.actions;
-export const settingReducer = settingSlice.reducer;
+export const { changeDisplayHW, addLesson, removeLesson } =
+  settingSlice.actions;
+export const settingsReducer = settingSlice.reducer;

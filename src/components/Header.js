@@ -13,11 +13,15 @@ function Header() {
           <ul className="header__menu">
             <li className="header__menu-item">Привет, Варя!</li>
             <li className="header__menu-item">
-              <img className="icons" src={account} alt="Aккаунт" />
+              <Link to="/profile">
+                <img className="icons" src={account} alt="Aккаунт" />
+              </Link>
             </li>
 
             <li className="header__menu-item">
-              <img className="icons" src={settings} alt="Настройки" />
+              <Link to="/settings">
+                <img className="icons" src={settings} alt="Настройки" />
+              </Link>
             </li>
           </ul>
         </nav>

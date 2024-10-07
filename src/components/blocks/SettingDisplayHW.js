@@ -8,8 +8,8 @@ const SettingDisplayHW = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      <h3>Отображать домашнее задание:</h3>
+    <div className="settings__item">
+      <h3 className="settings__title">Отображать домашнее задание:</h3>
       <div>
         <input
           type="radio"

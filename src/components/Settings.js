@@ -1,5 +1,6 @@
 import MenuCardBox from "./cards/MenuCardBox";
 import SettingDisplayHW from "./blocks/SettingDisplayHW";
+import { Link } from "react-router-dom";
 
 const Settings = () => {
   const titleCardId = 5;
@@ -16,9 +17,9 @@ const Settings = () => {
           <SettingDisplayHW />
           <div className="settings__item">
             <h3 className="settings__title">Расписание на учебный год</h3>
-            <button className="modal-submit-button">
+            <Link to="/scheduleCreate" className="modal-submit-button">
               Добавить на новый учебный год
-            </button>
+            </Link>
             <button className="modal-submit-button">Изменить текущее</button>
           </div>
           <div className="settings__item">

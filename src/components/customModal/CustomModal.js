@@ -8,6 +8,7 @@ import { ModalAddGrade } from "./ModalAddGrade";
 import { openCloseModal, setModify } from "../../store/slices/contentSlice";
 import { ModalAddNotes } from "./ModalAddNotes";
 import { ModalModifyDay } from "./ModalModifyDay";
+import { ModalScheduleAddLesson } from "./ModalScheduleAddLesson";
 
 export const CustomModal = () => {
   const modalList = useSelector((state) => state.content.openModal.modalList);
@@ -31,6 +32,8 @@ export const CustomModal = () => {
         return <ModalAddNotes />;
       case "editDayModal":
         return <ModalModifyDay />;
+      case "scheduleAddLesson":
+        return <ModalScheduleAddLesson />;
       default:
         return null;
     }

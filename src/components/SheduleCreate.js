@@ -59,9 +59,16 @@ const ScheduleCreate = () => {
       schedule: schedule,
     };
     dispatch(addWeeklySchedule(newWeeklySchedule));
+    setSchedule([
+      [{ lessonId: null, cabinet: null, teacherId: null }],
+      [{ lessonId: null, cabinet: null, teacherId: null }],
+      [{ lessonId: null, cabinet: null, teacherId: null }],
+      [{ lessonId: null, cabinet: null, teacherId: null }],
+      [{ lessonId: null, cabinet: null, teacherId: null }],
+      [{ lessonId: null, cabinet: null, teacherId: null }],
+    ]);
   };
 
-  // при создании расписания, надо проверять чтобы оно не было создано. если созднано - то вывести сообщение что надо изменить
   useEffectAfterMount(() => {
     const newSchedule = [...schedule];
     newSchedule[modalData.day][modalData.number] = {
@@ -75,7 +82,7 @@ const ScheduleCreate = () => {
   useEffect(() => {
     return () => {
       dispatch(setCreate(false));
-      dispatch(saveModalData({}));
+      dispatch(saveModalData({ day: null }));
     };
   }, []);
 
@@ -86,7 +93,7 @@ const ScheduleCreate = () => {
         <div className="container diary-container">
           <div className="schedule__header">
             <h2 className="diary__title">Создать новое учебное расписание</h2>
-            <div>
+            <div className="schedule__setting">
               <label htmlFor="periodSchedule">Период: </label>
               <select
                 value={period}
@@ -117,29 +124,35 @@ const ScheduleCreate = () => {
               </select>
               <span>- {period + 1}</span>
             </div>
-            {checkAvail &&
-              "Расписание для выбранного периода уже создано! Выберите длугой перод или отредактируйте созданное расписание"}
+            {checkAvail && (
+              <div className="schedule__attent">
+                Расписание для выбранного периода создано!
+              </div>
+            )}
           </div>
+          {!checkAvail && (
+            <div className="diary__area">
+              {schedule.map((day, ind) => (
+                <ScheduleTable
+                  daySchedule={day}
+                  index={ind}
+                  key={ind}
+                  create={true}
+                  addString={addString}
+                />
+              ))}
+            </div>
+          )}
 
-          <div className="diary__area">
-            {schedule.map((day, ind) => (
-              <ScheduleTable
-                daySchedule={day}
-                index={ind}
-                key={ind}
-                create={true}
-                addString={addString}
-              />
-            ))}
-          </div>
+          <button
+            className="modal-submit-button"
+            disabled={checkAvail}
+            onClick={() => saveWeeklySchedule()}
+          >
+            Сохранить домашнее задание
+          </button>
         </div>
-        <button
-          className="modal-submit-button"
-          disabled={checkAvail}
-          onClick={() => saveWeeklySchedule()}
-        >
-          Сохранить домашнее задание
-        </button>
+
         <CustomModal />
       </section>
 

@@ -1,7 +1,6 @@
 import ScheduleRow from "./ScheduleRow";
-import ScheduleRowCreate from "./ScheduleRowCreate";
 
-const ScheduleTable = ({ daySchedule, index, create }) => {
+const ScheduleTable = ({ daySchedule, index, create, setDaySchedule }) => {
   const dayOfWeek = [
     "Понедельник",
     "Вторник",
@@ -20,13 +19,15 @@ const ScheduleTable = ({ daySchedule, index, create }) => {
         <div className="diary__cell table__cell-title">Предмет</div>
         <div className="diary__cell table__cell-title">Кабинет</div>
         <div className="diary__cell table__cell-title">Преподаватель</div>
-        {daySchedule.map((lesson, ind) =>
-          create ? (
-            <ScheduleRowCreate lessonInfo={lesson} index={ind} key={ind} />
-          ) : (
-            <ScheduleRow lessonInfo={lesson} index={ind} key={ind} />
-          )
-        )}
+        {daySchedule.map((lesson, ind) => (
+          <ScheduleRow
+            lessonInfo={lesson}
+            index={ind}
+            key={ind}
+            create={create}
+            weekDay={index}
+          />
+        ))}
       </div>
       {create && <button className="modal-submit-button">Добавить урок</button>}
     </div>

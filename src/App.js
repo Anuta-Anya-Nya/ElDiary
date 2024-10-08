@@ -6,7 +6,7 @@ import Note from "./components/Note";
 import Diary from "./components/Diary";
 import Schedule from "./components/Schedule";
 import Settings from "./components/Settings";
-import ScheduleCreate from "./components/blocks/SheduleCreate";
+import ScheduleCreate from "./components/SheduleCreate";
 import Error404 from "./components/Error404";
 
 function App() {

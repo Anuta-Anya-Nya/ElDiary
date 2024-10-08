@@ -1,15 +1,16 @@
-import MenuCardBox from "../cards/MenuCardBox";
-import PageTitle from "../blocks/PageTitle";
-import ScheduleTable from "../tables/ScheduleTable";
-import { CustomModal } from "../customModal/CustomModal";
+import MenuCardBox from "./cards/MenuCardBox";
+import PageTitle from "./blocks/PageTitle";
+import ScheduleTable from "./tables/ScheduleTable";
+import { CustomModal } from "./customModal/CustomModal";
 import moment from "moment/min/moment-with-locales.min";
-import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { setCreate, saveModalData } from "../store/slices/contentSlice";
+import { useEffect, useState } from "react";
+import useEffectAfterMount from "../utils/useEffectAfterMount";
+import { useDispatch, useSelector } from "react-redux";
 
 const ScheduleCreate = () => {
   const titleCardId = 7;
-  const dispatch = useDispatch();
+
   const currentDate = moment();
   const currentStudyYear = currentDate.isBefore(
     moment(`${currentDate.format("YYYY")}-09-01`)
@@ -19,21 +20,39 @@ const ScheduleCreate = () => {
 
   const [period, setPeriod] = useState(currentStudyYear);
   const [schedule, setSchedule] = useState([
-    // [{ lessonId: null, cabinet: null, teacherId: null }],
-    // [{ lessonId: null, cabinet: null, teacherId: null }],
-    // [{ lessonId: null, cabinet: null, teacherId: null }],
-    // [{ lessonId: null, cabinet: null, teacherId: null }],
-    // [{ lessonId: null, cabinet: null, teacherId: null }],
-    // [{ lessonId: null, cabinet: null, teacherId: null }],
+    [{ lessonId: null, cabinet: null, teacherId: null }],
+    [{ lessonId: null, cabinet: null, teacherId: null }],
+    [{ lessonId: null, cabinet: null, teacherId: null }],
+    [{ lessonId: null, cabinet: null, teacherId: null }],
+    [{ lessonId: null, cabinet: null, teacherId: null }],
+    [{ lessonId: null, cabinet: null, teacherId: null }],
   ]);
-  const [day, setDay] = useState(0);
+
+  const modalData = useSelector((state) => state.content.openModal.modalData);
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
     setPeriod(Number(e.target.value));
   };
-  const handleChangeDay = (e) => {
-    setDay(Number(e.target.value));
-  };
+
   // при создании расписания, надо проверять чтобы оно не было создано. если созднано - то вывести сообщение что надо изменить
+  useEffectAfterMount(() => {
+    console.log("кастомный хук");
+    const newSchedule = [...schedule];
+    newSchedule[modalData.day][modalData.number] = {
+      lessonId: modalData.selectLessonId,
+      cabinet: modalData.selectClass,
+      teacherId: modalData.selectTeacher,
+    };
+    setSchedule(newSchedule);
+  }, [modalData.selectLessonId]);
+  useEffect(() => {
+    return () => {
+      dispatch(setCreate(false));
+      dispatch(saveModalData({}));
+    };
+  }, []);
+
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />
@@ -72,32 +91,6 @@ const ScheduleCreate = () => {
               </select>
               <span>- {period + 1}</span>
             </div>
-            <div>
-              <label htmlFor="daySchedule"></label>
-              <select
-                value={day}
-                onChange={(ev) => {
-                  handleChangeDay(ev);
-                }}
-                name="selectDay"
-                id="daySchedule"
-              >
-                <option value="0">Понедельник</option>
-                <option value="1">Вторник</option>
-                <option value="2">Среда</option>
-                <option value="3">Четверг</option>
-                <option value="4">Пятница</option>
-                <option value="5">Суббота</option>
-              </select>
-              <button
-                className="modal-submit-button"
-                onClick={() => {
-                  dispatch(openCloseModal({ scheduleAddLesson: true }));
-                }}
-              >
-                Добавить уроки
-              </button>
-            </div>
           </div>
 
           <div className="diary__area">
@@ -106,12 +99,12 @@ const ScheduleCreate = () => {
                 daySchedule={day}
                 index={ind}
                 key={ind}
-                create={false}
+                create={true}
               />
             ))}
           </div>
         </div>
-        <CustomModal data={day} />
+        <CustomModal />
       </section>
 
       <MenuCardBox titleCardId={titleCardId} />

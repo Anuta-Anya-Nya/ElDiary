@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { openCloseModal } from "../../store/slices/contentSlice";
+import { openCloseModal, editModalData } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlice";
 
@@ -8,6 +8,7 @@ export const ModalAddLesson = () => {
   const teachers = useSelector((state) => state.teachers.teachersList);
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const modify = useSelector((state) => state.content.openModal.modify);
+  const createMode = useSelector((state) => state.content.openModal.createMode);
 
   const [selectLessonId, setSelectLessonId] = useState(null);
   const [selectTeacher, setSelectTeacher] = useState(null);
@@ -23,31 +24,43 @@ export const ModalAddLesson = () => {
     setSelectClass(null);
     if (modify) {
       dispatch(openCloseModal({ lessonModal: false, editDayModal: true }));
+    } else if (createMode) {
+      dispatch(
+        editModalData({
+          selectLessonId: selectLessonId,
+          selectTeacher: selectTeacher,
+          selectClass: selectClass,
+        })
+      );
+      dispatch(openCloseModal({ lessonModal: false }));
     } else {
       dispatch(openCloseModal({ lessonModal: false }));
     }
   };
 
   const addLessonToShedule = () => {
-    if (!selectLessonId) {
-      setError(true);
-      return;
-    } else {
-      dispatch(
-        updateDailyScheduleLesson({
-          date: modalData.date,
-          number: modalData.number,
-          lesson: {
-            lessonId: selectLessonId,
-            homeworkId: null,
-            grade: null,
-            teacherId: selectTeacher || null,
-            class: selectClass || null,
-          },
-        })
-      );
-      toCloseAndRefreshData();
+    if (!createMode) {
+      if (!selectLessonId) {
+        setError(true);
+        return;
+      } else {
+        dispatch(
+          updateDailyScheduleLesson({
+            date: modalData.date,
+            number: modalData.number,
+            lesson: {
+              lessonId: selectLessonId,
+              homeworkId: null,
+              grade: null,
+              teacherId: selectTeacher || null,
+              class: selectClass || null,
+            },
+          })
+        );
+        toCloseAndRefreshData();
+      }
     }
+    toCloseAndRefreshData();
   };
 
   const findTeacherForSelectLesson = () => {

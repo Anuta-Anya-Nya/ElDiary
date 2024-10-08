@@ -177,6 +177,7 @@
     border: 1px solid $colorButton;
     transition: all 0.3s;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover {
         color: $colorButton;

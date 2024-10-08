@@ -263,6 +263,8 @@ input[type=checkbox] {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 1em;
 }
 .diary__area {
   display: grid;
@@ -274,6 +276,7 @@ input[type=checkbox] {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.5em;
 }
 .diary__day-tuesday {
   grid-column: 1;
@@ -292,7 +295,6 @@ input[type=checkbox] {
   justify-content: center;
   align-items: center;
   gap: 0.8em;
-  margin-bottom: 0.4em;
 }
 .diary__header {
   display: flex;
@@ -505,6 +507,7 @@ input[type=checkbox] {
   border: 1px solid #9a1d36;
   transition: all 0.3s;
   cursor: pointer;
+  text-decoration: none;
 }
 .modal-submit-button:hover {
   color: #9a1d36;
@@ -548,9 +551,27 @@ input[type=checkbox] {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1em;
+  gap: 0.5em;
   margin-bottom: 1em;
   flex-direction: column;
+}
+.schedule__setting {
+  display: flex;
+  align-items: center;
+  font-size: 1.5em;
+  color: #3c3c3c;
+  gap: 0.5em;
+}
+.schedule #periodSchedule {
+  padding: 0 5px;
+  font-family: "Oswald", sans-serif;
+  font-size: 1em;
+  color: #3c3c3c;
+  border-radius: 5px;
+}
+.schedule__attent {
+  color: #9a1d36;
+  font-size: 1.5em;
 }
 .schedule__table {
   display: grid;

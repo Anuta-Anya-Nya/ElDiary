@@ -110,3 +110,23 @@ export const toChangeDate = (count, setter, step, dateMoment) => {
     setter(dateMoment.clone().subtract(step, "days"));
   }
 };
+
+export const findTeacherForSelectLesson = (
+  lessons,
+  selectLessonId,
+  teachers
+) => {
+  const teachersThisLesson = lessons[selectLessonId].teachers;
+  if (!teachersThisLesson.length) {
+    console.log(
+      Object.values(teachers)
+        .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
+        .reduce((arr, teacher) => [...arr, teacher.id], [])
+    );
+    return Object.values(teachers)
+      .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
+      .reduce((arr, teacher) => [...arr, teacher.id], []);
+  } else {
+    return teachersThisLesson;
+  }
+};

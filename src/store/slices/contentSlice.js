@@ -83,12 +83,14 @@ const contentSlice = createSlice({
         gradeModal: false,
         notesModal: false,
         editDayModal: false,
+        scheduleAddLesson: false,
       },
       modalData: {
         date: "",
         number: null,
       },
       modify: false,
+      createMode: false,
     },
   },
   reducers: {
@@ -104,10 +106,25 @@ const contentSlice = createSlice({
         openModal: { ...state.openModal, modalData: action.payload },
       };
     },
+    editModalData: (state, action) => {
+      return {
+        ...state,
+        openModal: {
+          ...state.openModal,
+          modalData: { ...state.openModal.modalData, ...action.payload },
+        },
+      };
+    },
     setModify: (state, action) => {
       return {
         ...state,
         openModal: { ...state.openModal, modify: action.payload },
+      };
+    },
+    setCreate: (state, action) => {
+      return {
+        ...state,
+        openModal: { ...state.openModal, createMode: action.payload },
       };
     },
   },
@@ -121,6 +138,12 @@ const contentSlice = createSlice({
   //     });
   //   },
 });
-export const { addMenuButton, openCloseModal, saveModalData, setModify } =
-  contentSlice.actions;
+export const {
+  addMenuButton,
+  openCloseModal,
+  saveModalData,
+  editModalData,
+  setModify,
+  setCreate,
+} = contentSlice.actions;
 export const contentReducer = contentSlice.reducer;

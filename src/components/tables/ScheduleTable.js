@@ -1,6 +1,6 @@
 import ScheduleRow from "./ScheduleRow";
 
-const ScheduleTable = ({ daySchedule, index, create, setDaySchedule }) => {
+const ScheduleTable = ({ daySchedule, index, create, addString }) => {
   const dayOfWeek = [
     "Понедельник",
     "Вторник",
@@ -29,7 +29,16 @@ const ScheduleTable = ({ daySchedule, index, create, setDaySchedule }) => {
           />
         ))}
       </div>
-      {create && <button className="modal-submit-button">Добавить урок</button>}
+      {create && (
+        <button
+          className="modal-submit-button modal-button"
+          onClick={() => {
+            addString(index);
+          }}
+        >
+          Добавить строку
+        </button>
+      )}
     </div>
   );
 };

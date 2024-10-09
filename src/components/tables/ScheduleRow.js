@@ -1,4 +1,5 @@
 import add from "../../assets/icons/circle-plus.svg";
+import edit from "../../assets/icons/edit-pen.svg";
 import {
   openCloseModal,
   saveModalData,
@@ -6,7 +7,7 @@ import {
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-const ScheduleRow = ({ lessonInfo, index, create, weekDay }) => {
+const ScheduleRow = ({ lessonInfo, index, create, weekDay, editSchedule }) => {
   const { lessonId, cabinet, teacherId } = lessonInfo;
   const lesson = useSelector((state) => state.lessons.lessons[lessonId]);
   const teacher = useSelector(
@@ -19,7 +20,19 @@ const ScheduleRow = ({ lessonInfo, index, create, weekDay }) => {
       <div className="diary__cell">{index + 1}.</div>
       <div className="diary__cell">
         {lesson ? (
-          lesson.title
+          <>
+            <p>{lesson.title}</p>
+            {editSchedule && (
+              <img
+                className="diary__icons"
+                src={edit}
+                alt="редактировать"
+                onClick={() => {
+                  console.log("click");
+                }}
+              />
+            )}
+          </>
         ) : create ? (
           <img
             className="diary__icons"

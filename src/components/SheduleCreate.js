@@ -11,6 +11,7 @@ import ScheduleActions from "./blocks/ScheduleActions";
 
 const ScheduleCreate = () => {
   const titleCardId = 7;
+  const editSchedule = true;
 
   const currentDate = moment();
   const currentStudyYear = currentDate.isBefore(
@@ -73,7 +74,11 @@ const ScheduleCreate = () => {
           </div>
 
           {!checkAvail && (
-            <ScheduleActions period={period} checkAvail={checkAvail} />
+            <ScheduleActions
+              period={period}
+              checkAvail={checkAvail}
+              editSchedule={editSchedule}
+            />
           )}
         </div>
       </section>

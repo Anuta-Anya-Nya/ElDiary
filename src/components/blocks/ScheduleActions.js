@@ -11,6 +11,7 @@ const ScheduleActions = ({
   checkAvail,
   scheduleForEdit,
   setEditSchedule,
+  editSchedule,
 }) => {
   const [schedule, setSchedule] = useState([
     [{ lessonId: null, cabinet: null, teacherId: null }],
@@ -89,6 +90,7 @@ const ScheduleActions = ({
             key={ind}
             create={true}
             addString={addString}
+            editSchedule={editSchedule}
           />
         ))}
       </div>

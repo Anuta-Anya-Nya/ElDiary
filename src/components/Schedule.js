@@ -48,6 +48,7 @@ const Schedule = () => {
               scheduleForEdit={schedule.schedule}
               period={currentStudyYear}
               setEditSchedule={setEditSchedule}
+              editSchedule={editSchedule}
             />
           ) : (
             <ScheduleView schedule={schedule.schedule} />

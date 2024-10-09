@@ -4,6 +4,8 @@ import {
   openCloseModal,
   saveModalData,
   setCreate,
+  setModify,
+  setEditMode,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -28,7 +30,17 @@ const ScheduleRow = ({ lessonInfo, index, create, weekDay, editSchedule }) => {
                 src={edit}
                 alt="редактировать"
                 onClick={() => {
-                  console.log("click");
+                  dispatch(openCloseModal({ lessonModal: true }));
+                  dispatch(
+                    saveModalData({
+                      day: weekDay,
+                      number: index,
+                      lessonId: lessonId,
+                      teacherId: teacherId,
+                      class: cabinet,
+                    })
+                  );
+                  dispatch(setEditMode(true));
                 }}
               />
             )}

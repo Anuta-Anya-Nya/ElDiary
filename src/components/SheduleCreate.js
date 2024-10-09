@@ -1,13 +1,13 @@
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
-import ScheduleTable from "./tables/ScheduleTable";
-import { CustomModal } from "./customModal/CustomModal";
+
 import moment from "moment/min/moment-with-locales.min";
-import { setCreate, saveModalData } from "../store/slices/contentSlice";
-import { useEffect, useState } from "react";
-import useEffectAfterMount from "../utils/useEffectAfterMount";
-import { useDispatch, useSelector } from "react-redux";
-import { addWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
+
+import { useState } from "react";
+
+import { useSelector } from "react-redux";
+
+import ScheduleActions from "./blocks/ScheduleActions";
 
 const ScheduleCreate = () => {
   const titleCardId = 7;
@@ -20,71 +20,12 @@ const ScheduleCreate = () => {
     : Number(currentDate.format("YYYY"));
 
   const [period, setPeriod] = useState(currentStudyYear);
-
-  const [schedule, setSchedule] = useState([
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-  ]);
-
-  const checkAvail = useSelector(
-    (state) => state.weeklySchedule.scheduleForWeek[period]
-  );
-
-  const modalData = useSelector((state) => state.content.openModal.modalData);
-  const dispatch = useDispatch();
-
   const handleChange = (e) => {
     setPeriod(Number(e.target.value));
   };
-
-  const addString = (day) => {
-    const newSchedule = [...schedule];
-    newSchedule[day].push({
-      lessonId: null,
-      cabinet: null,
-      teacherId: null,
-    });
-    setSchedule(newSchedule);
-  };
-
-  const saveWeeklySchedule = () => {
-    const newWeeklySchedule = {
-      id: Date.now(),
-      startPeriod: `${period}-09-01`,
-      endPeriod: `${period + 1}-06-01`,
-      schedule: schedule,
-    };
-    dispatch(addWeeklySchedule(newWeeklySchedule));
-    setSchedule([
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-    ]);
-  };
-
-  useEffectAfterMount(() => {
-    const newSchedule = [...schedule];
-    newSchedule[modalData.day][modalData.number] = {
-      lessonId: modalData.selectLessonId,
-      cabinet: modalData.selectClass,
-      teacherId: modalData.selectTeacher,
-    };
-    setSchedule(newSchedule);
-  }, [modalData.selectLessonId]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(setCreate(false));
-      dispatch(saveModalData({ day: null }));
-    };
-  }, []);
+  const checkAvail = useSelector(
+    (state) => state.weeklySchedule.scheduleForWeek[period]
+  );
 
   return (
     <main>
@@ -130,30 +71,11 @@ const ScheduleCreate = () => {
               </div>
             )}
           </div>
+
           {!checkAvail && (
-            <div className="diary__area">
-              {schedule.map((day, ind) => (
-                <ScheduleTable
-                  daySchedule={day}
-                  index={ind}
-                  key={ind}
-                  create={true}
-                  addString={addString}
-                />
-              ))}
-            </div>
+            <ScheduleActions period={period} checkAvail={checkAvail} />
           )}
-
-          <button
-            className="modal-submit-button"
-            disabled={checkAvail}
-            onClick={() => saveWeeklySchedule()}
-          >
-            Сохранить домашнее задание
-          </button>
         </div>
-
-        <CustomModal />
       </section>
 
       <MenuCardBox titleCardId={titleCardId} />

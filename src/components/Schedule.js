@@ -1,8 +1,10 @@
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
-import ScheduleTable from "./tables/ScheduleTable";
+import ScheduleView from "./blocks/ScheduleView";
+import ScheduleActions from "./blocks/ScheduleActions";
 import { useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales.min";
+import { useState } from "react";
 
 const Schedule = () => {
   const titleCardId = 7;
@@ -18,6 +20,8 @@ const Schedule = () => {
     (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
   );
 
+  const [editSchedule, setEditSchedule] = useState(false);
+
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />
@@ -27,14 +31,28 @@ const Schedule = () => {
             <h2 className="diary__title">
               Учебный год {currentStudyYear} - {currentStudyYear + 1}
             </h2>
-            <button className="modal-submit-button">Изменить расписание</button>
+            {!editSchedule && (
+              <button
+                className="modal-submit-button"
+                onClick={() => {
+                  setEditSchedule(true);
+                }}
+              >
+                Изменить расписание
+              </button>
+            )}
           </div>
 
-          <div className="diary__area">
-            {schedule.schedule.map((day, ind) => (
-              <ScheduleTable daySchedule={day} index={ind} key={ind} />
-            ))}
-          </div>
+          {editSchedule ? (
+            <ScheduleActions
+              scheduleForEdit={schedule.schedule}
+              period={currentStudyYear}
+              setEditSchedule={setEditSchedule}
+              editSchedule={editSchedule}
+            />
+          ) : (
+            <ScheduleView schedule={schedule.schedule} />
+          )}
         </div>
       </section>
 

@@ -83,7 +83,6 @@ const contentSlice = createSlice({
         gradeModal: false,
         notesModal: false,
         editDayModal: false,
-        scheduleAddLesson: false,
       },
       modalData: {
         date: "",
@@ -91,6 +90,7 @@ const contentSlice = createSlice({
       },
       modify: false,
       createMode: false,
+      editMode: false,
     },
   },
   reducers: {
@@ -127,6 +127,12 @@ const contentSlice = createSlice({
         openModal: { ...state.openModal, createMode: action.payload },
       };
     },
+    setEditMode: (state, action) => {
+      return {
+        ...state,
+        openModal: { ...state.openModal, editMode: action.payload },
+      };
+    },
   },
   //   редьюсеры для thunk функций
   //   extraReducers: (builder) => {
@@ -145,5 +151,6 @@ export const {
   editModalData,
   setModify,
   setCreate,
+  setEditMode,
 } = contentSlice.actions;
 export const contentReducer = contentSlice.reducer;

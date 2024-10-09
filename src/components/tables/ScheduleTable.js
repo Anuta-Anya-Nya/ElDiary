@@ -1,6 +1,12 @@
 import ScheduleRow from "./ScheduleRow";
 
-const ScheduleTable = ({ daySchedule, index, create, addString }) => {
+const ScheduleTable = ({
+  daySchedule,
+  index,
+  create,
+  addString,
+  editSchedule,
+}) => {
   const dayOfWeek = [
     "Понедельник",
     "Вторник",
@@ -26,6 +32,7 @@ const ScheduleTable = ({ daySchedule, index, create, addString }) => {
             key={ind}
             create={create}
             weekDay={index}
+            editSchedule={editSchedule}
           />
         ))}
       </div>

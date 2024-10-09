@@ -9,6 +9,7 @@ export const ModalAddLesson = () => {
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const modify = useSelector((state) => state.content.openModal.modify);
   const createMode = useSelector((state) => state.content.openModal.createMode);
+  const editMode = useSelector((state) => state.content.openModal.editMode);
 
   const [selectLessonId, setSelectLessonId] = useState(null);
   const [selectTeacher, setSelectTeacher] = useState(null);
@@ -24,7 +25,7 @@ export const ModalAddLesson = () => {
     setSelectClass(null);
     if (modify) {
       dispatch(openCloseModal({ lessonModal: false, editDayModal: true }));
-    } else if (createMode) {
+    } else if (createMode || editMode) {
       dispatch(
         editModalData({
           selectLessonId: selectLessonId,
@@ -39,7 +40,7 @@ export const ModalAddLesson = () => {
   };
 
   const addLessonToShedule = () => {
-    if (!createMode) {
+    if (!createMode && !editMode) {
       if (!selectLessonId) {
         setError(true);
         return;
@@ -80,7 +81,7 @@ export const ModalAddLesson = () => {
     return "";
   };
   useEffect(() => {
-    if (modify) {
+    if (modify || editMode) {
       setSelectLessonId(modalData.lessonId);
       setSelectTeacher(modalData.teacherId);
       setSelectClass(modalData.class);

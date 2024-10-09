@@ -69,12 +69,14 @@ const ScheduleActions = ({
       dispatch(setCreate(false));
       dispatch(saveModalData({ day: null }));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (scheduleForEdit) {
       setSchedule(scheduleForEdit);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -96,7 +98,9 @@ const ScheduleActions = ({
         disabled={checkAvail}
         onClick={() => {
           saveWeeklySchedule();
-          setEditSchedule(false);
+          if (setEditSchedule) {
+            setEditSchedule(false);
+          }
         }}
       >
         Сохранить расписание

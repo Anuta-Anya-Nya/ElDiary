@@ -20,7 +20,13 @@ const Settings = () => {
             <Link to="/scheduleCreate" className="modal-submit-button">
               Добавить на новый учебный год
             </Link>
-            <button className="modal-submit-button">Изменить текущее</button>
+            <Link
+              to="/weekShedule"
+              state="/settings"
+              className="modal-submit-button"
+            >
+              Изменить текущее
+            </Link>
           </div>
           <div className="settings__item">
             <h3 className="settings__title">Список учителей</h3>

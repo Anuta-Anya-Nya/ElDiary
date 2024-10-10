@@ -4,11 +4,12 @@ import ScheduleView from "./blocks/ScheduleView";
 import ScheduleActions from "./blocks/ScheduleActions";
 import { useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales.min";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Schedule = () => {
   const titleCardId = 7;
-
+  const location = useLocation();
   const currentDate = moment();
   const currentStudyYear = currentDate.isBefore(
     moment(`${currentDate.format("YYYY")}-09-01`)
@@ -21,7 +22,13 @@ const Schedule = () => {
   );
 
   const [editSchedule, setEditSchedule] = useState(false);
+  useEffect(() => {
+    if (location.state === "/settings") {
+      setEditSchedule(true);
+    }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />

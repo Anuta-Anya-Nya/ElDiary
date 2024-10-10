@@ -2,6 +2,8 @@ import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import ScheduleView from "./blocks/ScheduleView";
 import ScheduleActions from "./blocks/ScheduleActions";
+import arrowLeft from "../assets/icons/arrow-left.svg";
+import arrowRight from "../assets/icons/arrow-right.svg";
 import { useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales.min";
 import { useEffect, useState } from "react";
@@ -11,17 +13,18 @@ const Schedule = () => {
   const titleCardId = 7;
   const location = useLocation();
   const currentDate = moment();
-  const currentStudyYear = currentDate.isBefore(
-    moment(`${currentDate.format("YYYY")}-09-01`)
-  )
-    ? Number(currentDate.format("YYYY")) - 1
-    : Number(currentDate.format("YYYY"));
+  const [currentStudyYear, setCurrentYear] = useState(
+    currentDate.isBefore(moment(`${currentDate.format("YYYY")}-09-01`))
+      ? Number(currentDate.format("YYYY")) - 1
+      : Number(currentDate.format("YYYY"))
+  );
 
   const schedule = useSelector(
     (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
   );
 
   const [editSchedule, setEditSchedule] = useState(false);
+
   useEffect(() => {
     if (location.state === "/settings") {
       setEditSchedule(true);
@@ -35,10 +38,37 @@ const Schedule = () => {
       <section className="schedule">
         <div className="container diary-container">
           <div className="schedule__header">
-            <h2 className="diary__title">
-              Учебный год {currentStudyYear} - {currentStudyYear + 1}
-            </h2>
-            {!editSchedule && (
+            <div className="diary__header">
+              {!editSchedule && (
+                <div className="homework__icons">
+                  <img
+                    className="icons"
+                    src={arrowLeft}
+                    alt="left"
+                    onClick={() => {
+                      setCurrentYear(currentStudyYear - 1);
+                    }}
+                  />
+                </div>
+              )}
+              <h2 className="diary__title">
+                Учебный год {currentStudyYear} - {currentStudyYear + 1}
+              </h2>
+              {!editSchedule && (
+                <div className="homework__icons">
+                  <img
+                    className="icons"
+                    src={arrowRight}
+                    alt="right"
+                    onClick={() => {
+                      setCurrentYear(currentStudyYear + 1);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {!editSchedule && schedule && (
               <button
                 className="modal-submit-button"
                 onClick={() => {
@@ -58,7 +88,7 @@ const Schedule = () => {
               editSchedule={editSchedule}
             />
           ) : (
-            <ScheduleView schedule={schedule.schedule} />
+            <ScheduleView schedule={schedule} />
           )}
         </div>
       </section>

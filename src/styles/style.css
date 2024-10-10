@@ -301,7 +301,6 @@ input[type=checkbox] {
   justify-content: center;
   align-items: center;
   gap: 3em;
-  margin-bottom: 1.5em;
 }
 .diary__table {
   display: grid;
@@ -552,7 +551,6 @@ input[type=checkbox] {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5em;
   margin-bottom: 1em;
   flex-direction: column;
 }

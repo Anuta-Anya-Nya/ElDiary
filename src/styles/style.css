@@ -301,7 +301,6 @@ input[type=checkbox] {
   justify-content: center;
   align-items: center;
   gap: 3em;
-  margin-bottom: 1.5em;
 }
 .diary__table {
   display: grid;
@@ -548,11 +547,13 @@ input[type=checkbox] {
   filter: brightness(0) saturate(100%) invert(45%) sepia(62%) saturate(540%) hue-rotate(134deg) brightness(94%) contrast(87%);
 }
 
+.schedule {
+  flex-grow: 1;
+}
 .schedule__header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5em;
   margin-bottom: 1em;
   flex-direction: column;
 }
@@ -579,6 +580,14 @@ input[type=checkbox] {
   grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, 140px) minmax(min-content, 350px);
   color: #3c3c3c;
   background-color: #ffffff;
+}
+.schedule__message {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+  color: #3c3c3c;
 }
 
 .settings__box {

@@ -1,4 +1,6 @@
 .schedule {
+    flex-grow: 1;
+
     &__header {
         display: flex;
         justify-content: center;
@@ -33,6 +35,15 @@
         grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, 140px) minmax(min-content, 350px);
         color: #3c3c3c;
         background-color: #ffffff;
+    }
+
+    &__message {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2em;
+        color: #3c3c3c;
     }
 
 }

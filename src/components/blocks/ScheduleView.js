@@ -1,4 +1,5 @@
 import ScheduleTable from "../tables/ScheduleTable";
+import ScheduleNotFound from "./ScheduleNotFound";
 
 const ScheduleView = ({ schedule }) => {
   return schedule ? (
@@ -8,7 +9,7 @@ const ScheduleView = ({ schedule }) => {
       ))}
     </div>
   ) : (
-    <div>Не создано</div>
+    <ScheduleNotFound />
   );
 };
 export default ScheduleView;

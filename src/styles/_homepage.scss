@@ -237,10 +237,19 @@ input[type=checkbox] {
         text-align: center;
     }
 
+    &__block {
+        margin-bottom: 25px;
 
+        &:last-of-type {
+            flex: 1;
+        }
+    }
 
 
 }
+
+
+
 
 .card-title {
     position: absolute;

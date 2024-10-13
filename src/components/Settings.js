@@ -1,9 +1,14 @@
 import MenuCardBox from "./cards/MenuCardBox";
 import SettingDisplayHW from "./blocks/SettingDisplayHW";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { openCloseModal } from "../store/slices/contentSlice";
+import { CustomModal } from "./customModal/CustomModal";
 
 const Settings = () => {
   const titleCardId = 5;
+  const dispatch = useDispatch();
+
   return (
     <main>
       <section className="title">
@@ -30,7 +35,12 @@ const Settings = () => {
           </div>
           <div className="settings__item">
             <h3 className="settings__title">Список учителей</h3>
-            <button className="modal-submit-button">
+            <button
+              className="modal-submit-button"
+              onClick={() => {
+                dispatch(openCloseModal({ teacherModal: true }));
+              }}
+            >
               Добавить нового учителя
             </button>
           </div>
@@ -44,6 +54,7 @@ const Settings = () => {
             <button className="modal-submit-button">Изменить </button>
           </div>
         </div>
+        <CustomModal />
       </section>
 
       <MenuCardBox titleCardId={titleCardId} />

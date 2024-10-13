@@ -83,6 +83,7 @@ const contentSlice = createSlice({
         gradeModal: false,
         notesModal: false,
         editDayModal: false,
+        teacherModal: false,
       },
       modalData: {
         date: "",

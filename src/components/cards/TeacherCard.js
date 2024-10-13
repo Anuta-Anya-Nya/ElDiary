@@ -1,8 +1,14 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  saveModalData,
+  setModify,
+  openCloseModal,
+} from "../../store/slices/contentSlice";
 
 const TeacherCard = ({ teacher }) => {
   const { name, tel, birthdate, teachingLessons } = teacher;
   const lessons = useSelector((state) => state.lessons.lessons);
+  const dispatch = useDispatch();
 
   return (
     <div className="card teachers__card">
@@ -22,7 +28,16 @@ const TeacherCard = ({ teacher }) => {
         </ul>
       </div>
 
-      <button className="modal-submit-button">Изменить данные учителя</button>
+      <button
+        className="modal-submit-button"
+        onClick={() => {
+          dispatch(saveModalData({ teacher }));
+          dispatch(setModify(true));
+          dispatch(openCloseModal({ teacherModal: true }));
+        }}
+      >
+        Изменить данные учителя
+      </button>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { addTeacher } from "../../store/slices/teachersSlice";
 export const ModalTeacher = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
   const modify = useSelector((state) => state.content.openModal.modify);
+  const modalData = useSelector((state) => state.content.openModal.modalData);
 
   const [teacherName, setTeacherName] = useState(null);
   const [lessonsIdList, setLessonsIdList] = useState([]);
@@ -21,7 +22,6 @@ export const ModalTeacher = () => {
     setTeacherName(null);
     setTel(null);
     setBirthdate(null);
-
     dispatch(openCloseModal({ teacherModal: false }));
   };
 
@@ -30,15 +30,28 @@ export const ModalTeacher = () => {
       setError(true);
       return;
     } else {
-      dispatch(
-        addTeacher({
-          id: Date.now(),
-          name: teacherName,
-          tel: tel,
-          birthdate: birthdate,
-          teachingLessons: lessonsIdList,
-        })
-      );
+      if (modify) {
+        dispatch(
+          addTeacher({
+            id: modalData.teacher.id,
+            name: teacherName,
+            tel: tel,
+            birthdate: birthdate,
+            teachingLessons: lessonsIdList,
+          })
+        );
+      } else {
+        dispatch(
+          addTeacher({
+            id: Date.now(),
+            name: teacherName,
+            tel: tel,
+            birthdate: birthdate,
+            teachingLessons: lessonsIdList,
+          })
+        );
+      }
+
       toCloseAndRefreshData();
     }
   };
@@ -49,14 +62,15 @@ export const ModalTeacher = () => {
   //     }
   //     return "";
   //   };
-  //   useEffect(() => {
-  //     if (modify || editMode) {
-  //       setSelectLessonId(modalData.lessonId);
-  //       setSelectTeacher(modalData.teacherId);
-  //       setSelectClass(modalData.class);
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, []);
+  useEffect(() => {
+    if (modify) {
+      setTeacherName(modalData.teacher.name);
+      setTel(modalData.teacher.tel);
+      setBirthdate(modalData.teacher.birthdate);
+      setLessonsIdList(modalData.teacher.teachingLessons);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="modal-content">
@@ -66,7 +80,7 @@ export const ModalTeacher = () => {
           className="modal-content-choice"
           type="text"
           placeholder="Введите ФИО учителя"
-          required
+          value={teacherName || ""}
           onChange={(ev) => {
             setTeacherName(ev.target.value);
             setError(false);
@@ -78,6 +92,7 @@ export const ModalTeacher = () => {
           className="modal-content-choice"
           type="date"
           placeholder="Введите день рождения"
+          value={birthdate || ""}
           onChange={(ev) => {
             setBirthdate(ev.target.value);
           }}
@@ -88,6 +103,7 @@ export const ModalTeacher = () => {
           className="modal-content-choice"
           type="tel"
           placeholder="Введите телефон"
+          value={tel || ""}
           onChange={(ev) => {
             setTel(ev.target.value);
           }}

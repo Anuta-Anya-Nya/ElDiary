@@ -29,7 +29,7 @@ function Lessons() {
           <button
             className="modal-submit-button"
             onClick={() => {
-              //   dispatch(openCloseModal({ teacherModal: true }));
+              dispatch(openCloseModal({ lessonListModal: true }));
             }}
           >
             Добавить новый урок

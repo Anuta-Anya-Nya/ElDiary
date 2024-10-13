@@ -21,6 +21,8 @@ const lessonsSlice = createSlice({
   reducers: {
     addLesson: (state, action) => {
       const lesson = action.payload;
+      console.log(lesson);
+      console.log(lesson.lessonId);
       state.lessons[lesson.lessonId] = lesson;
     },
     removeLesson: (state, action) => {

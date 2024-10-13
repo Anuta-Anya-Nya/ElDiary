@@ -6,23 +6,13 @@ import {
 } from "../../store/slices/contentSlice";
 
 const LessonCard = ({ lesson }) => {
-  console.log(lesson);
   const teachers = useSelector((state) => state.teachers.teachersList);
-  const { title, cabinets } = lesson;
+  const { title, cabinets, lessonId } = lesson;
   const dispatch = useDispatch();
 
-  const findTeacherIdForSelectLesson = () => {
-    const teachersThisLesson = lesson.teachers;
-    if (!teachersThisLesson.length) {
-      return Object.values(teachers)
-        .filter((teacher) => teacher.teachingLessons.includes(lesson.id))
-        .reduce((arr, teacher) => [...arr, teacher.id], []);
-    } else {
-      return teachersThisLesson;
-    }
-  };
-
-  const teachersForLesson = findTeacherIdForSelectLesson();
+  const teachersForLesson = Object.values(teachers)
+    .filter((teacher) => teacher.teachingLessons.includes(lessonId))
+    .reduce((arr, teacher) => [...arr, teacher.id], []);
 
   return (
     <div className="card teachers__card">
@@ -46,17 +36,16 @@ const LessonCard = ({ lesson }) => {
         <ul>
           {cabinets.length
             ? cabinets.join(", ")
-            : "Кабинетов для этого урока не найдено"}
+            : "Кабинетов для этого урока не записано"}
         </ul>
       </div>
 
       <button
         className="modal-submit-button"
         onClick={() => {
-          // dispatch(saveModalData({ teacher }));
-          // dispatch(setModify(true));
-          // dispatch(openCloseModal({ teacherModal: true }));
-          console.log(findTeacherIdForSelectLesson());
+          dispatch(saveModalData({ lesson }));
+          dispatch(setModify(true));
+          dispatch(openCloseModal({ lessonListModal: true }));
         }}
       >
         Изменить урок

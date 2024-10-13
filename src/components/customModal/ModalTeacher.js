@@ -26,7 +26,7 @@ export const ModalTeacher = () => {
   };
 
   const addTeacherToList = () => {
-    if (!teacherName && !lessonsIdList.length) {
+    if (!teacherName || !lessonsIdList.length) {
       setError(true);
       return;
     } else {
@@ -56,12 +56,6 @@ export const ModalTeacher = () => {
     }
   };
 
-  //   const contentItemCount = (itemsArr) => {
-  //     if (itemsArr.length <= 1) {
-  //       return "modal-content-choice-single";
-  //     }
-  //     return "";
-  //   };
   useEffect(() => {
     if (modify) {
       setTeacherName(modalData.teacher.name);
@@ -112,10 +106,7 @@ export const ModalTeacher = () => {
       <h4>Выберите уроки, которые ведет учитель:</h4>
       <div className="modal-content-choice">
         {Object.values(lessons).map((lesson) => (
-          <div
-            key={lesson.lessonId}
-            // className={contentItemCount(Object.values(lessons))}
-          >
+          <div key={lesson.lessonId}>
             <input
               className="modal-content-radio"
               type="checkbox"

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { openCloseModal, editModalData } from "../../store/slices/contentSlice";
+import {
+  openCloseModal,
+  saveModalData,
+  setModify,
+} from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { addTeacher } from "../../store/slices/teachersSlice";
 
@@ -22,6 +26,8 @@ export const ModalTeacher = () => {
     setTeacherName(null);
     setTel(null);
     setBirthdate(null);
+    dispatch(saveModalData({}));
+    dispatch(setModify(false));
     dispatch(openCloseModal({ teacherModal: false }));
   };
 

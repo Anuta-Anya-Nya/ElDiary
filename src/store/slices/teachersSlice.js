@@ -50,7 +50,14 @@ const teachersSlice = createSlice({
   },
   reducers: {
     addTeacher: (state, action) => {
-      state.lessons[action.payload.id] = action.payload;
+      return {
+        ...state,
+        teachersList: {
+          ...state.teachersList,
+          [action.payload.id]: action.payload,
+        },
+      };
+      // state.lessons[action.payload.id] = action.payload;
     },
   },
   //   редьюсеры для thunk функций

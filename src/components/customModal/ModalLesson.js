@@ -6,6 +6,7 @@ import {
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { addLesson } from "../../store/slices/lessonsSlice";
+import del from "../../assets/icons/delete.svg";
 
 export const ModalLesson = () => {
   const modify = useSelector((state) => state.content.openModal.modify);
@@ -17,11 +18,16 @@ export const ModalLesson = () => {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
+
   const addCabinetinList = () => {
     if (cabinet) {
       setCabinets([...cabinets, cabinet]);
       setCabinet(null);
     }
+  };
+
+  const delCabinets = () => {
+    setCabinets([]);
   };
 
   const toCloseAndRefreshData = () => {
@@ -63,9 +69,10 @@ export const ModalLesson = () => {
   return (
     <div className="modal-content">
       <h3>{modify ? "Изменить" : "Добавить"} урок:</h3>
-      <div>
+
+      <div className="lessons__modal">
         <input
-          className="modal-content-choice"
+          className="modal-content-input"
           type="text"
           placeholder="Введите название урока"
           value={title || ""}
@@ -74,11 +81,21 @@ export const ModalLesson = () => {
             setError(false);
           }}
         />
-      </div>
-      <div>
-        <div>{cabinets.join(", ")}</div>
+        {!!cabinets.length && (
+          <div className="lessons__modal-box">
+            <div>Выбранные кабинеты: {cabinets.join(", ")}</div>
+            <img
+              className="diary__icons"
+              src={del}
+              alt="удалить"
+              onClick={() => {
+                delCabinets();
+              }}
+            />
+          </div>
+        )}
         <input
-          className="modal-content-choice"
+          className="modal-content-input"
           type="number"
           placeholder="Введите кабинеты"
           value={cabinet || ""}
@@ -87,6 +104,7 @@ export const ModalLesson = () => {
           }}
         />
         <button
+          className="modal-submit-button modal-button"
           disabled={!cabinet}
           onClick={() => {
             addCabinetinList();

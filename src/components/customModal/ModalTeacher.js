@@ -74,10 +74,10 @@ export const ModalTeacher = () => {
 
   return (
     <div className="modal-content">
-      <h3>{modify ? "Изменить" : "Добавить"} учителя:</h3>
-      <div>
+      <div className="modal-content-box modal-content-box-center">
+        <h3>{modify ? "Изменить" : "Добавить"} учителя:</h3>
         <input
-          className="modal-content-choice"
+          className="modal-content-input"
           type="text"
           placeholder="Введите ФИО учителя"
           value={teacherName || ""}
@@ -86,10 +86,8 @@ export const ModalTeacher = () => {
             setError(false);
           }}
         />
-      </div>
-      <div>
         <input
-          className="modal-content-choice"
+          className="modal-content-input"
           type="date"
           placeholder="Введите день рождения"
           value={birthdate || ""}
@@ -97,10 +95,8 @@ export const ModalTeacher = () => {
             setBirthdate(ev.target.value);
           }}
         />
-      </div>
-      <div>
         <input
-          className="modal-content-choice"
+          className="modal-content-input"
           type="tel"
           placeholder="Введите телефон"
           value={tel || ""}
@@ -108,32 +104,32 @@ export const ModalTeacher = () => {
             setTel(ev.target.value);
           }}
         />
-      </div>
-      <h4>Выберите уроки, которые ведет учитель:</h4>
-      <div className="modal-content-choice">
-        {Object.values(lessons).map((lesson) => (
-          <div key={lesson.lessonId}>
-            <input
-              className="modal-content-radio"
-              type="checkbox"
-              name="selectLesson"
-              value={lesson.lessonId}
-              id={`lesson${lesson.lessonId}`}
-              checked={lessonsIdList.includes(lesson.lessonId)}
-              onChange={(ev) => {
-                setLessonsIdList(
-                  lessonsIdList.includes(Number(ev.target.value))
-                    ? lessonsIdList.filter(
-                        (el) => el !== Number(Number(ev.target.value))
-                      )
-                    : [...lessonsIdList, Number(ev.target.value)]
-                );
-                setError(false);
-              }}
-            />
-            <label htmlFor={`lesson${lesson.lessonId}`}>{lesson.title}</label>
-          </div>
-        ))}
+        <h4>Выберите уроки, которые ведет учитель:</h4>
+        <div className="modal-content-choice">
+          {Object.values(lessons).map((lesson) => (
+            <div key={lesson.lessonId}>
+              <input
+                className="modal-content-radio"
+                type="checkbox"
+                name="selectLesson"
+                value={lesson.lessonId}
+                id={`lesson${lesson.lessonId}`}
+                checked={lessonsIdList.includes(lesson.lessonId)}
+                onChange={(ev) => {
+                  setLessonsIdList(
+                    lessonsIdList.includes(Number(ev.target.value))
+                      ? lessonsIdList.filter(
+                          (el) => el !== Number(Number(ev.target.value))
+                        )
+                      : [...lessonsIdList, Number(ev.target.value)]
+                  );
+                  setError(false);
+                }}
+              />
+              <label htmlFor={`lesson${lesson.lessonId}`}>{lesson.title}</label>
+            </div>
+          ))}
+        </div>
       </div>
 
       {error && (

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { openCloseModal } from "../store/slices/contentSlice";
 import MenuCardBox from "./cards/MenuCardBox";
-import PageTitle from "./blocks/PageTitle";
 import LessonCard from "./cards/LessonCard";
 import { CustomModal } from "./customModal/CustomModal";
 

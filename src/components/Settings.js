@@ -49,7 +49,14 @@ const Settings = () => {
           </div>
           <div className="settings__item">
             <h3 className="settings__title">Уроки</h3>
-            <button className="modal-submit-button">Добавить урок</button>
+            <button
+              className="modal-submit-button"
+              onClick={() => {
+                dispatch(openCloseModal({ lessonListModal: true }));
+              }}
+            >
+              Добавить урок
+            </button>
             <Link to="/lessons" className="modal-submit-button">
               Список уроков
             </Link>

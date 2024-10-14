@@ -36,7 +36,7 @@ const ScheduleRow = ({ lessonInfo, index, create, weekDay, editSchedule }) => {
                       number: index,
                       lessonId: lessonId,
                       teacherId: teacherId,
-                      class: cabinet,
+                      cabinets: cabinet,
                     })
                   );
                   dispatch(setEditMode(true));

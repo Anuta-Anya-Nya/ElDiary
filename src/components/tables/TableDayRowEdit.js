@@ -28,7 +28,7 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
           homeworkId: null,
           grade: null,
           teacherId: null,
-          class: null,
+          cabinets: null,
         },
       })
     );

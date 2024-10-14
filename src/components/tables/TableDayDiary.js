@@ -44,7 +44,7 @@ const TableDayDiary = ({ day, position, modify }) => {
           homeworkId: null,
           grade: null,
           teacherId: null,
-          class: null,
+          cabinet: null,
         },
       })
     );

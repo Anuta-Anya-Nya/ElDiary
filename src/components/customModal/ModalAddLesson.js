@@ -13,7 +13,7 @@ export const ModalAddLesson = () => {
 
   const [selectLessonId, setSelectLessonId] = useState(null);
   const [selectTeacher, setSelectTeacher] = useState(null);
-  const [selectClass, setSelectClass] = useState(null);
+  const [selectCabinet, setSelectCabinet] = useState(null);
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export const ModalAddLesson = () => {
     setError(false);
     setSelectLessonId(null);
     setSelectTeacher(null);
-    setSelectClass(null);
+    setSelectCabinet(null);
     if (modify) {
       dispatch(openCloseModal({ lessonModal: false, editDayModal: true }));
     } else if (createMode || editMode) {
@@ -30,7 +30,7 @@ export const ModalAddLesson = () => {
         editModalData({
           selectLessonId: selectLessonId,
           selectTeacher: selectTeacher,
-          selectClass: selectClass,
+          selectCabinet: selectCabinet,
         })
       );
       dispatch(openCloseModal({ lessonModal: false }));
@@ -54,7 +54,7 @@ export const ModalAddLesson = () => {
               homeworkId: null,
               grade: null,
               teacherId: selectTeacher || null,
-              class: selectClass || null,
+              cabinet: selectCabinet || null,
             },
           })
         );
@@ -84,7 +84,7 @@ export const ModalAddLesson = () => {
     if (modify || editMode) {
       setSelectLessonId(modalData.lessonId);
       setSelectTeacher(modalData.teacherId);
-      setSelectClass(modalData.class);
+      setSelectCabinet(modalData.cabinet);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -150,11 +150,11 @@ export const ModalAddLesson = () => {
 
           <h3>Кабинет:</h3>
           <div className="modal-content-choice">
-            {lessons[selectLessonId].class.length ? (
-              lessons[selectLessonId].class.map((classItem, ind) => (
+            {lessons[selectLessonId].cabinets.length ? (
+              lessons[selectLessonId].cabinets.map((classItem, ind) => (
                 <div
                   key={ind}
-                  className={contentItemCount(lessons[selectLessonId].class)}
+                  className={contentItemCount(lessons[selectLessonId].cabinets)}
                 >
                   <input
                     className="modal-content-radio"
@@ -162,16 +162,18 @@ export const ModalAddLesson = () => {
                     name="selectClass"
                     value={classItem}
                     id={`class${classItem}`}
-                    checked={selectClass === classItem}
+                    checked={selectCabinet === classItem}
                     onChange={(el) => {
-                      setSelectClass(Number(el.target.value));
+                      setSelectCabinet(Number(el.target.value));
                     }}
                   />
                   <label htmlFor={`class${classItem}`}>{classItem}</label>
                 </div>
               ))
             ) : (
-              <div className={contentItemCount(lessons[selectLessonId].class)}>
+              <div
+                className={contentItemCount(lessons[selectLessonId].cabinets)}
+              >
                 Кабинетов для этого урока не найдено
               </div>
             )}

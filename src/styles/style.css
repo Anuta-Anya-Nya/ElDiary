@@ -653,6 +653,22 @@ input[type=checkbox] {
   align-self: start;
 }
 
+.lessons__title {
+  color: #3c3c3c;
+}
+.lessons__block {
+  display: flex;
+  gap: 15px;
+  align-items: baseline;
+  margin-bottom: 15px;
+}
+.lessons__block:last-of-type {
+  flex: 1;
+}
+.lessons__block ul {
+  text-align: center;
+}
+
 @media (max-width: 767px) {
   .header-container {
     display: flex;

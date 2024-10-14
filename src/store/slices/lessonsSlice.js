@@ -4,23 +4,25 @@ const lessonsSlice = createSlice({
   name: "lessons",
   initialState: {
     lessons: {
-      1: { lessonId: 1, title: "Русский", teachers: [1], class: [15] },
-      2: { lessonId: 2, title: "Математика", teachers: [2], class: [2] },
-      3: { lessonId: 3, title: "Литература", teachers: [1], class: [15] },
-      4: { lessonId: 4, title: "История", teachers: [], class: [] },
-      5: { lessonId: 5, title: "География", teachers: [], class: [] },
-      6: { lessonId: 6, title: "Биология", teachers: [], class: [] },
+      1: { lessonId: 1, title: "Русский", teachers: [1], cabinets: [15] },
+      2: { lessonId: 2, title: "Математика", teachers: [2], cabinets: [2] },
+      3: { lessonId: 3, title: "Литература", teachers: [1], cabinets: [15] },
+      4: { lessonId: 4, title: "История", teachers: [], cabinets: [] },
+      5: { lessonId: 5, title: "География", teachers: [], cabinets: [] },
+      6: { lessonId: 6, title: "Биология", teachers: [], cabinets: [] },
       7: {
         lessonId: 7,
         title: "Английский",
         teachers: [3, 4],
-        class: [23, 30],
+        cabinets: [23, 30],
       },
     },
   },
   reducers: {
     addLesson: (state, action) => {
       const lesson = action.payload;
+      console.log(lesson);
+      console.log(lesson.lessonId);
       state.lessons[lesson.lessonId] = lesson;
     },
     removeLesson: (state, action) => {

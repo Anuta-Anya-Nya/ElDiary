@@ -34,7 +34,7 @@ const Settings = () => {
             </Link>
           </div>
           <div className="settings__item">
-            <h3 className="settings__title">Список учителей</h3>
+            <h3 className="settings__title">Учителя</h3>
             <button
               className="modal-submit-button"
               onClick={() => {
@@ -43,10 +43,23 @@ const Settings = () => {
             >
               Добавить нового учителя
             </button>
+            <Link to="/teachers" className="modal-submit-button">
+              Список учителей
+            </Link>
           </div>
           <div className="settings__item">
-            <h3 className="settings__title">Список уроков</h3>
-            <button className="modal-submit-button">Добавить урок</button>
+            <h3 className="settings__title">Уроки</h3>
+            <button
+              className="modal-submit-button"
+              onClick={() => {
+                dispatch(openCloseModal({ lessonListModal: true }));
+              }}
+            >
+              Добавить урок
+            </button>
+            <Link to="/lessons" className="modal-submit-button">
+              Список уроков
+            </Link>
           </div>
           <div className="settings__item">
             <h3 className="settings__title">Расписание звонков</h3>

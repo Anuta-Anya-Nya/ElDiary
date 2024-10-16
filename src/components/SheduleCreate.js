@@ -1,24 +1,19 @@
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
+import ScheduleActions from "./blocks/ScheduleActions";
 
 import moment from "moment/min/moment-with-locales.min";
+import { findCurrentStudyYear } from "../utils/services";
 
 import { useState } from "react";
-
 import { useSelector } from "react-redux";
-
-import ScheduleActions from "./blocks/ScheduleActions";
 
 const ScheduleCreate = () => {
   const titleCardId = 7;
   const editSchedule = true;
 
   const currentDate = moment();
-  const currentStudyYear = currentDate.isBefore(
-    moment(`${currentDate.format("YYYY")}-09-01`)
-  )
-    ? Number(currentDate.format("YYYY")) - 1
-    : Number(currentDate.format("YYYY"));
+  const currentStudyYear = findCurrentStudyYear(currentDate);
 
   const [period, setPeriod] = useState(currentStudyYear);
   const handleChange = (e) => {

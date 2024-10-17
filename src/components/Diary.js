@@ -4,7 +4,11 @@ import moment from "moment/min/moment-with-locales.min";
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import TablesDiary from "./tables/TablesDiary";
-import { checkWeeklySchedule, getWeekDaysInStore } from "../utils/services";
+import {
+  checkWeeklySchedule,
+  findCurrentStudyYear,
+  getWeekDaysInStore,
+} from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addSchedule } from "../store/slices/dailySchedulesSlice";
 import arrowLeft from "../assets/icons/arrow-left.svg";
@@ -18,6 +22,11 @@ const Diary = () => {
 
   const [currentDate, setCurrentDate] = useState(moment());
   const [diaryWeek, setDiaryWeek] = useState({});
+
+  const currentStudyYear = findCurrentStudyYear(currentDate);
+  const weeklySchedule = useSelector(
+    (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
+  );
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const dispatch = useDispatch();
@@ -44,7 +53,13 @@ const Diary = () => {
   };
 
   useEffect(() => {
-    checkWeeklySchedule(currentDate, schedules, dispatch, addSchedule);
+    checkWeeklySchedule(
+      currentDate,
+      schedules,
+      weeklySchedule,
+      dispatch,
+      addSchedule
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate]);
 

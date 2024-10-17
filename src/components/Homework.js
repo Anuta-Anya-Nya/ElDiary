@@ -47,6 +47,7 @@ function Homework() {
       dispatch,
       addSchedule
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayDate]);
 
   return (

@@ -45,20 +45,32 @@ export const findMissingDates = (currentDateMoment, schedules) => {
   return [];
 };
 
+export function findDayInWeeklyShedule(dateStr, weeklySchedule) {
+  const dayOfWeek = moment(dateStr).day();
+  if (weeklySchedule && dayOfWeek) {
+    return weeklySchedule.schedule[dayOfWeek - 1];
+  }
+  return [];
+}
+
 export function checkWeeklySchedule(
   currentDateMoment,
   schedules,
+  weeklySchedule,
   dispatch,
   action
 ) {
   const missingDates = findMissingDates(currentDateMoment, schedules);
-  console.log(currentDateMoment.format("YYYY-MM-DD"));
-  if (missingDates.length > 0) {
+
+  if (missingDates.length) {
     const newScheduleItems = missingDates.reduce((sheduleItems, date) => {
-      sheduleItems[date] = {
-        id: Date.now(),
-        date,
-        lessonsList: [
+      let lessonsList = [];
+      if (weeklySchedule) {
+        lessonsList = findDayInWeeklyShedule(date, weeklySchedule).map(
+          (lesson) => ({ ...lesson, homework: null, grade: null })
+        );
+      } else {
+        lessonsList = [
           {
             lessonId: null,
             homeworkId: null,
@@ -66,13 +78,19 @@ export function checkWeeklySchedule(
             teacherId: null,
             cabinet: null,
           },
-        ],
+        ];
+      }
+      sheduleItems[date] = {
+        id: Date.now(),
+        date,
+        lessonsList,
         notes: null,
         vacation: false,
         holiday: false,
       };
       return sheduleItems;
     }, {});
+    missingDates.map((date) => findDayInWeeklyShedule(date));
     dispatch(action(newScheduleItems));
   }
 }

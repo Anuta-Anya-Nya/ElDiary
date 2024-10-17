@@ -25,15 +25,6 @@ export const ModalAddLesson = () => {
     setSelectCabinet(null);
     if (modify) {
       dispatch(openCloseModal({ lessonModal: false, editDayModal: true }));
-    } else if (createMode || editMode) {
-      dispatch(
-        editModalData({
-          selectLessonId: selectLessonId,
-          selectTeacher: selectTeacher,
-          selectCabinet: selectCabinet,
-        })
-      );
-      dispatch(openCloseModal({ lessonModal: false }));
     } else {
       dispatch(openCloseModal({ lessonModal: false }));
     }
@@ -60,6 +51,15 @@ export const ModalAddLesson = () => {
         );
         toCloseAndRefreshData();
       }
+    }
+    if (createMode || editMode) {
+      dispatch(
+        editModalData({
+          selectLessonId: selectLessonId,
+          selectTeacher: selectTeacher,
+          selectCabinet: selectCabinet,
+        })
+      );
     }
     toCloseAndRefreshData();
   };

@@ -11,6 +11,8 @@ import { findCurrentStudyYear, toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addSchedule } from "../store/slices/dailySchedulesSlice";
+import { useAuth } from "../utils/useAuth";
+import { Navigate } from "react-router-dom";
 
 function Homework() {
   moment.locale("ru");
@@ -34,7 +36,7 @@ function Homework() {
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
-
+  const isAuth = useAuth().isAuth;
   useEffect(() => {
     //если они пустые, нужно добавить записи в расписание на текущую неделю в зависимости от заданного расписания уроков
     // загрузить с БД все дневные расписания
@@ -50,7 +52,7 @@ function Homework() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayDate]);
 
-  return (
+  return isAuth ? (
     <main>
       <PageTitle titleCardId={titleCardId} />
       <section className="homework">
@@ -85,6 +87,8 @@ function Homework() {
       </section>
       <MenuCardBox titleCardId={titleCardId} />
     </main>
+  ) : (
+    <Navigate to="/" />
   );
 }
 

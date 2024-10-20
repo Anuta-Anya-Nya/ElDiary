@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import LoginView from "./components/LoginView";
 import Homework from "./components/Homework";
 import Note from "./components/Note";
 import Diary from "./components/Diary";
@@ -16,7 +17,8 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<Homework />} />
+        <Route path="/" element={<LoginView />} />
+        <Route path="/homework" element={<Homework />} />
         <Route path="/note" element={<Note />} />
         <Route path="/diary" element={<Diary />} />
         <Route path="/weekShedule" element={<Schedule />} />

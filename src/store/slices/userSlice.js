@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import { auth } from "../../firebase/firebase";
+
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,

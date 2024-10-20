@@ -12,7 +12,7 @@ const weeklyScheduleSlice = createSlice({
           [
             { lessonId: 1, cabinet: 23, teacherId: 1 },
             { lessonId: 2, cabinet: 23, teacherId: 2 },
-            { lessonId: null, cabinet: null, teacherId: null },
+            { lessonId: 1, cabinet: 15, teacherId: 1 },
             { lessonId: 2, cabinet: 23, teacherId: 2 },
           ],
           [

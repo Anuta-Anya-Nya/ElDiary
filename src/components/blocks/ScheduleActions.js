@@ -27,8 +27,6 @@ const ScheduleActions = ({
 
   const addString = (day) => {
     const newSchedule = JSON.parse(JSON.stringify(schedule));
-    console.log(newSchedule);
-
     newSchedule[day].push({
       lessonId: null,
       cabinet: null,
@@ -59,7 +57,7 @@ const ScheduleActions = ({
     const newSchedule = JSON.parse(JSON.stringify(schedule));
     newSchedule[modalData.day][modalData.number] = {
       lessonId: modalData.selectLessonId,
-      cabinet: modalData.selectClass,
+      cabinet: modalData.selectCabinet,
       teacherId: modalData.selectTeacher,
     };
     setSchedule(newSchedule);

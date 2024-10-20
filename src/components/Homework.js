@@ -7,7 +7,7 @@ import arrowRight from "../assets/icons/arrow-right.svg";
 import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
-import { toChangeDate } from "../utils/services";
+import { findCurrentStudyYear, toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addSchedule } from "../store/slices/dailySchedulesSlice";
@@ -21,6 +21,12 @@ function Homework() {
   );
   const titleCardId = 6;
 
+  const currentStudyYear = findCurrentStudyYear(currentDate);
+  const weeklySchedule = useSelector(
+    (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
+  );
+
+  // из базы нужно будет запрашивать записи за 24 учебный год
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const dispatch = useDispatch();
 
@@ -34,7 +40,14 @@ function Homework() {
     // загрузить с БД все дневные расписания
   }, []);
   useEffect(() => {
-    checkWeeklySchedule(displayDate, schedules, dispatch, addSchedule);
+    checkWeeklySchedule(
+      displayDate,
+      schedules,
+      weeklySchedule,
+      dispatch,
+      addSchedule
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayDate]);
 
   return (

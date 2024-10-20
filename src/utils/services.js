@@ -12,6 +12,14 @@ export const buildTask = (lessonItem) => {
   return taskArr.join(", ");
 };
 
+export const findCurrentStudyYear = (currentDateMoment) => {
+  return currentDateMoment.isBefore(
+    moment(`${currentDateMoment.format("YYYY")}-09-01`)
+  )
+    ? Number(currentDateMoment.format("YYYY")) - 1
+    : Number(currentDateMoment.format("YYYY"));
+};
+
 export function getWeekDaysInStore(currentDateMoment, schedules) {
   const startWeekDate = currentDateMoment.clone().startOf("week");
   const endWeekDate = currentDateMoment.clone().endOf("week");
@@ -22,83 +30,67 @@ export function getWeekDaysInStore(currentDateMoment, schedules) {
 
 export const findMissingDates = (currentDateMoment, schedules) => {
   const findingDates = getWeekDaysInStore(currentDateMoment, schedules);
-  const missingDates = [];
-  const startWeekDate = currentDateMoment.clone().startOf("week");
-  const endWeekDate = currentDateMoment.clone().endOf("week");
-
   if (findingDates.length !== 7) {
+    const missingDates = [];
+    const startWeekDate = currentDateMoment.clone().startOf("week");
+    const endWeekDate = currentDateMoment.clone().endOf("week");
     while (startWeekDate.isBefore(endWeekDate)) {
       if (!findingDates.includes(startWeekDate.format("YYYY-MM-DD"))) {
         missingDates.push(startWeekDate.format("YYYY-MM-DD"));
       }
       startWeekDate.add(1, "days");
     }
+    return missingDates;
   }
-  return missingDates;
+  return [];
 };
+
+export function findDayInWeeklyShedule(dateStr, weeklySchedule) {
+  const dayOfWeek = moment(dateStr).day();
+  if (weeklySchedule && dayOfWeek) {
+    return weeklySchedule.schedule[dayOfWeek - 1];
+  }
+  return [];
+}
 
 export function checkWeeklySchedule(
   currentDateMoment,
   schedules,
+  weeklySchedule,
   dispatch,
   action
 ) {
   const missingDates = findMissingDates(currentDateMoment, schedules);
-  if (missingDates.length > 0) {
-    const newScheduleItems = {};
-    missingDates.map((date) => {
-      return (newScheduleItems[date] = {
+
+  if (missingDates.length) {
+    const newScheduleItems = missingDates.reduce((sheduleItems, date) => {
+      let lessonsList = [];
+      if (weeklySchedule) {
+        lessonsList = findDayInWeeklyShedule(date, weeklySchedule).map(
+          (lesson) => ({ ...lesson, homework: null, grade: null })
+        );
+      } else {
+        lessonsList = [
+          {
+            lessonId: null,
+            homeworkId: null,
+            grade: null,
+            teacherId: null,
+            cabinet: null,
+          },
+        ];
+      }
+      sheduleItems[date] = {
         id: Date.now(),
-        date: date,
-        lessonsList: [
-          {
-            lessonId: null,
-            homeworkId: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
-          {
-            lessonId: null,
-            homeworkId: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
-          {
-            lessonId: null,
-            homeworkId: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
-          {
-            lessonId: null,
-            homeworkId: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
-          {
-            lessonId: null,
-            homeworkId: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
-          {
-            lessonId: null,
-            homeworkId: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
-        ],
+        date,
+        lessonsList,
         notes: null,
         vacation: false,
         holiday: false,
-      });
-    });
+      };
+      return sheduleItems;
+    }, {});
+    missingDates.map((date) => findDayInWeeklyShedule(date));
     dispatch(action(newScheduleItems));
   }
 }

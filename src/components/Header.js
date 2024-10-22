@@ -4,10 +4,12 @@ import account from "../assets/icons/personal-account-account-svgrepo-com.svg";
 import settings from "../assets/icons/setting-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../utils/useAuth";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
 function Header() {
   const dispatch = useDispatch();
-  const email = useAuth().email;
+  const email = useAuth()?.email;
   return (
     <header className="header">
       <div className="container header-container">
@@ -19,7 +21,7 @@ function Header() {
             <li
               className="header__menu-item"
               onClick={() => {
-                dispatch(removeUser());
+                signOut(auth);
               }}
             >
               Привет, {email || "незнакомец"}!

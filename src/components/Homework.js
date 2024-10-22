@@ -11,8 +11,10 @@ import { findCurrentStudyYear, toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addSchedule } from "../store/slices/dailySchedulesSlice";
-import { useAuth } from "../utils/useAuth";
+// import { useAuth } from "../utils/useAuth";
 import { Navigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
 function Homework() {
   moment.locale("ru");
@@ -36,10 +38,27 @@ function Homework() {
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
-  const isAuth = useAuth().isAuth;
+  // const isAuth = useAuth().isAuth;
+  // const isAuth = onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     console.log(user);
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // });
+  const [isAuth, setIsAuth] = useState(true);
+  console.log(isAuth);
   useEffect(() => {
-    //если они пустые, нужно добавить записи в расписание на текущую неделю в зависимости от заданного расписания уроков
-    // загрузить с БД все дневные расписания
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user.email);
+        setIsAuth(true);
+      } else {
+        console.log("пользователь отсутствует");
+        setIsAuth(false);
+      }
+    });
   }, []);
   useEffect(() => {
     checkWeeklySchedule(

@@ -1,9 +1,7 @@
 import { useState } from "react";
-// import { useAuth } from "../utils/useAuth";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { createUserThunk, loginThunk } from "../store/slices/userSlice";
-
 import { useAuth } from "../utils/AuthContext";
 
 const LoginView = () => {

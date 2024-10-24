@@ -17,8 +17,8 @@ import { AuthProvider } from "./router/AuthContext";
 function App() {
   return (
     <div className="App">
-      <Header />
       <AuthProvider>
+        <Header />
         <Routes>
           <Route path="/" element={<div>Домашняя страница</div>} />
           <Route path="/login" element={<LoginView />} />
@@ -35,9 +35,8 @@ function App() {
 
           <Route path="*" element={<Error404 />} />
         </Routes>
+        <Footer />
       </AuthProvider>
-
-      <Footer />
     </div>
   );
 }

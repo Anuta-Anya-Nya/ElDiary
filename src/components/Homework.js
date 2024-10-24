@@ -11,10 +11,6 @@ import { findCurrentStudyYear, toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addSchedule } from "../store/slices/dailySchedulesSlice";
-// import { useAuth } from "../utils/useAuth";
-import { Navigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/firebase";
 
 function Homework() {
   moment.locale("ru");
@@ -38,28 +34,6 @@ function Homework() {
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
-  // const isAuth = useAuth().isAuth;
-  // const isAuth = onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     console.log(user);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // });
-  const [isAuth, setIsAuth] = useState(true);
-  console.log(isAuth);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user.email);
-        setIsAuth(true);
-      } else {
-        console.log("пользователь отсутствует");
-        setIsAuth(false);
-      }
-    });
-  }, []);
   useEffect(() => {
     checkWeeklySchedule(
       displayDate,
@@ -71,7 +45,7 @@ function Homework() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayDate]);
 
-  return isAuth ? (
+  return (
     <main>
       <PageTitle titleCardId={titleCardId} />
       <section className="homework">
@@ -106,8 +80,6 @@ function Homework() {
       </section>
       <MenuCardBox titleCardId={titleCardId} />
     </main>
-  ) : (
-    <Navigate to="/" />
   );
 }
 

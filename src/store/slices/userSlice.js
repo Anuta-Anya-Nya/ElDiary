@@ -38,13 +38,13 @@ export const loginThunk = createAsyncThunk(
   "user/loginThunk",
   async ({ email, pass }) => {
     try {
-      // всегда надо передавать можуль аутентификации с конфигами auth
       const userCredit = await signInWithEmailAndPassword(auth, email, pass);
       const userData = {
         email: userCredit.user.email,
         id: userCredit.user.uid,
         token: userCredit.user.accessToken,
       };
+      console.log(userCredit.user);
       return userData;
     } catch (er) {
       console.log(er.code, er.message);

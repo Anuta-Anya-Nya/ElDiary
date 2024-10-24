@@ -34,11 +34,6 @@ function Homework() {
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
-
-  useEffect(() => {
-    //если они пустые, нужно добавить записи в расписание на текущую неделю в зависимости от заданного расписания уроков
-    // загрузить с БД все дневные расписания
-  }, []);
   useEffect(() => {
     checkWeeklySchedule(
       displayDate,

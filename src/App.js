@@ -12,7 +12,7 @@ import Teachers from "./components/Teachers";
 import Lessons from "./components/Lessons";
 import Error404 from "./components/Error404";
 import PrivateRoutes from "./router/PrivateRoutes";
-import { AuthProvider } from "./router/AuthContext";
+import { AuthProvider } from "../src/utils/AuthContext";
 
 function App() {
   return (
@@ -32,7 +32,6 @@ function App() {
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/lessons" element={<Lessons />} />
           </Route>
-
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />

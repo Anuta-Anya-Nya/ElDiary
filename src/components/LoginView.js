@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { createUserThunk, loginThunk } from "../store/slices/userSlice";
 
-import { useAuth } from "../router/AuthContext";
+import { useAuth } from "../utils/AuthContext";
 
 const LoginView = () => {
   const { user } = useAuth();

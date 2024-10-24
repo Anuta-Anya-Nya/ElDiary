@@ -3,7 +3,7 @@ import settings from "../assets/icons/setting-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import { useAuth } from "../router/AuthContext";
+import { useAuth } from "../utils/AuthContext";
 import { useEffect, useState } from "react";
 
 function Header() {

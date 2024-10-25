@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
+import { addUserDb } from "../../firebase/crud";
 
 // THUNK для создания пользователя при регистрации
 export const createUserThunk = createAsyncThunk(
@@ -20,8 +21,8 @@ export const createUserThunk = createAsyncThunk(
       const userData = {
         email: userCredit.user.email,
         id: userCredit.user.uid,
-        token: userCredit.user.accessToken,
       };
+      addUserDb(userData);
       return userData;
     } catch (er) {
       console.log(er.code, er.message);
@@ -40,7 +41,6 @@ export const loginThunk = createAsyncThunk(
       const userData = {
         email: userCredit.user.email,
         id: userCredit.user.uid,
-        token: userCredit.user.accessToken,
       };
       console.log(userCredit.user);
       return userData;

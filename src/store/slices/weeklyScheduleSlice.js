@@ -1,4 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getWeeklySheduleDB } from "../../firebase/crud";
+
+// THUNK для записи недельного расписания из базы данных в стор
+export const getWeeklySchedule = createAsyncThunk(
+  "weeklySchedule/getWeeklySchedThunk",
+  async ({ userId, currentYear }) => {
+    try {
+      const weeklySched = await getWeeklySheduleDB(userId, 2024);
+      console.log(weeklySched);
+      return weeklySched;
+    } catch (er) {
+      console.log(er.code, er.message);
+    }
+  }
+);
 
 const weeklyScheduleSlice = createSlice({
   name: "weeklySchedule",
@@ -48,15 +63,12 @@ const weeklyScheduleSlice = createSlice({
     // updateDailySchedule: (state, action) => {
     // },
   },
-  //   редьюсеры для thunk функций
-  //   extraReducers: (builder) => {
-  //     builder.addCase(createUserThunk.fulfilled, (state, action) => {
-  //       return (state = action.payload);
-  //     });
-  //     builder.addCase(loginThunk.fulfilled, (state, action) => {
-  //       return (state = action.payload);
-  //     });
-  //   },
+  // редьюсеры для thunk функций
+  extraReducers: (builder) => {
+    builder.addCase(getWeeklySchedule.fulfilled, (state, action) => {
+      return (state = action.payload);
+    });
+  },
 });
 export const { addWeeklySchedule } = weeklyScheduleSlice.actions;
 export const weeklyScheduleReducer = weeklyScheduleSlice.reducer;

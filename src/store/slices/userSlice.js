@@ -5,7 +5,6 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     email: null,
-    token: null,
     id: null,
     // error: null
   },

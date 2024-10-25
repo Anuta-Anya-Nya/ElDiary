@@ -11,6 +11,8 @@ import { findCurrentStudyYear, toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addSchedule } from "../store/slices/dailySchedulesSlice";
+import { getWeeklySheduleDB } from "../firebase/crud";
+import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 
 function Homework() {
   moment.locale("ru");
@@ -20,6 +22,7 @@ function Homework() {
     currentDate.clone().add(selectDisplay, "days")
   );
   const titleCardId = 6;
+  const userId = useSelector((state) => state.user.id);
 
   const currentStudyYear = findCurrentStudyYear(currentDate);
   const weeklySchedule = useSelector(
@@ -35,6 +38,9 @@ function Homework() {
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
   useEffect(() => {
+    dispatch(getWeeklySchedule({ userId, currentStudyYear }));
+
+    // getWeeklySheduleDB(userId, currentStudyYear);
     checkWeeklySchedule(
       displayDate,
       schedules,

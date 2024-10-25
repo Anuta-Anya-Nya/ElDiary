@@ -5,11 +5,14 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useAuth } from "../utils/AuthContext";
 import { useEffect, useState } from "react";
+import { removeUser } from "../store/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 function Header() {
   const { user } = useAuth();
   const greeting = `Привет, ${user?.email || "незнакомец"}!`;
   const [textButton, setTextButton] = useState(greeting);
+  const dispatch = useDispatch();
 
   const handleMouseEnter = () => {
     if (user) {
@@ -35,6 +38,7 @@ function Header() {
             <li
               className="header__menu-item"
               onClick={() => {
+                dispatch(removeUser());
                 signOut(auth);
               }}
               onMouseEnter={() => {

@@ -11,7 +11,6 @@ import { findCurrentStudyYear, toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addSchedule } from "../store/slices/dailySchedulesSlice";
-import { getWeeklySheduleDB } from "../firebase/crud";
 import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 
 function Homework() {
@@ -26,10 +25,9 @@ function Homework() {
 
   const currentStudyYear = findCurrentStudyYear(currentDate);
   const weeklySchedule = useSelector(
-    (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
+    (state) => state.weeklySchedule.scheduleForWeek
   );
 
-  // из базы нужно будет запрашивать записи за 24 учебный год
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const dispatch = useDispatch();
 
@@ -38,9 +36,10 @@ function Homework() {
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
   useEffect(() => {
-    dispatch(getWeeklySchedule({ userId, currentStudyYear }));
-
-    // getWeeklySheduleDB(userId, currentStudyYear);
+    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
     checkWeeklySchedule(
       displayDate,
       schedules,

@@ -15,17 +15,18 @@ import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
 import { CustomModal } from "./customModal/CustomModal";
+import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 
 const Diary = () => {
   moment.locale("ru");
   const titleCardId = 1;
-
+  const userId = useSelector((state) => state.user.id);
   const [currentDate, setCurrentDate] = useState(moment());
   const [diaryWeek, setDiaryWeek] = useState({});
 
   const currentStudyYear = findCurrentStudyYear(currentDate);
   const weeklySchedule = useSelector(
-    (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
+    (state) => state.weeklySchedule.scheduleForWeek
   );
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
@@ -51,7 +52,10 @@ const Diary = () => {
       .endOf("week")
       .format("DD MMMM YYYY")} года`;
   };
-
+  useEffect(() => {
+    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     checkWeeklySchedule(
       currentDate,

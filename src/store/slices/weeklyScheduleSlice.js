@@ -6,7 +6,7 @@ export const getWeeklySchedule = createAsyncThunk(
   "weeklySchedule/getWeeklySchedThunk",
   async ({ userId, currentYear }) => {
     try {
-      const weeklySched = await getWeeklySheduleDB(userId, 2024);
+      const weeklySched = await getWeeklySheduleDB(userId, currentYear);
       console.log(weeklySched);
       return weeklySched;
     } catch (er) {
@@ -19,39 +19,37 @@ const weeklyScheduleSlice = createSlice({
   name: "weeklySchedule",
   initialState: {
     scheduleForWeek: {
-      2024: {
-        id: 123,
-        startPeriod: "2024-09-01",
-        endPeriod: "2025-06-01",
-        schedule: [
-          [
-            { lessonId: 1, cabinet: 23, teacherId: 1 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-            { lessonId: 1, cabinet: 15, teacherId: 1 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-          ],
-          [
-            { lessonId: 1, cabinet: 23, teacherId: 1 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-          ],
-          [
-            { lessonId: 1, cabinet: 23, teacherId: 1 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-          ],
-          [
-            { lessonId: 1, cabinet: 23, teacherId: 1 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-          ],
-          [
-            { lessonId: 1, cabinet: 23, teacherId: 1 },
-            { lessonId: 2, cabinet: 23, teacherId: 2 },
-          ],
-          [{ lessonId: null, cabinet: null, teacherId: null }],
+      id: 123,
+      startPeriod: "2024-09-01",
+      endPeriod: "2025-06-01",
+      schedule: [
+        [
+          { lessonId: 1, cabinet: 23, teacherId: 1 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+          { lessonId: 1, cabinet: 15, teacherId: 1 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
         ],
-      },
+        [
+          { lessonId: 1, cabinet: 23, teacherId: 1 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+        ],
+        [
+          { lessonId: 1, cabinet: 23, teacherId: 1 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+        ],
+        [
+          { lessonId: 1, cabinet: 23, teacherId: 1 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+        ],
+        [
+          { lessonId: 1, cabinet: 23, teacherId: 1 },
+          { lessonId: 2, cabinet: 23, teacherId: 2 },
+        ],
+        [{ lessonId: null, cabinet: null, teacherId: null }],
+      ],
     },
   },
 

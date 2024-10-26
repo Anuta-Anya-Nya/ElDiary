@@ -5,12 +5,15 @@ import ScheduleActions from "./blocks/ScheduleActions";
 import moment from "moment/min/moment-with-locales.min";
 import { findCurrentStudyYear } from "../utils/services";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { isCreateWeeklySheduleDB } from "../firebase/crud";
 import { useSelector } from "react-redux";
 
 const ScheduleCreate = () => {
   const titleCardId = 7;
   const editSchedule = true;
+  const userId = useSelector((state) => state.user.id);
 
   const currentDate = moment();
   const currentStudyYear = findCurrentStudyYear(currentDate);
@@ -19,9 +22,13 @@ const ScheduleCreate = () => {
   const handleChange = (e) => {
     setPeriod(Number(e.target.value));
   };
-  const checkAvail = useSelector(
-    (state) => state.weeklySchedule.scheduleForWeek[period]
-  );
+  // const checkAvail = isCreateWeeklySheduleDB(userId, period);
+  const [checkAvail, setCheckAvail] = useState(true);
+
+  useEffect(() => {
+    isCreateWeeklySheduleDB(userId, period).then((data) => setCheckAvail(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [period]);
 
   return (
     <main>

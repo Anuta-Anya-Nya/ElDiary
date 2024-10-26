@@ -36,3 +36,15 @@ export const getWeeklySheduleDB = async (userId, currentYear) => {
     return {};
   }
 };
+export const isCreateWeeklySheduleDB = async (userId, currentYear) => {
+  const resp = await getDoc(
+    doc(db, `users/${userId}/weeklyShedule/${currentYear}`)
+  );
+  if (resp.exists()) {
+    console.log(true);
+    return true;
+  } else {
+    console.log(false);
+    return false;
+  }
+};

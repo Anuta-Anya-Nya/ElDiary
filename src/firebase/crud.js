@@ -41,10 +41,16 @@ export const isCreateWeeklySheduleDB = async (userId, currentYear) => {
     doc(db, `users/${userId}/weeklyShedule/${currentYear}`)
   );
   if (resp.exists()) {
-    console.log(true);
     return true;
   } else {
-    console.log(false);
     return false;
   }
+};
+
+export const addWeeklyScheduleDB = async (userId, data) => {
+  const result = setDoc(
+    doc(db, `users/${userId}/weeklyShedule/${data.year}`),
+    data
+  );
+  console.log(result);
 };

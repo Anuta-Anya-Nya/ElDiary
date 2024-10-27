@@ -4,6 +4,7 @@ import moment from "moment/min/moment-with-locales.min";
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import TablesDiary from "./tables/TablesDiary";
+import Loading from "./blocks/Loading";
 import {
   checkWeeklySchedule,
   findCurrentStudyYear,
@@ -106,8 +107,10 @@ const Diary = () => {
               />
             </div>
           </div>
-          {Object.keys(diaryWeek).length > 0 && (
+          {Object.keys(diaryWeek).length > 0 ? (
             <TablesDiary week={diaryWeek} currentDate={currentDate} />
+          ) : (
+            <Loading />
           )}
         </div>
         <CustomModal />

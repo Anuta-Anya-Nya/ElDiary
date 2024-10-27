@@ -7,6 +7,7 @@ import arrowRight from "../assets/icons/arrow-right.svg";
 import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
+import Loading from "./blocks/Loading";
 import { findCurrentStudyYear, toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
@@ -16,12 +17,15 @@ import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 function Homework() {
   moment.locale("ru");
   const currentDate = moment();
+  const loadingWeeklySchedule = useSelector(
+    (state) => state.weeklySchedule.loading
+  );
+  const titleCardId = 6;
+  const userId = useSelector((state) => state.user.id);
   const selectDisplay = useSelector((state) => state.settings.displayHomeWork);
   const [displayDate, setDisplayDate] = useState(
     currentDate.clone().add(selectDisplay, "days")
   );
-  const titleCardId = 6;
-  const userId = useSelector((state) => state.user.id);
 
   const currentStudyYear = findCurrentStudyYear(currentDate);
   const weeklySchedule = useSelector(
@@ -36,19 +40,25 @@ function Homework() {
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
   useEffect(() => {
-    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    if (loadingWeeklySchedule) {
+      dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    checkWeeklySchedule(
-      displayDate,
-      schedules,
-      weeklySchedule,
-      dispatch,
-      addSchedule
-    );
+    if (!loadingWeeklySchedule) {
+      checkWeeklySchedule(
+        displayDate,
+        schedules,
+        weeklySchedule,
+        dispatch,
+        addSchedule
+      );
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayDate]);
+  }, [displayDate, loadingWeeklySchedule]);
 
   return (
     <main>
@@ -58,6 +68,7 @@ function Homework() {
           <h3 className="homework__title">
             Домашнее задание на {displayDate.format("dddd")}
           </h3>
+
           <div className="homework__area">
             <div className="homework__icons">
               <img
@@ -69,7 +80,11 @@ function Homework() {
                 }}
               />
             </div>
-            <TableHomework displaySchedule={displaySchedule} />
+            {loadingWeeklySchedule ? (
+              <Loading />
+            ) : (
+              <TableHomework displaySchedule={displaySchedule} />
+            )}
             <div className="homework__icons">
               <img
                 className="icons"

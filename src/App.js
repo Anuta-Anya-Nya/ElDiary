@@ -20,9 +20,9 @@ function App() {
       <AuthProvider>
         <Header />
         <Routes>
-          <Route path="/" element={<div>Домашняя страница</div>} />
           <Route path="/login" element={<LoginView />} />
           <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Homework />} />
             <Route path="/homework" element={<Homework />} />
             <Route path="/note" element={<Note />} />
             <Route path="/diary" element={<Diary />} />

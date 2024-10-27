@@ -21,6 +21,9 @@ const Diary = () => {
   moment.locale("ru");
   const titleCardId = 1;
   const userId = useSelector((state) => state.user.id);
+  const loadingWeeklySchedule = useSelector(
+    (state) => state.weeklySchedule.loading
+  );
   const [currentDate, setCurrentDate] = useState(moment());
   const [diaryWeek, setDiaryWeek] = useState({});
 
@@ -53,19 +56,23 @@ const Diary = () => {
       .format("DD MMMM YYYY")} года`;
   };
   useEffect(() => {
-    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    if (loadingWeeklySchedule) {
+      dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    checkWeeklySchedule(
-      currentDate,
-      schedules,
-      weeklySchedule,
-      dispatch,
-      addSchedule
-    );
+    if (!loadingWeeklySchedule)
+      checkWeeklySchedule(
+        currentDate,
+        schedules,
+        weeklySchedule,
+        dispatch,
+        addSchedule
+      );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentDate]);
+  }, [currentDate, loadingWeeklySchedule]);
 
   useEffect(() => {
     findDiaryWeek(currentDate, schedules);

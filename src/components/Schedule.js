@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales.min";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
+import Loading from "./blocks/Loading";
 
 const Schedule = () => {
   const titleCardId = 7;
@@ -18,20 +21,27 @@ const Schedule = () => {
       ? Number(currentDate.format("YYYY")) - 1
       : Number(currentDate.format("YYYY"))
   );
-
-  const schedule = useSelector(
-    (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
+  const loadingWeeklySchedule = useSelector(
+    (state) => state.weeklySchedule.loading
   );
+  const userId = useSelector((state) => state.user.id);
+  const schedule = useSelector((state) => state.weeklySchedule.scheduleForWeek);
 
   const [editSchedule, setEditSchedule] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (location.state === "/settings") {
       setEditSchedule(true);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStudyYear]);
+
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />
@@ -79,8 +89,9 @@ const Schedule = () => {
               </button>
             )}
           </div>
-
-          {editSchedule ? (
+          {loadingWeeklySchedule ? (
+            <Loading />
+          ) : editSchedule ? (
             <ScheduleActions
               scheduleForEdit={schedule.schedule}
               period={currentStudyYear}

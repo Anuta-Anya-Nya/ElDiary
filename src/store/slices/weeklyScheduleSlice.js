@@ -63,8 +63,7 @@ const weeklyScheduleSlice = createSlice({
 
   reducers: {
     addWeeklySchedule: (state, action) => {
-      const key = action.payload.startPeriod.slice(0, 4);
-      state.scheduleForWeek[key] = action.payload;
+      return (state = action.payload);
     },
     // updateDailySchedule: (state, action) => {
     // },

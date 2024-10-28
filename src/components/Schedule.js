@@ -9,8 +9,12 @@ import moment from "moment/min/moment-with-locales.min";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
+import {
+  addWeeklySchedule,
+  getWeeklySchedule,
+} from "../store/slices/weeklyScheduleSlice";
 import Loading from "./blocks/Loading";
+import { isCreateWeeklySheduleDB } from "../db/weeklyScheduleDb";
 
 const Schedule = () => {
   const titleCardId = 7;
@@ -28,6 +32,7 @@ const Schedule = () => {
   const schedule = useSelector((state) => state.weeklySchedule.scheduleForWeek);
 
   const [editSchedule, setEditSchedule] = useState(false);
+  const [isCreate, setIsCreate] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -37,8 +42,25 @@ const Schedule = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
-    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    isCreateWeeklySheduleDB(userId, currentStudyYear)
+      .then((data) => setIsCreate(data))
+      .then(() => {
+        if (isCreate) {
+          dispatch(
+            getWeeklySchedule({ userId, currentYear: currentStudyYear })
+          );
+        } else {
+          dispatch(
+            addWeeklySchedule({
+              loading: false,
+              error: null,
+              scheduleForWeek: {},
+            })
+          );
+        }
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStudyYear]);
 
@@ -78,7 +100,7 @@ const Schedule = () => {
               )}
             </div>
 
-            {!editSchedule && schedule && (
+            {!editSchedule && isCreate && (
               <button
                 className="modal-submit-button"
                 onClick={() => {
@@ -99,7 +121,7 @@ const Schedule = () => {
               editSchedule={editSchedule}
             />
           ) : (
-            <ScheduleView schedule={schedule} />
+            <ScheduleView schedule={schedule} isCreate={isCreate} />
           )}
         </div>
       </section>

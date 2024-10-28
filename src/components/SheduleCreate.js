@@ -7,7 +7,7 @@ import { findCurrentStudyYear } from "../utils/services";
 
 import { useEffect, useState } from "react";
 
-import { isCreateWeeklySheduleDB } from "../firebase/crud";
+import { isCreateWeeklySheduleDB } from "../db/weeklyScheduleDb";
 import { useSelector } from "react-redux";
 
 const ScheduleCreate = () => {

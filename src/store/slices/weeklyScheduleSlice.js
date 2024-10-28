@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getWeeklySheduleDB } from "../../firebase/crud";
+import { getWeeklySheduleDB } from "../../db/weeklyScheduleDb";
 
 // THUNK для записи недельного расписания из базы данных в стор
 export const getWeeklySchedule = createAsyncThunk(

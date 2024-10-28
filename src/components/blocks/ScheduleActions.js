@@ -4,7 +4,7 @@ import { setCreate, saveModalData } from "../../store/slices/contentSlice";
 import { useEffect, useState } from "react";
 import useEffectAfterMount from "../../utils/useEffectAfterMount";
 import { useDispatch, useSelector } from "react-redux";
-import { addWeeklyScheduleDB } from "../../firebase/crud";
+import { addWeeklyScheduleDB } from "../../db/weeklyScheduleDb";
 import { getWeeklySchedule } from "../../store/slices/weeklyScheduleSlice";
 
 const ScheduleActions = ({

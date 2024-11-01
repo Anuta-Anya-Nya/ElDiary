@@ -13,12 +13,14 @@ import Lessons from "./components/Lessons";
 import Error404 from "./components/Error404";
 import PrivateRoutes from "./router/PrivateRoutes";
 import { AuthProvider } from "../src/utils/AuthContext";
+import LoadData from "./components/LoadData";
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
         <Header />
+        <LoadData />
         <Routes>
           <Route path="/login" element={<LoginView />} />
           <Route element={<PrivateRoutes />}>

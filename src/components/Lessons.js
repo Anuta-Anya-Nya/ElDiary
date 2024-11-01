@@ -13,10 +13,6 @@ function Lessons() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getLessonsThunk(userId));
-  }, []);
-
   return (
     <main>
       <section className="title">

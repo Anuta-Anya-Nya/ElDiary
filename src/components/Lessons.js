@@ -3,13 +3,19 @@ import { openCloseModal } from "../store/slices/contentSlice";
 import MenuCardBox from "./cards/MenuCardBox";
 import LessonCard from "./cards/LessonCard";
 import { CustomModal } from "./customModal/CustomModal";
+import { useEffect } from "react";
+import { getLessonsThunk } from "../store/slices/lessonsSlice";
 
 function Lessons() {
   const titleCardId = 5;
-
+  const userId = useSelector((state) => state.user.id);
   const lessonsList = useSelector((state) => state.lessons.lessons);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getLessonsThunk(userId));
+  }, []);
 
   return (
     <main>

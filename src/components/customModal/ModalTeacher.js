@@ -6,11 +6,13 @@ import {
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { addTeacher } from "../../store/slices/teachersSlice";
+import { addTeacherDb } from "../../db/teachersDb";
 
 export const ModalTeacher = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
   const modify = useSelector((state) => state.content.openModal.modify);
   const modalData = useSelector((state) => state.content.openModal.modalData);
+  const userId = useSelector((state) => state.user.id);
 
   const [teacherName, setTeacherName] = useState(null);
   const [lessonsIdList, setLessonsIdList] = useState([]);
@@ -37,6 +39,7 @@ export const ModalTeacher = () => {
       return;
     } else {
       if (modify) {
+        // изменить учителя
         dispatch(
           addTeacher({
             id: modalData.teacher.id,
@@ -56,6 +59,16 @@ export const ModalTeacher = () => {
             teachingLessons: lessonsIdList,
           })
         );
+        addTeacherDb({
+          userId,
+          teacher: {
+            name: teacherName,
+            tel: tel,
+            birthdate: birthdate,
+            teachingLessons: lessonsIdList,
+          },
+        });
+        console.log(userId);
       }
 
       toCloseAndRefreshData();
@@ -117,11 +130,9 @@ export const ModalTeacher = () => {
                 checked={lessonsIdList.includes(lesson.lessonId)}
                 onChange={(ev) => {
                   setLessonsIdList(
-                    lessonsIdList.includes(Number(ev.target.value))
-                      ? lessonsIdList.filter(
-                          (el) => el !== Number(Number(ev.target.value))
-                        )
-                      : [...lessonsIdList, Number(ev.target.value)]
+                    lessonsIdList.includes(ev.target.value)
+                      ? lessonsIdList.filter((el) => el !== ev.target.value)
+                      : [...lessonsIdList, ev.target.value]
                   );
                   setError(false);
                 }}

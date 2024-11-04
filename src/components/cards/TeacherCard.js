@@ -22,9 +22,11 @@ const TeacherCard = ({ teacher }) => {
       <div className="card__block">
         <h3 className="card__title">Преподает:</h3>
         <ul>
-          {teachingLessons.map((lessonId, ind) => (
-            <li key={ind}>{lessons[lessonId].title}</li>
-          ))}
+          {teachingLessons.length
+            ? teachingLessons.map((lessonId, ind) => (
+                <li key={ind}>{lessons[lessonId].title}</li>
+              ))
+            : ""}
         </ul>
       </div>
 

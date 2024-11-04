@@ -6,30 +6,19 @@ export const getLessonsThunk = createAsyncThunk(
   async (userId) => {
     try {
       const lessons = await getLessonsDB(userId);
-      console.log(lessons);
-      return lessons;
+      return { lessons, loading: false };
     } catch (er) {
       console.log(er.code, er.message);
-      return {};
+      return { lessons: {}, loading: false };
     }
   }
 );
 const lessonsSlice = createSlice({
   name: "lessons",
   initialState: {
+    loading: true,
     lessons: {
-      // 1: { lessonId: 1, title: "Русский", teachers: [1], cabinets: [15] },
-      // 2: { lessonId: 2, title: "Математика", teachers: [2], cabinets: [2] },
-      // 3: { lessonId: 3, title: "Литература", teachers: [1], cabinets: [15] },
-      // 4: { lessonId: 4, title: "История", teachers: [], cabinets: [] },
-      // 5: { lessonId: 5, title: "География", teachers: [], cabinets: [] },
-      // 6: { lessonId: 6, title: "Биология", teachers: [], cabinets: [] },
-      // 7: {
-      //   lessonId: 7,
-      //   title: "Английский",
-      //   teachers: [3, 4],
-      //   cabinets: [23, 30],
-      // },
+      // qwe: { lessonId: "qwe", title: "Русский", teachers: [1], cabinets: [15] },
     },
   },
   reducers: {
@@ -50,7 +39,7 @@ const lessonsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getLessonsThunk.fulfilled, (state, action) => {
-      return { ...state, lessons: action.payload };
+      return (state = action.payload);
     });
     // builder.addCase(loginThunk.fulfilled, (state, action) => {
     //   return (state = action.payload);

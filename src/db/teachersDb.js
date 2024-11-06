@@ -1,4 +1,3 @@
-import shortid from "shortid";
 import { db } from "../firebase/firebase";
 import { setDoc, doc, getDocs, collection } from "firebase/firestore";
 
@@ -13,10 +12,6 @@ export const getTeachersDB = async (userId) => {
   return arr;
 };
 
-export const addTeacherDb = async ({ userId, teacher }) => {
-  const teacherId = shortid.generate();
-  setDoc(doc(db, `users/${userId}/teachers/${teacherId}`), {
-    ...teacher,
-    id: teacherId,
-  });
+export const addTeacherDb = async (userId, teacher) => {
+  setDoc(doc(db, `users/${userId}/teachers/${teacher.id}`), teacher);
 };

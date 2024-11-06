@@ -5,25 +5,29 @@ import {
   setModify,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { addTeacher } from "../../store/slices/teachersSlice";
-import { addTeacherDb } from "../../db/teachersDb";
+import { addTeacherThunk } from "../../store/slices/teachersSlice";
+import shortid from "shortid";
 
 export const ModalTeacher = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
   const modify = useSelector((state) => state.content.openModal.modify);
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const userId = useSelector((state) => state.user.id);
-
+  const teachers = useSelector((state) => state.teachers.teachersList);
   const [teacherName, setTeacherName] = useState(null);
   const [lessonsIdList, setLessonsIdList] = useState([]);
   const [tel, setTel] = useState(null);
   const [birthdate, setBirthdate] = useState(null);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
+
+  const errorName = "Имя учителя обязательно к заполению!";
+  const errorLesson = "Уроки, которые ведет учитель обязательны к заполнению!";
+  const errorAvail = "Такой учитель уже существует!";
 
   const dispatch = useDispatch();
 
   const toCloseAndRefreshData = () => {
-    setError(false);
+    setError(null);
     setLessonsIdList(null);
     setTeacherName(null);
     setTel(null);
@@ -35,43 +39,27 @@ export const ModalTeacher = () => {
 
   const addTeacherToList = () => {
     if (!teacherName || !lessonsIdList.length) {
-      setError(true);
+      setError(errorName || errorLesson);
       return;
     } else {
-      if (modify) {
-        // изменить учителя
-        dispatch(
-          addTeacher({
-            id: modalData.teacher.id,
-            name: teacherName,
-            tel: tel,
-            birthdate: birthdate,
-            teachingLessons: lessonsIdList,
-          })
-        );
+      const avaiTeacherName = Object.values(teachers).filter(
+        (teacher) => teacher.name === teacherName
+      );
+      if (avaiTeacherName.length) {
+        setError(errorAvail);
+        return;
       } else {
-        dispatch(
-          addTeacher({
-            id: Date.now(),
-            name: teacherName,
-            tel: tel,
-            birthdate: birthdate,
-            teachingLessons: lessonsIdList,
-          })
-        );
-        addTeacherDb({
-          userId,
-          teacher: {
-            name: teacherName,
-            tel: tel,
-            birthdate: birthdate,
-            teachingLessons: lessonsIdList,
-          },
-        });
-        console.log(userId);
+        const id = modify ? modalData.teacher.id : shortid.generate();
+        const teacher = {
+          id: id,
+          name: teacherName,
+          tel: tel,
+          birthdate: birthdate,
+          teachingLessons: lessonsIdList,
+        };
+        dispatch(addTeacherThunk({ userId, teacher }));
+        toCloseAndRefreshData();
       }
-
-      toCloseAndRefreshData();
     }
   };
 
@@ -96,7 +84,7 @@ export const ModalTeacher = () => {
           value={teacherName || ""}
           onChange={(ev) => {
             setTeacherName(ev.target.value);
-            setError(false);
+            setError(null);
           }}
         />
         <input
@@ -134,7 +122,7 @@ export const ModalTeacher = () => {
                       ? lessonsIdList.filter((el) => el !== ev.target.value)
                       : [...lessonsIdList, ev.target.value]
                   );
-                  setError(false);
+                  setError(null);
                 }}
               />
               <label htmlFor={`lesson${lesson.lessonId}`}>{lesson.title}</label>
@@ -143,11 +131,7 @@ export const ModalTeacher = () => {
         </div>
       </div>
 
-      {error && (
-        <div className="modal-content-error">
-          Имя учителя и его уроки обязательны к заполнению!
-        </div>
-      )}
+      <div className="modal-content-error">{error}</div>
 
       <button
         className="modal-submit-button"

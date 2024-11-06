@@ -5,13 +5,14 @@ import {
   setModify,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { addLesson } from "../../store/slices/lessonsSlice";
+import { addLesson, addLessonThunk } from "../../store/slices/lessonsSlice";
 import del from "../../assets/icons/delete.svg";
+import shortid from "shortid";
 
 export const ModalLesson = () => {
   const modify = useSelector((state) => state.content.openModal.modify);
   const modalData = useSelector((state) => state.content.openModal.modalData);
-
+  const userId = useSelector((state) => state.user.id);
   const [title, setTitle] = useState(null);
   const [cabinet, setCabinet] = useState(null);
   const [cabinets, setCabinets] = useState([]);
@@ -45,15 +46,14 @@ export const ModalLesson = () => {
       setError(true);
       return;
     } else {
-      const id = modify ? modalData.lesson.lessonId : Date.now();
+      const id = modify ? modalData.lesson.lessonId : shortid.generate();
       const cabinetList = cabinet ? [...cabinets, cabinet] : [...cabinets];
-      dispatch(
-        addLesson({
-          lessonId: id,
-          title,
-          cabinets: cabinetList,
-        })
-      );
+      const lesson = {
+        lessonId: id,
+        title,
+        cabinets: cabinetList,
+      };
+      dispatch(addLessonThunk({ userId, lesson }));
       toCloseAndRefreshData();
     }
   };

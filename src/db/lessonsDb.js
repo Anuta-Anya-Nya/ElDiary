@@ -1,5 +1,6 @@
 import { db } from "../firebase/firebase";
 import { setDoc, doc, collection, getDocs } from "firebase/firestore";
+
 import shortid from "shortid";
 
 const lessonsList = [
@@ -34,4 +35,8 @@ export const getLessonsDB = async (userId) => {
   }, {});
 
   return arr;
+};
+
+export const addLessonDB = async (userId, lesson) => {
+  setDoc(doc(db, `users/${userId}/lessons/${lesson.lessonId}`), lesson);
 };

@@ -18,6 +18,7 @@ export const ModalTeacher = () => {
   const [lessonsIdList, setLessonsIdList] = useState([]);
   const [tel, setTel] = useState(null);
   const [birthdate, setBirthdate] = useState(null);
+  const [tempName, setTempName] = useState(null);
   const [error, setError] = useState(null);
 
   const errorName = "Имя учителя обязательно к заполению!";
@@ -36,39 +37,48 @@ export const ModalTeacher = () => {
     dispatch(setModify(false));
     dispatch(openCloseModal({ teacherModal: false }));
   };
-
-  const addTeacherToList = () => {
+  const checkValues = () => {
     if (!teacherName) {
       setError(errorName);
-      return;
+      return false;
     } else if (!lessonsIdList.length) {
       setError(errorLesson);
-      return;
+      return false;
     } else {
       const avaiTeacherName = Object.values(teachers).filter(
-        (teacher) => teacher.name === teacherName
+        (teacher) => teacher.name.toLowerCase() === teacherName.toLowerCase()
       );
-      if (avaiTeacherName.length) {
-        setError(errorAvail);
-        return;
+      if (!avaiTeacherName.length) {
+        return true;
       } else {
-        const id = modify ? modalData.teacher.id : shortid.generate();
-        const teacher = {
-          id: id,
-          name: teacherName,
-          tel: tel,
-          birthdate: birthdate,
-          teachingLessons: lessonsIdList,
-        };
-        dispatch(addTeacherThunk({ userId, teacher }));
-        toCloseAndRefreshData();
+        if (modify && tempName.toLowerCase() === teacherName.toLowerCase()) {
+          return true;
+        } else {
+          setError(errorAvail);
+          return false;
+        }
       }
+    }
+  };
+  const addTeacherToList = () => {
+    if (checkValues()) {
+      const id = modify ? modalData.teacher.id : shortid.generate();
+      const teacher = {
+        id: id,
+        name: teacherName,
+        tel: tel,
+        birthdate: birthdate,
+        teachingLessons: lessonsIdList,
+      };
+      dispatch(addTeacherThunk({ userId, teacher }));
+      toCloseAndRefreshData();
     }
   };
 
   useEffect(() => {
     if (modify) {
       setTeacherName(modalData.teacher.name);
+      setTempName(modalData.teacher.name);
       setTel(modalData.teacher.tel);
       setBirthdate(modalData.teacher.birthdate);
       setLessonsIdList(modalData.teacher.teachingLessons);

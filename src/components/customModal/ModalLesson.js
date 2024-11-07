@@ -17,6 +17,7 @@ export const ModalLesson = () => {
   const [title, setTitle] = useState(null);
   const [cabinet, setCabinet] = useState(null);
   const [cabinets, setCabinets] = useState([]);
+  const [tempTitle, setTempTitle] = useState(null);
   const [error, setError] = useState(null);
 
   const errorTitle = "Название урока обязательно к заполению!";
@@ -44,35 +45,44 @@ export const ModalLesson = () => {
     dispatch(setModify(false));
     dispatch(openCloseModal({ lessonListModal: false }));
   };
-
-  const addLessonToList = () => {
+  const checkValues = () => {
     if (!title) {
       setError(errorTitle);
-      return;
+      return false;
     } else {
-      const isAvailLessonTitle = Object.values(lessons).filter(
-        (lesson) => lesson.title === title
+      const availLessonTitle = Object.values(lessons).filter(
+        (lesson) => lesson.title.toLowerCase() === title.toLowerCase()
       );
-      if (isAvailLessonTitle.length) {
-        setError(errorAvail);
-        return;
+      if (!availLessonTitle.length) {
+        return true;
       } else {
-        const id = modify ? modalData.lesson.lessonId : shortid.generate();
-        const cabinetList = cabinet ? [...cabinets, cabinet] : [...cabinets];
-        const lesson = {
-          lessonId: id,
-          title,
-          cabinets: cabinetList,
-        };
-        dispatch(addLessonThunk({ userId, lesson }));
-        toCloseAndRefreshData();
+        if (modify && tempTitle.toLowerCase() === title.toLowerCase()) {
+          return true;
+        } else {
+          setError(errorAvail);
+          return false;
+        }
       }
+    }
+  };
+  const addLessonToList = () => {
+    if (checkValues()) {
+      const id = modify ? modalData.lesson.lessonId : shortid.generate();
+      const cabinetList = cabinet ? [...cabinets, cabinet] : [...cabinets];
+      const lesson = {
+        lessonId: id,
+        title,
+        cabinets: cabinetList,
+      };
+      dispatch(addLessonThunk({ userId, lesson }));
+      toCloseAndRefreshData();
     }
   };
 
   useEffect(() => {
     if (modify) {
       setTitle(modalData.lesson.title);
+      setTempTitle(modalData.lesson.title);
       setCabinets(modalData.lesson.cabinets);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

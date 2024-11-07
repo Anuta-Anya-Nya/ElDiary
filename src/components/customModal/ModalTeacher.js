@@ -38,8 +38,11 @@ export const ModalTeacher = () => {
   };
 
   const addTeacherToList = () => {
-    if (!teacherName || !lessonsIdList.length) {
-      setError(errorName || errorLesson);
+    if (!teacherName) {
+      setError(errorName);
+      return;
+    } else if (!lessonsIdList.length) {
+      setError(errorLesson);
       return;
     } else {
       const avaiTeacherName = Object.values(teachers).filter(

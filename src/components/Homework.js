@@ -21,13 +21,12 @@ function Homework() {
     (state) => state.weeklySchedule.loading
   );
   const titleCardId = 6;
-  const userId = useSelector((state) => state.user.id);
+  // const userId = useSelector((state) => state.user.id);
   const selectDisplay = useSelector((state) => state.settings.displayHomeWork);
   const [displayDate, setDisplayDate] = useState(
     currentDate.clone().add(selectDisplay, "days")
   );
 
-  const currentStudyYear = findCurrentStudyYear(currentDate);
   const weeklySchedule = useSelector(
     (state) => state.weeklySchedule.scheduleForWeek
   );
@@ -39,13 +38,13 @@ function Homework() {
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
-  useEffect(() => {
-    if (loadingWeeklySchedule) {
-      dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
-    }
+  // useEffect(() => {
+  //   if (loadingWeeklySchedule) {
+  //     dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+  //   }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   useEffect(() => {
     if (!loadingWeeklySchedule) {
       checkWeeklySchedule(

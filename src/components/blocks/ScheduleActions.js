@@ -6,6 +6,7 @@ import useEffectAfterMount from "../../utils/useEffectAfterMount";
 import { useDispatch, useSelector } from "react-redux";
 import { addWeeklyScheduleDB } from "../../db/weeklyScheduleDb";
 import { getWeeklySchedule } from "../../store/slices/weeklyScheduleSlice";
+import shortid from "shortid";
 
 const ScheduleActions = ({
   period,
@@ -39,7 +40,7 @@ const ScheduleActions = ({
 
   const saveWeeklySchedule = () => {
     const newWeeklySchedule = {
-      id: Date.now(),
+      id: shortid.generate(),
       year: period,
       startPeriod: `${period}-09-01`,
       endPeriod: `${period + 1}-06-01`,

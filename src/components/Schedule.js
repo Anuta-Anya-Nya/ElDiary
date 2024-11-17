@@ -14,7 +14,7 @@ import {
   getWeeklySchedule,
 } from "../store/slices/weeklyScheduleSlice";
 import Loading from "./blocks/Loading";
-import { isCreateWeeklySheduleDB } from "../db/weeklyScheduleDb";
+import useEffectAfterMount from "../utils/useEffectAfterMount";
 
 const Schedule = () => {
   const titleCardId = 7;
@@ -30,9 +30,8 @@ const Schedule = () => {
   );
   const userId = useSelector((state) => state.user.id);
   const schedule = useSelector((state) => state.weeklySchedule.scheduleForWeek);
-
+  const isCreate = Object.keys(schedule).length > 0 ? true : false;
   const [editSchedule, setEditSchedule] = useState(false);
-  const [isCreate, setIsCreate] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -43,25 +42,11 @@ const Schedule = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    isCreateWeeklySheduleDB(userId, currentStudyYear)
-      .then((data) => setIsCreate(data))
-      .then(() => {
-        if (isCreate) {
-          dispatch(
-            getWeeklySchedule({ userId, currentYear: currentStudyYear })
-          );
-        } else {
-          dispatch(
-            addWeeklySchedule({
-              loading: false,
-              error: null,
-              scheduleForWeek: {},
-            })
-          );
-        }
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffectAfterMount(() => {
+    dispatch(
+      addWeeklySchedule({ loading: true, error: null, scheduleForWeek: {} })
+    );
+    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
   }, [currentStudyYear]);
 
   return (

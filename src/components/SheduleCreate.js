@@ -23,7 +23,7 @@ const ScheduleCreate = () => {
     setPeriod(Number(e.target.value));
   };
   // const checkAvail = isCreateWeeklySheduleDB(userId, period);
-  const [checkAvail, setCheckAvail] = useState(true);
+  const [checkAvail, setCheckAvail] = useState(null);
 
   useEffect(() => {
     isCreateWeeklySheduleDB(userId, period).then((data) => setCheckAvail(data));

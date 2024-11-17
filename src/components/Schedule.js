@@ -40,13 +40,31 @@ const Schedule = () => {
       setEditSchedule(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      console.log("Перезапись текущего расписания");
+      dispatch(
+        getWeeklySchedule({
+          userId,
+          currentYear: currentDate.isBefore(
+            moment(`${currentDate.format("YYYY")}-09-01`)
+          )
+            ? Number(currentDate.format("YYYY")) - 1
+            : Number(currentDate.format("YYYY")),
+        })
+      );
+    };
   }, []);
 
   useEffectAfterMount(() => {
     dispatch(
       addWeeklySchedule({ loading: true, error: null, scheduleForWeek: {} })
     );
-    dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
+    dispatch(
+      getWeeklySchedule({
+        userId,
+        currentYear: currentStudyYear,
+      })
+    );
   }, [currentStudyYear]);
 
   return (

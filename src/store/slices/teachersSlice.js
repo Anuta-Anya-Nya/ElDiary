@@ -1,51 +1,52 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { addTeacherDb, getTeachersDB } from "../../db/teachersDb";
+
+export const getTeachersThunk = createAsyncThunk(
+  "teachers/getTeachersThunk",
+  async (userId) => {
+    try {
+      const teachersList = await getTeachersDB(userId);
+      console.log(teachersList);
+      return { teachersList, loading: false };
+    } catch (er) {
+      console.log(er.code, er.message);
+      return { teachersList: {}, loading: false };
+    }
+  }
+);
+
+export const addTeacherThunk = createAsyncThunk(
+  "teachers/addTeacherThunk",
+  async ({ userId, teacher }, { rejectWithValue }) => {
+    try {
+      await addTeacherDb(userId, teacher);
+      return { [teacher.id]: teacher };
+    } catch (error) {
+      if (error.code === "permission-denied") {
+        console.error("У вас нет разрешения на добавление документа.");
+      } else if (error.code === "not-found") {
+        console.error("Коллекция не найдена.");
+      } else {
+        console.error("Произошла неизвестная ошибка: ", error.message);
+      }
+      return rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 const teachersSlice = createSlice({
   name: "teachers",
   initialState: {
+    loading: true,
+    error: null,
     teachersList: {
-      1: {
-        id: 1,
-        name: "Иванова Мария Михайловна",
-        tel: "(905)123-22-33",
-        birthdate: null,
-        teachingLessons: [1, 3],
-      },
-      2: {
-        id: 2,
-        name: "Петрова Лилия Григорьевна",
-        tel: "(905)111-22-33",
-        birthdate: null,
-        teachingLessons: [2],
-      },
-      3: {
-        id: 3,
-        name: "Сидорова Валентина Михайловна",
-        tel: "(905)123-22-33",
-        birthdate: null,
-        teachingLessons: [7],
-      },
-      4: {
-        id: 4,
-        name: "Матвеева Валентина Михайловна",
-        tel: "(905)123-22-33",
-        birthdate: null,
-        teachingLessons: [7],
-      },
-      5: {
-        id: 5,
-        name: "Валентинова Валентина Михайловна",
-        tel: "(905)123-22-33",
-        birthdate: null,
-        teachingLessons: [5],
-      },
-      6: {
-        id: 6,
-        name: "Михайлова Валентина Михайловна",
-        tel: "(905)123-22-33",
-        birthdate: null,
-        teachingLessons: [5],
-      },
+      // 1: {
+      //   id: 1,
+      //   name: "Иванова Мария Михайловна",
+      //   tel: "(905)123-22-33",
+      //   birthdate: null,
+      //   teachingLessons: ["4Cn4xJFFJ2"],
+      // },
     },
   },
   reducers: {
@@ -57,18 +58,25 @@ const teachersSlice = createSlice({
           [action.payload.id]: action.payload,
         },
       };
-      // state.lessons[action.payload.id] = action.payload;
     },
   },
-  //   редьюсеры для thunk функций
-  //   extraReducers: (builder) => {
-  //     builder.addCase(createUserThunk.fulfilled, (state, action) => {
-  //       return (state = action.payload);
-  //     });
-  //     builder.addCase(loginThunk.fulfilled, (state, action) => {
-  //       return (state = action.payload);
-  //     });
-  //   },
+  extraReducers: (builder) => {
+    builder.addCase(getTeachersThunk.fulfilled, (state, action) => {
+      return (state = action.payload);
+    });
+    builder.addCase(addTeacherThunk.fulfilled, (state, action) => {
+      return {
+        ...state,
+        teachersList: { ...state.teachersList, ...action.payload },
+      };
+    });
+    builder.addCase(addTeacherThunk.rejected, (state, action) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    });
+  },
 });
 export const { addTeacher } = teachersSlice.actions;
 export const teacherReducer = teachersSlice.reducer;

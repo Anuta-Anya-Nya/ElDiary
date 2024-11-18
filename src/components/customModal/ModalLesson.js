@@ -5,17 +5,23 @@ import {
   setModify,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { addLesson } from "../../store/slices/lessonsSlice";
+import { addLessonThunk } from "../../store/slices/lessonsSlice";
 import del from "../../assets/icons/delete.svg";
+import shortid from "shortid";
 
 export const ModalLesson = () => {
   const modify = useSelector((state) => state.content.openModal.modify);
   const modalData = useSelector((state) => state.content.openModal.modalData);
-
+  const userId = useSelector((state) => state.user.id);
+  const lessons = useSelector((state) => state.lessons.lessons);
   const [title, setTitle] = useState(null);
   const [cabinet, setCabinet] = useState(null);
   const [cabinets, setCabinets] = useState([]);
-  const [error, setError] = useState(false);
+  const [tempTitle, setTempTitle] = useState(null);
+  const [error, setError] = useState(null);
+
+  const errorTitle = "Название урока обязательно к заполению!";
+  const errorAvail = "Введенное название урока уже существует! Выберите другое";
 
   const dispatch = useDispatch();
 
@@ -31,7 +37,7 @@ export const ModalLesson = () => {
   };
 
   const toCloseAndRefreshData = () => {
-    setError(false);
+    setError(null);
     setTitle(null);
     setCabinets([]);
     setCabinet(null);
@@ -39,21 +45,36 @@ export const ModalLesson = () => {
     dispatch(setModify(false));
     dispatch(openCloseModal({ lessonListModal: false }));
   };
-
-  const addLessonToList = () => {
+  const checkValues = () => {
     if (!title) {
-      setError(true);
-      return;
+      setError(errorTitle);
+      return false;
     } else {
-      const id = modify ? modalData.lesson.lessonId : Date.now();
-      const cabinetList = cabinet ? [...cabinets, cabinet] : [...cabinets];
-      dispatch(
-        addLesson({
-          lessonId: id,
-          title,
-          cabinets: cabinetList,
-        })
+      const availLessonTitle = Object.values(lessons).filter(
+        (lesson) => lesson.title.toLowerCase() === title.toLowerCase()
       );
+      if (!availLessonTitle.length) {
+        return true;
+      } else {
+        if (modify && tempTitle.toLowerCase() === title.toLowerCase()) {
+          return true;
+        } else {
+          setError(errorAvail);
+          return false;
+        }
+      }
+    }
+  };
+  const addLessonToList = () => {
+    if (checkValues()) {
+      const id = modify ? modalData.lesson.lessonId : shortid.generate();
+      const cabinetList = cabinet ? [...cabinets, cabinet] : [...cabinets];
+      const lesson = {
+        lessonId: id,
+        title,
+        cabinets: cabinetList,
+      };
+      dispatch(addLessonThunk({ userId, lesson }));
       toCloseAndRefreshData();
     }
   };
@@ -61,6 +82,7 @@ export const ModalLesson = () => {
   useEffect(() => {
     if (modify) {
       setTitle(modalData.lesson.title);
+      setTempTitle(modalData.lesson.title);
       setCabinets(modalData.lesson.cabinets);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +100,7 @@ export const ModalLesson = () => {
           value={title || ""}
           onChange={(ev) => {
             setTitle(ev.target.value);
-            setError(false);
+            setError(null);
           }}
         />
         {!!cabinets.length && (
@@ -114,11 +136,7 @@ export const ModalLesson = () => {
         </button>
       </div>
 
-      {error && (
-        <div className="modal-content-error">
-          Название урока обязательно к заполнению!
-        </div>
-      )}
+      <div className="modal-content-error">{error}</div>
 
       <button
         className="modal-submit-button"

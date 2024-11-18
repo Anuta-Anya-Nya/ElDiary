@@ -65,7 +65,7 @@ export function checkWeeklySchedule(
   if (missingDates.length) {
     const newScheduleItems = missingDates.reduce((sheduleItems, date) => {
       let lessonsList = [];
-      if (weeklySchedule) {
+      if (weeklySchedule.schedule) {
         lessonsList = findDayInWeeklyShedule(date, weeklySchedule).map(
           (lesson) => ({ ...lesson, homework: null, grade: null })
         );

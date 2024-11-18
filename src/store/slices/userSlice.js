@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import { auth } from "../../firebase/firebase";
-
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { addUserDb } from "../../db/userDb";
+import { lessonsInit } from "../../db/lessonsDb";
 
 // THUNK для создания пользователя при регистрации
 export const createUserThunk = createAsyncThunk(
@@ -22,8 +22,9 @@ export const createUserThunk = createAsyncThunk(
       const userData = {
         email: userCredit.user.email,
         id: userCredit.user.uid,
-        token: userCredit.user.accessToken,
       };
+      addUserDb(userData);
+      lessonsInit(userCredit.user.uid);
       return userData;
     } catch (er) {
       console.log(er.code, er.message);
@@ -42,7 +43,6 @@ export const loginThunk = createAsyncThunk(
       const userData = {
         email: userCredit.user.email,
         id: userCredit.user.uid,
-        token: userCredit.user.accessToken,
       };
       console.log(userCredit.user);
       return userData;
@@ -56,7 +56,6 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     email: null,
-    token: null,
     id: null,
     // error: null
   },

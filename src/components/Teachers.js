@@ -4,12 +4,13 @@ import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import TeacherCard from "./cards/TeacherCard";
 import { CustomModal } from "./customModal/CustomModal";
+import Loading from "./blocks/Loading";
 
 function Teachers() {
   const titleCardId = 2;
 
   const teachersList = useSelector((state) => state.teachers.teachersList);
-
+  const loadingTeachers = useSelector((state) => state.teachers.loading);
   const dispatch = useDispatch();
   //   Object.values(teachersList)
   //   .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
@@ -18,24 +19,32 @@ function Teachers() {
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />
+
       <section className="teachers">
         <div className="container teachers__container">
-          <div className="teachers__area">
-            {Object.values(teachersList).map((teacher) => (
-              <TeacherCard teacher={teacher} key={teacher.id} />
-            ))}
-          </div>
-          <button
-            className="modal-submit-button"
-            onClick={() => {
-              dispatch(openCloseModal({ teacherModal: true }));
-            }}
-          >
-            Добавить нового учителя
-          </button>
+          {loadingTeachers ? (
+            <Loading />
+          ) : (
+            <>
+              <div className="teachers__area">
+                {Object.values(teachersList).map((teacher) => (
+                  <TeacherCard teacher={teacher} key={teacher.id} />
+                ))}
+              </div>
+              <button
+                className="modal-submit-button"
+                onClick={() => {
+                  dispatch(openCloseModal({ teacherModal: true }));
+                }}
+              >
+                Добавить нового учителя
+              </button>
+            </>
+          )}
         </div>
         <CustomModal />
       </section>
+
       <MenuCardBox titleCardId={titleCardId} />
     </main>
   );

@@ -9,7 +9,6 @@ const LessonCard = ({ lesson }) => {
   const teachers = useSelector((state) => state.teachers.teachersList);
   const { title, cabinets, lessonId } = lesson;
   const dispatch = useDispatch();
-
   const teachersForLesson = Object.values(teachers)
     .filter((teacher) => teacher.teachingLessons.includes(lessonId))
     .reduce((arr, teacher) => [...arr, teacher.id], []);

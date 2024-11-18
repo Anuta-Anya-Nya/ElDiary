@@ -65,14 +65,9 @@ export const ModalAddLesson = () => {
   };
 
   const findTeacherForSelectLesson = () => {
-    const teachersThisLesson = lessons[selectLessonId].teachers;
-    if (!teachersThisLesson.length) {
-      return Object.values(teachers)
-        .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
-        .reduce((arr, teacher) => [...arr, teacher.id], []);
-    } else {
-      return teachersThisLesson;
-    }
+    return Object.values(teachers)
+      .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
+      .reduce((arr, teacher) => [...arr, teacher.id], []);
   };
   const contentItemCount = (itemsArr) => {
     if (itemsArr.length <= 1) {
@@ -106,7 +101,7 @@ export const ModalAddLesson = () => {
               id={`lesson${lesson.lessonId}`}
               checked={selectLessonId === lesson.lessonId}
               onChange={(el) => {
-                setSelectLessonId(Number(el.target.value));
+                setSelectLessonId(el.target.value);
                 setError(false);
               }}
             />
@@ -133,7 +128,7 @@ export const ModalAddLesson = () => {
                     id={`teacher${teacherId}`}
                     checked={selectTeacher === teacherId}
                     onChange={(el) => {
-                      setSelectTeacher(Number(el.target.value));
+                      setSelectTeacher(el.target.value);
                     }}
                   />
                   <label htmlFor={`teacher${teacherId}`}>

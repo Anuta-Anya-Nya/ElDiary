@@ -8,6 +8,13 @@ import { useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales.min";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  addWeeklySchedule,
+  getWeeklySchedule,
+} from "../store/slices/weeklyScheduleSlice";
+import Loading from "./blocks/Loading";
+import useEffectAfterMount from "../utils/useEffectAfterMount";
 
 const Schedule = () => {
   const titleCardId = 7;
@@ -18,20 +25,48 @@ const Schedule = () => {
       ? Number(currentDate.format("YYYY")) - 1
       : Number(currentDate.format("YYYY"))
   );
-
-  const schedule = useSelector(
-    (state) => state.weeklySchedule.scheduleForWeek[currentStudyYear]
+  const loadingWeeklySchedule = useSelector(
+    (state) => state.weeklySchedule.loading
   );
-
+  const userId = useSelector((state) => state.user.id);
+  const schedule = useSelector((state) => state.weeklySchedule.scheduleForWeek);
+  const isCreate = Object.keys(schedule).length > 0 ? true : false;
   const [editSchedule, setEditSchedule] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (location.state === "/settings") {
       setEditSchedule(true);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      console.log("Перезапись текущего расписания");
+      dispatch(
+        getWeeklySchedule({
+          userId,
+          currentYear: currentDate.isBefore(
+            moment(`${currentDate.format("YYYY")}-09-01`)
+          )
+            ? Number(currentDate.format("YYYY")) - 1
+            : Number(currentDate.format("YYYY")),
+        })
+      );
+    };
   }, []);
+
+  useEffectAfterMount(() => {
+    dispatch(
+      addWeeklySchedule({ loading: true, error: null, scheduleForWeek: {} })
+    );
+    dispatch(
+      getWeeklySchedule({
+        userId,
+        currentYear: currentStudyYear,
+      })
+    );
+  }, [currentStudyYear]);
+
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />
@@ -68,7 +103,7 @@ const Schedule = () => {
               )}
             </div>
 
-            {!editSchedule && schedule && (
+            {!editSchedule && isCreate && (
               <button
                 className="modal-submit-button"
                 onClick={() => {
@@ -79,8 +114,9 @@ const Schedule = () => {
               </button>
             )}
           </div>
-
-          {editSchedule ? (
+          {loadingWeeklySchedule ? (
+            <Loading />
+          ) : editSchedule ? (
             <ScheduleActions
               scheduleForEdit={schedule.schedule}
               period={currentStudyYear}
@@ -88,7 +124,7 @@ const Schedule = () => {
               editSchedule={editSchedule}
             />
           ) : (
-            <ScheduleView schedule={schedule} />
+            <ScheduleView schedule={schedule} isCreate={isCreate} />
           )}
         </div>
       </section>

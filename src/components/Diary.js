@@ -5,7 +5,11 @@ import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import TablesDiary from "./tables/TablesDiary";
 import Loading from "./blocks/Loading";
-import { checkWeeklySchedule, getWeekDaysInStore } from "../utils/services";
+import {
+  checkWeeklySchedule,
+  filteredSchedules,
+  getWeekDaysInStore,
+} from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addDailySchedulesThunk } from "../store/slices/dailySchedulesSlice";
 import arrowLeft from "../assets/icons/arrow-left.svg";
@@ -16,6 +20,10 @@ import { CustomModal } from "./customModal/CustomModal";
 const Diary = () => {
   moment.locale("ru");
   const titleCardId = 1;
+
+  const [currentDate, setCurrentDate] = useState(moment());
+  const [diaryWeek, setDiaryWeek] = useState({});
+
   const userId = useSelector((state) => state.user.id);
   const loadingWeeklySchedule = useSelector(
     (state) => state.weeklySchedule.loading
@@ -23,26 +31,16 @@ const Diary = () => {
   const loadingDailySchedules = useSelector(
     (state) => state.dailySchedules.loading
   );
-  const [currentDate, setCurrentDate] = useState(moment());
-  const [diaryWeek, setDiaryWeek] = useState({});
-
   const weeklySchedule = useSelector(
     (state) => state.weeklySchedule.scheduleForWeek
   );
-
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
 
   const dispatch = useDispatch();
 
   const findDiaryWeek = (currentDate, schedules) => {
-    const selectedDates = getWeekDaysInStore(currentDate, schedules);
-    const filteredSchedules = Object.keys(schedules)
-      .filter((key) => selectedDates.includes(key))
-      .reduce((obj, key) => {
-        obj[key] = schedules[key];
-        return obj;
-      }, {});
-    setDiaryWeek(filteredSchedules);
+    const datesForSelect = getWeekDaysInStore(currentDate, schedules);
+    setDiaryWeek(filteredSchedules(schedules, datesForSelect));
   };
 
   const renderDiaryTitle = (currentDate) => {

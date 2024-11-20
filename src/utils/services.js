@@ -28,6 +28,14 @@ export function getWeekDaysInStore(currentDateMoment, schedules) {
     moment(el).isBetween(startWeekDate.clone().subtract(1, "days"), endWeekDate)
   );
 }
+export function filteredSchedules(schedules, datesForfilter) {
+  return Object.keys(schedules)
+    .filter((key) => datesForfilter.includes(key))
+    .reduce((obj, key) => {
+      obj[key] = schedules[key];
+      return obj;
+    }, {});
+}
 
 export const findMissingDates = (currentDateMoment, schedules) => {
   const findingDates = getWeekDaysInStore(currentDateMoment, schedules);

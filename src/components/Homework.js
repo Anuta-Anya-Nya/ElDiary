@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import moment from "moment/min/moment-with-locales.min";
-
 import TableHomework from "./tables/TableHomework";
 import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
@@ -16,30 +15,31 @@ import { addDailySchedulesThunk } from "../store/slices/dailySchedulesSlice";
 function Homework() {
   moment.locale("ru");
   const currentDate = moment();
+  const titleCardId = 6;
+
+  const selectDisplay = useSelector((state) => state.settings.displayHomeWork);
+  const [displayDate, setDisplayDate] = useState(
+    currentDate.clone().add(selectDisplay, "days")
+  );
+
   const loadingWeeklySchedule = useSelector(
     (state) => state.weeklySchedule.loading
   );
   const loadingDailySchedules = useSelector(
     (state) => state.dailySchedules.loading
   );
-  const titleCardId = 6;
-  const selectDisplay = useSelector((state) => state.settings.displayHomeWork);
-  const userId = useSelector((state) => state.user.id);
-  const [displayDate, setDisplayDate] = useState(
-    currentDate.clone().add(selectDisplay, "days")
-  );
 
+  const userId = useSelector((state) => state.user.id);
   const weeklySchedule = useSelector(
     (state) => state.weeklySchedule.scheduleForWeek
   );
-
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
-  const dispatch = useDispatch();
-
   const displaySchedule = useSelector(
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!loadingWeeklySchedule && !loadingDailySchedules) {

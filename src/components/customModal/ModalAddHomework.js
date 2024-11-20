@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import edit from "../../assets/icons/edit-pen.svg";
 import del from "../../assets/icons/delete.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { addHomework } from "../../store/slices/homeworksSlice";
+import {
+  addHomework,
+  addHomeworkThunk,
+} from "../../store/slices/homeworksSlice";
 import { updateDailyScheduleHomework } from "../../store/slices/dailySchedulesSlice";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
+import shortid from "shortid";
+import { findCurrentStudyYear } from "../../utils/services";
+import moment from "moment/min/moment-with-locales.min";
 
 export const ModalAddHomework = () => {
   const [error, setError] = useState(false);
@@ -16,6 +22,7 @@ export const ModalAddHomework = () => {
   const dispatch = useDispatch();
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const modify = useSelector((state) => state.content.openModal.modify);
+  const userId = useSelector((state) => state.user.id);
 
   const addAnotherHW = () => {
     if (task || page || note) {
@@ -49,12 +56,15 @@ export const ModalAddHomework = () => {
       setError(true);
     } else {
       let hw;
-      const homeworkId = Date.now();
+      const homeworkId = shortid.generate();
       if (task || page || note) {
         hw = [...homeworkData, { task: task, page: page, notes: note }];
       } else {
         hw = homeworkData;
       }
+      const homework = { id: homeworkId, homework: hw, isDone: false };
+      const currentStudyYear = findCurrentStudyYear(moment(modalData.date));
+      dispatch(addHomeworkThunk({ userId, homework, currentStudyYear }));
       dispatch(addHomework({ id: homeworkId, homework: hw, isDone: false }));
       dispatch(
         updateDailyScheduleHomework({

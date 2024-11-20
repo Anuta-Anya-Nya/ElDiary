@@ -7,6 +7,7 @@ import moment from "moment/min/moment-with-locales.min";
 import { findCurrentStudyYear } from "../utils/services";
 import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 import { getDailySchedules } from "../store/slices/dailySchedulesSlice";
+import { getHomeworksThunk } from "../store/slices/homeworksSlice";
 
 const LoadData = () => {
   const { loading } = useAuth();
@@ -21,6 +22,7 @@ const LoadData = () => {
       dispatch(getTeachersThunk(userId));
       dispatch(getWeeklySchedule({ userId, currentYear }));
       dispatch(getDailySchedules({ userId, currentYear }));
+      dispatch(getHomeworksThunk({ userId, currentYear }));
     }
   }, [loading]);
 };

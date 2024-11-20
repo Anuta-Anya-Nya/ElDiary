@@ -1,4 +1,5 @@
 import moment from "moment/min/moment-with-locales.min";
+import shortid from "shortid";
 
 export const buildTask = (lessonItem) => {
   const taskArr = [];
@@ -58,10 +59,10 @@ export function checkWeeklySchedule(
   schedules,
   weeklySchedule,
   dispatch,
-  action
+  action,
+  userId
 ) {
   const missingDates = findMissingDates(currentDateMoment, schedules);
-
   if (missingDates.length) {
     const newScheduleItems = missingDates.reduce((sheduleItems, date) => {
       let lessonsList = [];
@@ -81,7 +82,7 @@ export function checkWeeklySchedule(
         ];
       }
       sheduleItems[date] = {
-        id: Date.now(),
+        id: shortid.generate(),
         date,
         lessonsList,
         notes: null,
@@ -91,7 +92,10 @@ export function checkWeeklySchedule(
       return sheduleItems;
     }, {});
     missingDates.map((date) => findDayInWeeklyShedule(date));
-    dispatch(action(newScheduleItems));
+    const currentStudyYear = findCurrentStudyYear(currentDateMoment);
+    dispatch(
+      action({ userId, schedulesList: newScheduleItems, currentStudyYear })
+    );
   }
 }
 
@@ -110,11 +114,6 @@ export const findTeacherForSelectLesson = (
 ) => {
   const teachersThisLesson = lessons[selectLessonId].teachers;
   if (!teachersThisLesson.length) {
-    console.log(
-      Object.values(teachers)
-        .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
-        .reduce((arr, teacher) => [...arr, teacher.id], [])
-    );
     return Object.values(teachers)
       .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
       .reduce((arr, teacher) => [...arr, teacher.id], []);

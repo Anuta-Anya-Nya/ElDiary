@@ -1,8 +1,5 @@
 import { db } from "../firebase/firebase";
-import { setDoc, doc, collection, getDoc, updateDoc } from "firebase/firestore";
-import moment from "moment/min/moment-with-locales.min";
-
-import { findCurrentStudyYear } from "../utils/services";
+import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
 export const dailySchedInit = async (userId, currentYear) => {
   setDoc(doc(db, `users/${userId}/dailyShedules/${currentYear}`), {});

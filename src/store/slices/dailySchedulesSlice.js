@@ -11,10 +11,6 @@ export const getDailySchedules = createAsyncThunk(
       console.log("загружаем ежедневные расписания...");
       const schedulesList = await getDailyShedulesDB(userId, currentYear);
       console.log(schedulesList);
-      // В firestore нельзя хранить массив с вложенными массивами, потому перед сохранением в firestore используется JSON.stringify(schedule), а после загрузки на клиенте используется метод parse()
-      // if (scheduleForWeek.schedule) {
-      //   scheduleForWeek.schedule = JSON.parse(scheduleForWeek.schedule);
-      // }
       return { loading: false, error: null, schedulesList };
     } catch (er) {
       console.log(er.code, er.message);
@@ -78,85 +74,10 @@ const dailySchedulesSlice = createSlice({
       //   vacation: false,
       //   holiday: false,
       // },
-      // "2024-09-03": {
-      //   id: 12312321113231,
-      //   date: "2024-09-03",
-      //   lessonsList: [
-      //     {
-      //       lessonId: 1,
-      //       homeworkId: 4,
-      //       grade: null,
-      //       teacherId: 2,
-      //       cabinet: null,
-      //     },
-      //     {
-      //       lessonId: 4,
-      //       homeworkId: 5,
-      //       grade: null,
-      //       teacherId: null,
-      //       cabinet: null,
-      //     },
-      //     {
-      //       lessonId: 6,
-      //       homeworkId: 9,
-      //       grade: null,
-      //       teacherId: null,
-      //       cabinet: null,
-      //     },
-      //     {
-      //       lessonId: 7,
-      //       homeworkId: 10,
-      //       grade: null,
-      //       teacherId: null,
-      //       cabinet: null,
-      //     },
-      //   ],
-      //   notes: "qwerty",
-      //   vacation: false,
-      //   holiday: false,
-      // },
-      // "2024-09-04": {
-      //   id: 3122223,
-      //   date: "2024-09-04",
-      //   lessonsList: [
-      //     {
-      //       lessonId: null,
-      //       homeworkId: null,
-      //       grade: null,
-      //       teacherId: null,
-      //       cabinet: null,
-      //     },
-      //     {
-      //       lessonId: 2,
-      //       homeworkId: 6,
-      //       grade: null,
-      //       teacherId: 2,
-      //       cabinet: null,
-      //     },
-      //     {
-      //       lessonId: 2,
-      //       homeworkId: 7,
-      //       grade: null,
-      //       teacherId: 2,
-      //       cabinet: null,
-      //     },
-      //     {
-      //       lessonId: 1,
-      //       homeworkId: 8,
-      //       grade: null,
-      //       teacherId: 1,
-      //       cabinet: null,
-      //     },
-      //   ],
-      //   notes: null,
-      //   vacation: false,
-      //   holiday: false,
-      // },
     },
   },
   reducers: {
     addSchedule: (state, action) => {
-      // state.schedulesList[action.payload.date] = action.payload;
       return {
         ...state,
         schedulesList: { ...state.schedulesList, ...action.payload },

@@ -5,18 +5,13 @@ import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import TablesDiary from "./tables/TablesDiary";
 import Loading from "./blocks/Loading";
-import {
-  checkWeeklySchedule,
-  findCurrentStudyYear,
-  getWeekDaysInStore,
-} from "../utils/services";
+import { checkWeeklySchedule, getWeekDaysInStore } from "../utils/services";
 import { useDispatch } from "react-redux";
-import { addSchedule } from "../store/slices/dailySchedulesSlice";
+import { addDailySchedulesThunk } from "../store/slices/dailySchedulesSlice";
 import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
 import { CustomModal } from "./customModal/CustomModal";
-import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 
 const Diary = () => {
   moment.locale("ru");
@@ -25,15 +20,18 @@ const Diary = () => {
   const loadingWeeklySchedule = useSelector(
     (state) => state.weeklySchedule.loading
   );
+  const loadingDailySchedules = useSelector(
+    (state) => state.dailySchedules.loading
+  );
   const [currentDate, setCurrentDate] = useState(moment());
   const [diaryWeek, setDiaryWeek] = useState({});
 
-  // const currentStudyYear = findCurrentStudyYear(currentDate);
   const weeklySchedule = useSelector(
     (state) => state.weeklySchedule.scheduleForWeek
   );
 
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
+
   const dispatch = useDispatch();
 
   const findDiaryWeek = (currentDate, schedules) => {
@@ -56,24 +54,21 @@ const Diary = () => {
       .endOf("week")
       .format("DD MMMM YYYY")} года`;
   };
-  // useEffect(() => {
-  //   if (loadingWeeklySchedule) {
-  //     dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
-  //   }
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
   useEffect(() => {
-    if (!loadingWeeklySchedule)
+    if (!loadingWeeklySchedule && !loadingDailySchedules) {
+      console.log("Проверить даты текущей недели и создать если нужно новые");
       checkWeeklySchedule(
         currentDate,
         schedules,
         weeklySchedule,
         dispatch,
-        addSchedule
+        addDailySchedulesThunk,
+        userId
       );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentDate, loadingWeeklySchedule]);
+  }, [currentDate, loadingWeeklySchedule, loadingDailySchedules]);
 
   useEffect(() => {
     findDiaryWeek(currentDate, schedules);

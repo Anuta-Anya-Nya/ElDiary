@@ -6,8 +6,9 @@ import { useDispatch } from "react-redux";
 const TableHomeworkRow = ({ currentNumber, lessonItem }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
-    (state) => state.homeworks.homeworksList[lessonItem.homeworkId]
+    (state) => state.homeworks.homeworksList[lessonItem.homework]
   );
+  console.log(homework);
   const dispatch = useDispatch();
 
   const isAttenshion = () => {

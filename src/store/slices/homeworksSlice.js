@@ -1,124 +1,62 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { addHomeworkDB, getHomeworksDB } from "../../db/homeworkDb";
+
+export const getHomeworksThunk = createAsyncThunk(
+  "homeworks/getHomeworksThunk",
+  async ({ userId, currentYear }) => {
+    try {
+      console.log("загружаем ежедневные расписания...");
+      const homeworksList = await getHomeworksDB(userId, currentYear);
+      console.log(homeworksList);
+      return { loading: false, error: null, homeworksList };
+    } catch (er) {
+      console.log(er.code, er.message);
+      return { loading: false, error: er.message };
+    }
+  }
+);
+
+export const addHomeworkThunk = createAsyncThunk(
+  "homeworks/addHomeworkThunk",
+  async ({ userId, homework, currentStudyYear }, { rejectWithValue }) => {
+    try {
+      await addHomeworkDB(userId, homework, currentStudyYear);
+      return { homework };
+    } catch (error) {
+      if (error.code === "permission-denied") {
+        console.error("У вас нет разрешения на добавление документа.");
+      } else if (error.code === "not-found") {
+        console.error("Коллекция не найдена.");
+      } else {
+        console.error("Произошла неизвестная ошибка: ", error.message);
+      }
+      return rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 const homeworksSlice = createSlice({
   name: "homeworks",
   initialState: {
+    loading: true,
+    error: null,
     homeworksList: {
-      1: {
-        id: 1,
-        homework: [
-          {
-            task: null,
-            page: null,
-            notes: "стих наизусть",
-          },
-          {
-            task: "23",
-            page: "23-34",
-            notes: "qwerty",
-          },
-        ],
-        isDone: false,
-      },
-      2: {
-        id: 2,
-        homework: [
-          {
-            task: "23",
-            page: "23-34",
-            notes: "qwerty",
-          },
-        ],
-        isDone: false,
-      },
-      3: {
-        id: 3,
-        homework: [
-          {
-            task: "232",
-            page: null,
-            notes: null,
-          },
-        ],
-        isDone: false,
-      },
-      4: {
-        id: 4,
-        homework: [
-          {
-            task: "232",
-            page: null,
-            notes: null,
-          },
-        ],
-        isDone: false,
-      },
-      5: {
-        id: 5,
-        homework: [
-          {
-            task: "232",
-            page: "12 - 23",
-            notes: null,
-          },
-        ],
-        isDone: true,
-      },
-      6: {
-        id: 6,
-        homework: [
-          {
-            task: "232",
-            page: null,
-            notes: null,
-          },
-        ],
-        isDone: false,
-      },
-      7: {
-        id: 7,
-        homework: [
-          {
-            task: "232",
-            page: "uiuiui",
-            notes: null,
-          },
-        ],
-        isDone: false,
-      },
-      8: {
-        id: 8,
-        homework: [
-          {
-            task: "232",
-            page: "uiuiui",
-            notes: null,
-          },
-        ],
-        isDone: false,
-      },
-      9: {
-        id: 9,
-        homework: [
-          {
-            task: "232",
-            page: "uiuiui",
-            notes: null,
-          },
-        ],
-        isDone: false,
-      },
-      10: {
-        id: 10,
-        homework: [
-          {
-            task: "232",
-            page: "uiuiui",
-            notes: null,
-          },
-        ],
-        isDone: false,
-      },
+      // 1: {
+      //   id: 1,
+      //   homework: [
+      //     {
+      //       task: null,
+      //       page: null,
+      //       notes: "стих наизусть",
+      //     },
+      //     {
+      //       task: "23",
+      //       page: "23-34",
+      //       notes: "qwerty",
+      //     },
+      //   ],
+      //   isDone: false,
+      // },
     },
   },
   reducers: {
@@ -150,15 +88,24 @@ const homeworksSlice = createSlice({
         }, {});
     },
   },
-  //   редьюсеры для thunk функций
-  //   extraReducers: (builder) => {
-  //     builder.addCase(createUserThunk.fulfilled, (state, action) => {
-  //       return (state = action.payload);
-  //     });
-  //     builder.addCase(loginThunk.fulfilled, (state, action) => {
-  //       return (state = action.payload);
-  //     });
-  //   },
+  extraReducers: (builder) => {
+    builder.addCase(getHomeworksThunk.fulfilled, (state, action) => {
+      return (state = action.payload);
+    });
+    builder.addCase(addHomeworkThunk.fulfilled, (state, action) => {
+      console.log(action.payload);
+      return {
+        ...state,
+        homeworksList: {
+          ...state.homeworksList,
+          ...action.payload.homeworksList,
+        },
+      };
+    });
+    builder.addCase(addHomeworkThunk.rejected, (state, action) => {
+      return state;
+    });
+  },
 });
 export const { addHomework, updateHomework, deleteHomework } =
   homeworksSlice.actions;

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import moment from "moment/min/moment-with-locales.min";
-
 import TableHomework from "./tables/TableHomework";
 import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
@@ -8,56 +7,53 @@ import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import Loading from "./blocks/Loading";
-import { findCurrentStudyYear, toChangeDate } from "../utils/services";
+import { toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
-import { addSchedule } from "../store/slices/dailySchedulesSlice";
-import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
+import { addDailySchedulesThunk } from "../store/slices/dailySchedulesSlice";
 
 function Homework() {
   moment.locale("ru");
   const currentDate = moment();
-  const loadingWeeklySchedule = useSelector(
-    (state) => state.weeklySchedule.loading
-  );
   const titleCardId = 6;
-  // const userId = useSelector((state) => state.user.id);
+
   const selectDisplay = useSelector((state) => state.settings.displayHomeWork);
   const [displayDate, setDisplayDate] = useState(
     currentDate.clone().add(selectDisplay, "days")
   );
 
+  const loadingWeeklySchedule = useSelector(
+    (state) => state.weeklySchedule.loading
+  );
+  const loadingDailySchedules = useSelector(
+    (state) => state.dailySchedules.loading
+  );
+
+  const userId = useSelector((state) => state.user.id);
   const weeklySchedule = useSelector(
     (state) => state.weeklySchedule.scheduleForWeek
   );
-
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
-  const dispatch = useDispatch();
-
   const displaySchedule = useSelector(
     (state) =>
       state.dailySchedules.schedulesList[displayDate.format("YYYY-MM-DD")]
   );
-  // useEffect(() => {
-  //   if (loadingWeeklySchedule) {
-  //     dispatch(getWeeklySchedule({ userId, currentYear: currentStudyYear }));
-  //   }
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!loadingWeeklySchedule) {
+    if (!loadingWeeklySchedule && !loadingDailySchedules) {
       checkWeeklySchedule(
         displayDate,
         schedules,
         weeklySchedule,
         dispatch,
-        addSchedule
+        addDailySchedulesThunk,
+        userId
       );
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayDate, loadingWeeklySchedule]);
+  }, [displayDate, loadingWeeklySchedule, loadingDailySchedules]);
 
   return (
     <main>

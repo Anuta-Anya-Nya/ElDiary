@@ -28,7 +28,6 @@ function Homework() {
   const loadingDailySchedules = useSelector(
     (state) => state.dailySchedules.loading
   );
-
   const userId = useSelector((state) => state.user.id);
   const weeklySchedule = useSelector(
     (state) => state.weeklySchedule.scheduleForWeek

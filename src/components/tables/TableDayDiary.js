@@ -41,7 +41,7 @@ const TableDayDiary = ({ day, position, modify }) => {
         date: day.date,
         lesson: {
           lessonId: null,
-          homeworkId: null,
+          homework: null,
           grade: null,
           teacherId: null,
           cabinet: null,
@@ -93,23 +93,6 @@ const TableDayDiary = ({ day, position, modify }) => {
               />
             );
           })}
-        {/* {day?.lessonsList.map((el, ind) => {
-          return modify ? (
-            <TableDayRowEdit
-              currentNumber={ind}
-              lessonItem={el}
-              key={ind}
-              sheduleDate={day.date}
-            />
-          ) : (
-            <TableDayRow
-              currentNumber={ind}
-              lessonItem={el}
-              key={ind}
-              sheduleDate={day.date}
-            />
-          );
-        })} */}
 
         <div className="diary__cell-long">
           <div className="diary__notes">Заметки: </div>

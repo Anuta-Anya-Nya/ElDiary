@@ -73,21 +73,29 @@ export function checkWeeklySchedule(
   const missingDates = findMissingDates(currentDateMoment, schedules);
   if (missingDates.length) {
     const newScheduleItems = missingDates.reduce((sheduleItems, date) => {
-      let lessonsList = [];
+      let lessonsList = {};
+      // if (weeklySchedule.schedule) {
+      //   lessonsList = findDayInWeeklyShedule(date, weeklySchedule).map(
+      //     (lesson) => ({ ...lesson, homework: null, grade: null })
+      //   );\
       if (weeklySchedule.schedule) {
-        lessonsList = findDayInWeeklyShedule(date, weeklySchedule).map(
-          (lesson) => ({ ...lesson, homework: null, grade: null })
+        lessonsList = findDayInWeeklyShedule(date, weeklySchedule).reduce(
+          (lessonsList, lesson, number) => {
+            lessonsList[number] = { ...lesson, homework: null, grade: null };
+            return lessonsList;
+          },
+          {}
         );
       } else {
-        lessonsList = [
-          {
+        lessonsList = {
+          0: {
             lessonId: null,
             homeworkId: null,
             grade: null,
             teacherId: null,
             cabinet: null,
           },
-        ];
+        };
       }
       sheduleItems[date] = {
         id: shortid.generate(),
@@ -99,6 +107,7 @@ export function checkWeeklySchedule(
       };
       return sheduleItems;
     }, {});
+
     missingDates.map((date) => findDayInWeeklyShedule(date));
     const currentStudyYear = findCurrentStudyYear(currentDateMoment);
     dispatch(

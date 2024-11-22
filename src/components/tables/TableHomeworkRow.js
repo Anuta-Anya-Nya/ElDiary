@@ -8,7 +8,6 @@ const TableHomeworkRow = ({ currentNumber, lessonItem }) => {
   const homework = useSelector(
     (state) => state.homeworks.homeworksList[lessonItem.homework]
   );
-  console.log(homework);
   const dispatch = useDispatch();
 
   const isAttenshion = () => {

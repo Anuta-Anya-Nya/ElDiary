@@ -31,12 +31,7 @@ const weeklyScheduleSlice = createSlice({
       // startPeriod: "2024-09-01",
       // endPeriod: "2025-06-01",
       // schedule: [
-      //   [
-      //     { lessonId: 1, cabinet: 23, teacherId: 1 },
-      //     { lessonId: 2, cabinet: 23, teacherId: 2 },
-      //     { lessonId: 1, cabinet: 15, teacherId: 1 },
-      //     { lessonId: 2, cabinet: 23, teacherId: 2 },
-      //   ],
+      //
       //   [
       //     { lessonId: 1, cabinet: 23, teacherId: 1 },
       //     { lessonId: 2, cabinet: 23, teacherId: 2 },

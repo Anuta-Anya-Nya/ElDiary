@@ -30,3 +30,11 @@ export const addDailySchedulesDB = async (userId, data, currentStudyYear) => {
     setDoc(doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`), data);
   }
 };
+
+export const updateDailyScheduleDB = async (userId, data, currentStudyYear) => {
+  const updateInfo = `${data.date}.lessonsList.${data.number}.${data.update}`;
+  console.log(updateInfo);
+  updateDoc(doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`), {
+    [updateInfo]: data.homeworkId,
+  });
+};

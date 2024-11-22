@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addHomeworkDB, getHomeworksDB } from "../../db/homeworkDb";
+import { updateDailyScheduleDB } from "../../db/dailyShedulesDb";
 
 export const getHomeworksThunk = createAsyncThunk(
   "homeworks/getHomeworksThunk",
@@ -18,9 +19,11 @@ export const getHomeworksThunk = createAsyncThunk(
 
 export const addHomeworkThunk = createAsyncThunk(
   "homeworks/addHomeworkThunk",
-  async ({ userId, homework, currentStudyYear }, { rejectWithValue }) => {
+  async ({ userId, homework, currentStudyYear, data }, { rejectWithValue }) => {
     try {
-      await addHomeworkDB(userId, homework, currentStudyYear);
+      await addHomeworkDB(userId, homework, currentStudyYear).then(
+        updateDailyScheduleDB(userId, data, currentStudyYear)
+      );
       return { homework };
     } catch (error) {
       if (error.code === "permission-denied") {

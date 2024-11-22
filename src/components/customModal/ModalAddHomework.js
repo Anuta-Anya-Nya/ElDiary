@@ -64,7 +64,13 @@ export const ModalAddHomework = () => {
       }
       const homework = { id: homeworkId, homework: hw, isDone: false };
       const currentStudyYear = findCurrentStudyYear(moment(modalData.date));
-      dispatch(addHomeworkThunk({ userId, homework, currentStudyYear }));
+      const data = {
+        update: "homework",
+        date: modalData.date,
+        number: modalData.number,
+        homeworkId: homeworkId,
+      };
+      dispatch(addHomeworkThunk({ userId, homework, currentStudyYear, data }));
       dispatch(addHomework({ id: homeworkId, homework: hw, isDone: false }));
       dispatch(
         updateDailyScheduleHomework({

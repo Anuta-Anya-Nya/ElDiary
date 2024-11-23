@@ -16,12 +16,10 @@ export const addHomeworkDB = async (userId, data, currentStudyYear) => {
     doc(db, `users/${userId}/homework/${currentStudyYear}`)
   );
   if (resp.exists()) {
-    console.log("создан, надо обновить");
     updateDoc(doc(db, `users/${userId}/homework/${currentStudyYear}`), {
       [data.id]: data,
     });
   } else {
-    console.log("не создан, надо создать");
     setDoc(doc(db, `users/${userId}/homework/${currentStudyYear}`), {
       [data.id]: data,
     });

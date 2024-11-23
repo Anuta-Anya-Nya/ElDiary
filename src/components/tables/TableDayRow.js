@@ -44,8 +44,10 @@ const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
               );
             }}
           />
-        ) : (
+        ) : homework ? (
           buildTask(homework.homework)
+        ) : (
+          "Сохранение..."
         )}
       </div>
       <div className="diary__cell">

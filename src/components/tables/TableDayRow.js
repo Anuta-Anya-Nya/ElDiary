@@ -5,7 +5,7 @@ import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
-    (state) => state.homeworks.homeworksList[lessonItem.homeworkId]
+    (state) => state.homeworks.homeworksList[lessonItem.homework]
   );
   const dispatch = useDispatch();
 
@@ -32,7 +32,7 @@ const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
       <div className="diary__cell table__cell-task">
         {!lessonItem.lessonId ? (
           ""
-        ) : !lessonItem.homeworkId ? (
+        ) : !lessonItem.homework ? (
           <img
             className="diary__icons"
             src={add}
@@ -44,8 +44,10 @@ const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
               );
             }}
           />
-        ) : (
+        ) : homework ? (
           buildTask(homework.homework)
+        ) : (
+          "Сохранение..."
         )}
       </div>
       <div className="diary__cell">

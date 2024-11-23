@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addHomeworkDB, getHomeworksDB } from "../../db/homeworkDb";
+import { updateDailyScheduleThunk } from "./dailySchedulesSlice";
 
 export const getHomeworksThunk = createAsyncThunk(
   "homeworks/getHomeworksThunk",
   async ({ userId, currentYear }) => {
     try {
-      console.log("загружаем ежедневные расписания...");
       const homeworksList = await getHomeworksDB(userId, currentYear);
-      console.log(homeworksList);
       return { loading: false, error: null, homeworksList };
     } catch (er) {
       console.log(er.code, er.message);
@@ -18,10 +17,15 @@ export const getHomeworksThunk = createAsyncThunk(
 
 export const addHomeworkThunk = createAsyncThunk(
   "homeworks/addHomeworkThunk",
-  async ({ userId, homework, currentStudyYear }, { rejectWithValue }) => {
+  async (
+    { userId, homework, currentStudyYear, data, dispatch },
+    { rejectWithValue }
+  ) => {
     try {
-      await addHomeworkDB(userId, homework, currentStudyYear);
-      return { homework };
+      await addHomeworkDB(userId, homework, currentStudyYear).then(
+        dispatch(updateDailyScheduleThunk({ userId, data, currentStudyYear }))
+      );
+      return homework;
     } catch (error) {
       if (error.code === "permission-denied") {
         console.error("У вас нет разрешения на добавление документа.");
@@ -67,11 +71,6 @@ const homeworksSlice = createSlice({
       Object.assign(state.homeworksList[action.payload.id], action.payload);
     },
     deleteHomework: (state, action) => {
-      // console.log(
-      //   Object.keys(state.homeworksList).filter(
-      //     (key) => Number(key) !== action.payload
-      //   )
-      // );
       console.log(
         Object.keys(state.homeworksList)
           .filter((key) => Number(key) !== action.payload)
@@ -93,12 +92,12 @@ const homeworksSlice = createSlice({
       return (state = action.payload);
     });
     builder.addCase(addHomeworkThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       return {
         ...state,
         homeworksList: {
           ...state.homeworksList,
-          ...action.payload.homeworksList,
+
+          [action.payload.id]: action.payload,
         },
       };
     });

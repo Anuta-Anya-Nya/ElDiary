@@ -2,19 +2,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addDailySchedulesDB,
   getDailyShedulesDB,
+  updateDailyScheduleDB,
 } from "../../db/dailyShedulesDb";
 
 export const getDailySchedules = createAsyncThunk(
   "dailySchedules/getDailySchedThunk",
   async ({ userId, currentYear }) => {
     try {
-      console.log("загружаем ежедневные расписания...");
       const schedulesList = await getDailyShedulesDB(userId, currentYear);
-      console.log(schedulesList);
       return { loading: false, error: null, schedulesList };
     } catch (er) {
       console.log(er.code, er.message);
-      return { loading: false, error: er.message };
+      return { loading: false, error: er.message, schedulesList: {} };
     }
   }
 );
@@ -38,6 +37,25 @@ export const addDailySchedulesThunk = createAsyncThunk(
   }
 );
 
+export const updateDailyScheduleThunk = createAsyncThunk(
+  "dailySchedules/updateDailySchedulesThunk",
+  async ({ userId, data, currentStudyYear }, { rejectWithValue }) => {
+    try {
+      await updateDailyScheduleDB(userId, data, currentStudyYear);
+      return data;
+    } catch (error) {
+      if (error.code === "permission-denied") {
+        console.error("У вас нет разрешения на добавление документа.");
+      } else if (error.code === "not-found") {
+        console.error("Коллекция не найдена.");
+      } else {
+        console.error("Произошла неизвестная ошибка: ", error.message);
+      }
+      return rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 const dailySchedulesSlice = createSlice({
   name: "dailySchedules",
   initialState: {
@@ -47,29 +65,29 @@ const dailySchedulesSlice = createSlice({
       // "2024-09-02": {
       //   id: 123123231,
       //   date: "2024-09-02",
-      //   lessonsList: [
-      //     {
+      //   lessonsList: {
+      //     0: {
       //       lessonId: 2,
-      //       homeworkId: 1,
+      //       homework: 1,
       //       grade: 5,
       //       teacherId: 2,
       //       cabinet: null,
       //     },
-      //     {
+      //     1: {
       //       lessonId: 1,
-      //       homeworkId: 2,
+      //       homework: 2,
       //       grade: null,
       //       teacherId: 1,
       //       cabinet: null,
       //     },
-      //     {
+      //     2: {
       //       lessonId: 1,
-      //       homeworkId: null,
+      //       homework: null,
       //       grade: null,
       //       teacherId: 1,
       //       cabinet: null,
       //     },
-      //   ],
+      //   },
       //   notes: "qwerty",
       //   vacation: false,
       //   holiday: false,
@@ -120,7 +138,6 @@ const dailySchedulesSlice = createSlice({
       return (state = action.payload);
     });
     builder.addCase(addDailySchedulesThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       return {
         ...state,
         schedulesList: {
@@ -134,6 +151,28 @@ const dailySchedulesSlice = createSlice({
         ...state,
         ...action.payload,
       };
+    });
+    builder.addCase(updateDailyScheduleThunk.fulfilled, (state, action) => {
+      const { date, number, homeworkId } = action.payload;
+      return {
+        ...state,
+        schedulesList: {
+          ...state.schedulesList,
+          [date]: {
+            ...state.schedulesList[date],
+            lessonsList: {
+              ...state.schedulesList[date].lessonsList,
+              [number]: {
+                ...state.schedulesList[date].lessonsList[number],
+                homework: homeworkId,
+              },
+            },
+          },
+        },
+      };
+    });
+    builder.addCase(updateDailyScheduleThunk.rejected, (state, action) => {
+      return state;
     });
   },
 });

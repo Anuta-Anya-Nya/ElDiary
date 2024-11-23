@@ -64,14 +64,14 @@ export const ModalAddHomework = () => {
       }
       const homework = { id: homeworkId, homework: hw, isDone: false };
       const currentStudyYear = findCurrentStudyYear(moment(modalData.date));
-      dispatch(addHomeworkThunk({ userId, homework, currentStudyYear }));
-      dispatch(addHomework({ id: homeworkId, homework: hw, isDone: false }));
+      const data = {
+        update: "homework",
+        date: modalData.date,
+        number: modalData.number,
+        homeworkId: homeworkId,
+      };
       dispatch(
-        updateDailyScheduleHomework({
-          date: modalData.date,
-          number: modalData.number,
-          homeworkId: homeworkId,
-        })
+        addHomeworkThunk({ userId, homework, currentStudyYear, data, dispatch })
       );
       toCloseAndRefreshData();
     }
@@ -79,10 +79,10 @@ export const ModalAddHomework = () => {
 
   const editHomeWork = (ind) => {
     const newHW = [...homeworkData];
-    console.log(newHW);
     newHW[ind] = { task: task, page: page, notes: note };
     return newHW;
   };
+
   const delHomework = (ind) => {
     setHomeworkData(homeworkData.filter((el, index) => index !== ind));
   };

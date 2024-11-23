@@ -25,7 +25,7 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
         number: currentNumber,
         lesson: {
           lessonId: null,
-          homeworkId: null,
+          homework: null,
           grade: null,
           teacherId: null,
           cabinets: null,
@@ -39,7 +39,7 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
       updateDailyScheduleHomework({
         date: sheduleDate,
         number: currentNumber,
-        homeworkId: null,
+        homework: null,
       })
     );
   };
@@ -109,7 +109,7 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
       <div className="diary__cell table__cell-task">
         {!lessonItem.lessonId ? (
           ""
-        ) : !lessonItem.homeworkId ? (
+        ) : !lessonItem.homework ? (
           <img
             className="diary__icons"
             src={add}

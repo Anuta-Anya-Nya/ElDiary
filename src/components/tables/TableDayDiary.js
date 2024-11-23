@@ -41,7 +41,7 @@ const TableDayDiary = ({ day, position, modify }) => {
         date: day.date,
         lesson: {
           lessonId: null,
-          homeworkId: null,
+          homework: null,
           grade: null,
           teacherId: null,
           cabinet: null,
@@ -74,23 +74,25 @@ const TableDayDiary = ({ day, position, modify }) => {
         <div className="diary__cell table__cell-title">Предмет</div>
         <div className="diary__cell table__cell-title">Домашнее задание</div>
         <div className="diary__cell table__cell-title">Оценка</div>
-        {day?.lessonsList.map((el, ind) => {
-          return modify ? (
-            <TableDayRowEdit
-              currentNumber={ind}
-              lessonItem={el}
-              key={ind}
-              sheduleDate={day.date}
-            />
-          ) : (
-            <TableDayRow
-              currentNumber={ind}
-              lessonItem={el}
-              key={ind}
-              sheduleDate={day.date}
-            />
-          );
-        })}
+        {Object.keys(day.lessonsList)
+          .sort()
+          .map((key) => {
+            return modify ? (
+              <TableDayRowEdit
+                currentNumber={+key}
+                lessonItem={day.lessonsList[key]}
+                key={key}
+                sheduleDate={day.date}
+              />
+            ) : (
+              <TableDayRow
+                currentNumber={+key}
+                lessonItem={day.lessonsList[key]}
+                key={key}
+                sheduleDate={day.date}
+              />
+            );
+          })}
 
         <div className="diary__cell-long">
           <div className="diary__notes">Заметки: </div>

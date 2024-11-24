@@ -25,3 +25,15 @@ export const addHomeworkDB = async (userId, data, currentStudyYear) => {
     });
   }
 };
+export const updateHomeworkDB = async (userId, currentStudyYear, homework) => {
+  const resp = await getDoc(
+    doc(db, `users/${userId}/homework/${currentStudyYear}`)
+  );
+  if (resp.exists()) {
+    updateDoc(doc(db, `users/${userId}/homework/${currentStudyYear}`), {
+      [homework.id]: homework,
+    });
+  } else {
+    throw new Error("Домашней работы для обновления не найдено");
+  }
+};

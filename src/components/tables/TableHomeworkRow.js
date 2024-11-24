@@ -1,13 +1,16 @@
-import { updateHomework } from "../../store/slices/homeworksSlice";
-import { buildTask } from "../../utils/services";
+import { updateHomeworkThunk } from "../../store/slices/homeworksSlice";
+import { buildTask, findCurrentStudyYear } from "../../utils/services";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import moment from "moment/min/moment-with-locales.min";
 
 const TableHomeworkRow = ({ currentNumber, lessonItem }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
     (state) => state.homeworks.homeworksList[lessonItem.homework]
   );
+  const userId = useSelector((state) => state.user.id);
+  const currentStudyYear = findCurrentStudyYear(moment());
   const dispatch = useDispatch();
 
   const isAttenshion = () => {
@@ -42,7 +45,13 @@ const TableHomeworkRow = ({ currentNumber, lessonItem }) => {
             !lessonItem.lessonId ? false : homework ? homework.isDone : false
           }
           onChange={() => {
-            dispatch(updateHomework({ ...homework, isDone: !homework.isDone }));
+            dispatch(
+              updateHomeworkThunk({
+                userId,
+                currentStudyYear,
+                homework: { ...homework, isDone: !homework.isDone },
+              })
+            );
           }}
           disabled={!lessonItem.lessonId || !homework}
         />

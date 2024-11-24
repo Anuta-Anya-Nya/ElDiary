@@ -37,8 +37,8 @@ export const addDailySchedulesThunk = createAsyncThunk(
   }
 );
 
-export const updateDailyScheduleThunk = createAsyncThunk(
-  "dailySchedules/updateDailySchedulesThunk",
+export const updateDailyScheduleLessonThunk = createAsyncThunk(
+  "dailySchedules/updateDailyScheduleLessonThunk",
   async ({ userId, data, currentStudyYear }, { rejectWithValue }) => {
     try {
       await updateDailyScheduleDB(userId, data, currentStudyYear);
@@ -152,28 +152,34 @@ const dailySchedulesSlice = createSlice({
         ...action.payload,
       };
     });
-    builder.addCase(updateDailyScheduleThunk.fulfilled, (state, action) => {
-      const { updateKey, date, number, updateValue } = action.payload;
-      return {
-        ...state,
-        schedulesList: {
-          ...state.schedulesList,
-          [date]: {
-            ...state.schedulesList[date],
-            lessonsList: {
-              ...state.schedulesList[date].lessonsList,
-              [number]: {
-                ...state.schedulesList[date].lessonsList[number],
-                [updateKey]: updateValue,
+    builder.addCase(
+      updateDailyScheduleLessonThunk.fulfilled,
+      (state, action) => {
+        const { updateKey, date, number, updateValue } = action.payload;
+        return {
+          ...state,
+          schedulesList: {
+            ...state.schedulesList,
+            [date]: {
+              ...state.schedulesList[date],
+              lessonsList: {
+                ...state.schedulesList[date].lessonsList,
+                [number]: {
+                  ...state.schedulesList[date].lessonsList[number],
+                  [updateKey]: updateValue,
+                },
               },
             },
           },
-        },
-      };
-    });
-    builder.addCase(updateDailyScheduleThunk.rejected, (state, action) => {
-      return state;
-    });
+        };
+      }
+    );
+    builder.addCase(
+      updateDailyScheduleLessonThunk.rejected,
+      (state, action) => {
+        return state;
+      }
+    );
   },
 });
 export const {

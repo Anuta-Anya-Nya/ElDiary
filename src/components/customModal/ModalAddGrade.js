@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateDailyScheduleThunk } from "../../store/slices/dailySchedulesSlice";
+import { updateDailyScheduleLessonThunk } from "../../store/slices/dailySchedulesSlice";
 import { openCloseModal } from "../../store/slices/contentSlice";
 import { findCurrentStudyYear } from "../../utils/services";
 import moment from "moment/min/moment-with-locales.min";
@@ -29,7 +29,7 @@ export const ModalAddGrade = () => {
     } else {
       const currentStudyYear = findCurrentStudyYear(moment(modalData.date));
       dispatch(
-        updateDailyScheduleThunk({
+        updateDailyScheduleLessonThunk({
           userId,
           data: {
             date: modalData.date,

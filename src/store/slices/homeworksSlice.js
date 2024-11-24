@@ -4,7 +4,7 @@ import {
   getHomeworksDB,
   updateHomeworkDB,
 } from "../../db/homeworkDb";
-import { updateDailyScheduleThunk } from "./dailySchedulesSlice";
+import { updateDailyScheduleLessonThunk } from "./dailySchedulesSlice";
 
 export const getHomeworksThunk = createAsyncThunk(
   "homeworks/getHomeworksThunk",
@@ -27,7 +27,9 @@ export const addHomeworkThunk = createAsyncThunk(
   ) => {
     try {
       await addHomeworkDB(userId, homework, currentStudyYear).then(
-        dispatch(updateDailyScheduleThunk({ userId, data, currentStudyYear }))
+        dispatch(
+          updateDailyScheduleLessonThunk({ userId, data, currentStudyYear })
+        )
       );
       return homework;
     } catch (error) {

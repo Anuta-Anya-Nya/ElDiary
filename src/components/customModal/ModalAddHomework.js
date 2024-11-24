@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import edit from "../../assets/icons/edit-pen.svg";
 import del from "../../assets/icons/delete.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addHomework,
-  addHomeworkThunk,
-} from "../../store/slices/homeworksSlice";
-import { updateDailyScheduleHomework } from "../../store/slices/dailySchedulesSlice";
+import { addHomeworkThunk } from "../../store/slices/homeworksSlice";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 import shortid from "shortid";
 import { findCurrentStudyYear } from "../../utils/services";
@@ -65,10 +61,10 @@ export const ModalAddHomework = () => {
       const homework = { id: homeworkId, homework: hw, isDone: false };
       const currentStudyYear = findCurrentStudyYear(moment(modalData.date));
       const data = {
-        update: "homework",
+        updateKey: "homework",
         date: modalData.date,
         number: modalData.number,
-        homeworkId: homeworkId,
+        updateValue: homeworkId,
       };
       dispatch(
         addHomeworkThunk({ userId, homework, currentStudyYear, data, dispatch })

@@ -153,7 +153,7 @@ const dailySchedulesSlice = createSlice({
       };
     });
     builder.addCase(updateDailyScheduleThunk.fulfilled, (state, action) => {
-      const { date, number, homeworkId } = action.payload;
+      const { updateKey, date, number, updateValue } = action.payload;
       return {
         ...state,
         schedulesList: {
@@ -164,7 +164,7 @@ const dailySchedulesSlice = createSlice({
               ...state.schedulesList[date].lessonsList,
               [number]: {
                 ...state.schedulesList[date].lessonsList[number],
-                homework: homeworkId,
+                [updateKey]: updateValue,
               },
             },
           },

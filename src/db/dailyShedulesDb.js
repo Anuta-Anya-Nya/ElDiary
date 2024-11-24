@@ -32,9 +32,9 @@ export const addDailySchedulesDB = async (userId, data, currentStudyYear) => {
 };
 
 export const updateDailyScheduleDB = async (userId, data, currentStudyYear) => {
-  const updateInfo = `${data.date}.lessonsList.${data.number}.${data.update}`;
-  console.log(updateInfo);
+  const updateKey = `${data.date}.lessonsList.${data.number}.${data.updateKey}`;
+  console.log(updateKey);
   updateDoc(doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`), {
-    [updateInfo]: data.homeworkId,
+    [updateKey]: data.updateValue,
   });
 };

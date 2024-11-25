@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateDailyScheduleNote } from "../../store/slices/dailySchedulesSlice";
+import { updateDailyScheduleDayThunk } from "../../store/slices/dailySchedulesSlice";
 import { openCloseModal } from "../../store/slices/contentSlice";
+import moment from "moment/min/moment-with-locales.min";
+import { findCurrentStudyYear } from "../../utils/services";
 
 export const ModalAddNotes = ({ isOpen, onClose }) => {
   const [note, setNote] = useState("");
   const [error, setError] = useState(false);
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const modify = useSelector((state) => state.content.openModal.modify);
-
+  const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
 
   const toCloseAndRefreshData = () => {
@@ -26,9 +28,10 @@ export const ModalAddNotes = ({ isOpen, onClose }) => {
       setError(true);
     } else {
       dispatch(
-        updateDailyScheduleNote({
-          date: modalData.date,
-          notes: note,
+        updateDailyScheduleDayThunk({
+          userId,
+          data: { date: modalData.date, updateKey: "notes", updateValue: note },
+          currentStudyYear: findCurrentStudyYear(moment(modalData.date)),
         })
       );
       toCloseAndRefreshData();

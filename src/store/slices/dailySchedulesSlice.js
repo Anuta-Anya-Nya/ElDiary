@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addDailySchedulesDB,
   getDailyShedulesDB,
-  updateDailyScheduleDB,
+  updateDailyScheduleDayDB,
+  updateDailyScheduleLessonDB,
 } from "../../db/dailyShedulesDb";
 
 export const getDailySchedules = createAsyncThunk(
@@ -37,11 +38,29 @@ export const addDailySchedulesThunk = createAsyncThunk(
   }
 );
 
-export const updateDailyScheduleThunk = createAsyncThunk(
-  "dailySchedules/updateDailySchedulesThunk",
+export const updateDailyScheduleLessonThunk = createAsyncThunk(
+  "dailySchedules/updateDailyScheduleLessonThunk",
   async ({ userId, data, currentStudyYear }, { rejectWithValue }) => {
     try {
-      await updateDailyScheduleDB(userId, data, currentStudyYear);
+      await updateDailyScheduleLessonDB(userId, data, currentStudyYear);
+      return data;
+    } catch (error) {
+      if (error.code === "permission-denied") {
+        console.error("У вас нет разрешения на добавление документа.");
+      } else if (error.code === "not-found") {
+        console.error("Коллекция не найдена.");
+      } else {
+        console.error("Произошла неизвестная ошибка: ", error.message);
+      }
+      return rejectWithValue({ error: error.message });
+    }
+  }
+);
+export const updateDailyScheduleDayThunk = createAsyncThunk(
+  "dailySchedules/updateDailyScheduleDayThunk",
+  async ({ userId, currentStudyYear, data }, { rejectWithValue }) => {
+    try {
+      await updateDailyScheduleDayDB(userId, data, currentStudyYear);
       return data;
     } catch (error) {
       if (error.code === "permission-denied") {
@@ -152,26 +171,64 @@ const dailySchedulesSlice = createSlice({
         ...action.payload,
       };
     });
-    builder.addCase(updateDailyScheduleThunk.fulfilled, (state, action) => {
-      const { date, number, homeworkId } = action.payload;
+    builder.addCase(
+      updateDailyScheduleLessonThunk.fulfilled,
+      (state, action) => {
+        const { updateKey, date, number, updateValue } = action.payload;
+        if (updateKey === "lesson") {
+          return {
+            ...state,
+            schedulesList: {
+              ...state.schedulesList,
+              [date]: {
+                ...state.schedulesList[date],
+                lessonsList: {
+                  ...state.schedulesList[date].lessonsList,
+                  [number]: updateValue,
+                },
+              },
+            },
+          };
+        } else {
+          return {
+            ...state,
+            schedulesList: {
+              ...state.schedulesList,
+              [date]: {
+                ...state.schedulesList[date],
+                lessonsList: {
+                  ...state.schedulesList[date].lessonsList,
+                  [number]: {
+                    ...state.schedulesList[date].lessonsList[number],
+                    [updateKey]: updateValue,
+                  },
+                },
+              },
+            },
+          };
+        }
+      }
+    );
+    builder.addCase(
+      updateDailyScheduleLessonThunk.rejected,
+      (state, action) => {
+        return state;
+      }
+    );
+    builder.addCase(updateDailyScheduleDayThunk.fulfilled, (state, action) => {
+      const { updateKey, date, updateValue } = action.payload;
       return {
         ...state,
         schedulesList: {
           ...state.schedulesList,
           [date]: {
             ...state.schedulesList[date],
-            lessonsList: {
-              ...state.schedulesList[date].lessonsList,
-              [number]: {
-                ...state.schedulesList[date].lessonsList[number],
-                homework: homeworkId,
-              },
-            },
+            [updateKey]: updateValue,
           },
         },
       };
     });
-    builder.addCase(updateDailyScheduleThunk.rejected, (state, action) => {
+    builder.addCase(updateDailyScheduleDayThunk.rejected, (state, action) => {
       return state;
     });
   },

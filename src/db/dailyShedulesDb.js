@@ -31,10 +31,43 @@ export const addDailySchedulesDB = async (userId, data, currentStudyYear) => {
   }
 };
 
-export const updateDailyScheduleDB = async (userId, data, currentStudyYear) => {
-  const updateInfo = `${data.date}.lessonsList.${data.number}.${data.update}`;
-  console.log(updateInfo);
-  updateDoc(doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`), {
-    [updateInfo]: data.homeworkId,
-  });
+export const updateDailyScheduleLessonDB = async (
+  userId,
+  data,
+  currentStudyYear
+) => {
+  const resp = await getDoc(
+    doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`)
+  );
+  if (resp.exists()) {
+    let updateKey;
+    if (data.updateKey === "lesson") {
+      updateKey = `${data.date}.lessonsList.${data.number}`;
+    } else {
+      updateKey = `${data.date}.lessonsList.${data.number}.${data.updateKey}`;
+    }
+
+    updateDoc(doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`), {
+      [updateKey]: data.updateValue,
+    });
+  } else {
+    throw new Error("Документ отсутствует");
+  }
+};
+
+export const updateDailyScheduleDayDB = async (
+  userId,
+  data,
+  currentStudyYear
+) => {
+  const resp = await getDoc(
+    doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`)
+  );
+  if (resp.exists()) {
+    updateDoc(doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`), {
+      [`${data.date}.${data.updateKey}`]: data.updateValue,
+    });
+  } else {
+    throw new Error("Документ отсутствует");
+  }
 };

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateDailyScheduleGrade } from "../../store/slices/dailySchedulesSlice";
+import { updateDailyScheduleLessonThunk } from "../../store/slices/dailySchedulesSlice";
 import { openCloseModal } from "../../store/slices/contentSlice";
+import { findCurrentStudyYear } from "../../utils/services";
+import moment from "moment/min/moment-with-locales.min";
 
 export const ModalAddGrade = () => {
   const [radioValue, setRadioValue] = useState("");
   const [error, setError] = useState(false);
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const modify = useSelector((state) => state.content.openModal.modify);
-
+  const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
 
   const toCloseAndRefreshData = () => {
@@ -25,11 +27,17 @@ export const ModalAddGrade = () => {
     if (!radioValue) {
       setError(true);
     } else {
+      const currentStudyYear = findCurrentStudyYear(moment(modalData.date));
       dispatch(
-        updateDailyScheduleGrade({
-          date: modalData.date,
-          number: modalData.number,
-          grade: Number(radioValue),
+        updateDailyScheduleLessonThunk({
+          userId,
+          data: {
+            date: modalData.date,
+            number: modalData.number,
+            updateValue: Number(radioValue),
+            updateKey: "grade",
+          },
+          currentStudyYear,
         })
       );
       toCloseAndRefreshData();

@@ -13,7 +13,7 @@ import {
 const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
-    (state) => state.homeworks.homeworksList[lessonItem.homeworkId]
+    (state) => state.homeworks.homeworksList[lessonItem.homework]
   );
 
   const dispatch = useDispatch();

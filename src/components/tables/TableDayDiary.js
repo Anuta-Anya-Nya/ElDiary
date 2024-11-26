@@ -4,16 +4,16 @@ import del from "../../assets/icons/delete.svg";
 import moment from "moment/min/moment-with-locales.min";
 import TableDayRow from "./TableDayRow";
 import TableDayRowEdit from "./TableDayRowEdit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 import {
-  updateDailyScheduleNote,
   addDailyScheduleLesson,
-  updateDailyScheduleVacation,
-  updateDailyScheduleHoliday,
+  updateDailyScheduleDayThunk,
 } from "../../store/slices/dailySchedulesSlice";
+import { findCurrentStudyYear } from "../../utils/services";
 
 const TableDayDiary = ({ day, position, modify }) => {
+  const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
 
   const gridColumn = () => {
@@ -29,9 +29,10 @@ const TableDayDiary = ({ day, position, modify }) => {
 
   const delNote = () => {
     dispatch(
-      updateDailyScheduleNote({
-        date: day.date,
-        notes: null,
+      updateDailyScheduleDayThunk({
+        userId,
+        data: { date: day.date, updateKey: "notes", updateValue: null },
+        currentStudyYear: findCurrentStudyYear(moment(day.date)),
       })
     );
   };
@@ -161,9 +162,14 @@ const TableDayDiary = ({ day, position, modify }) => {
             className="modal-submit-button modal-button"
             onClick={() => {
               dispatch(
-                updateDailyScheduleHoliday({
-                  date: day.date,
-                  holiday: !day.holiday,
+                updateDailyScheduleDayThunk({
+                  userId,
+                  data: {
+                    date: day.date,
+                    updateKey: "holiday",
+                    updateValue: !day.holiday,
+                  },
+                  currentStudyYear: findCurrentStudyYear(moment(day.date)),
                 })
               );
             }}
@@ -175,9 +181,14 @@ const TableDayDiary = ({ day, position, modify }) => {
             className="modal-submit-button modal-button"
             onClick={() => {
               dispatch(
-                updateDailyScheduleVacation({
-                  date: day.date,
-                  vacation: !day.vacation,
+                updateDailyScheduleDayThunk({
+                  userId,
+                  data: {
+                    date: day.date,
+                    updateKey: "vacation",
+                    updateValue: !day.vacation,
+                  },
+                  currentStudyYear: findCurrentStudyYear(moment(day.date)),
                 })
               );
             }}

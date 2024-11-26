@@ -175,22 +175,38 @@ const dailySchedulesSlice = createSlice({
       updateDailyScheduleLessonThunk.fulfilled,
       (state, action) => {
         const { updateKey, date, number, updateValue } = action.payload;
-        return {
-          ...state,
-          schedulesList: {
-            ...state.schedulesList,
-            [date]: {
-              ...state.schedulesList[date],
-              lessonsList: {
-                ...state.schedulesList[date].lessonsList,
-                [number]: {
-                  ...state.schedulesList[date].lessonsList[number],
-                  [updateKey]: updateValue,
+        if (updateKey === "lesson") {
+          return {
+            ...state,
+            schedulesList: {
+              ...state.schedulesList,
+              [date]: {
+                ...state.schedulesList[date],
+                lessonsList: {
+                  ...state.schedulesList[date].lessonsList,
+                  [number]: updateValue,
                 },
               },
             },
-          },
-        };
+          };
+        } else {
+          return {
+            ...state,
+            schedulesList: {
+              ...state.schedulesList,
+              [date]: {
+                ...state.schedulesList[date],
+                lessonsList: {
+                  ...state.schedulesList[date].lessonsList,
+                  [number]: {
+                    ...state.schedulesList[date].lessonsList[number],
+                    [updateKey]: updateValue,
+                  },
+                },
+              },
+            },
+          };
+        }
       }
     );
     builder.addCase(

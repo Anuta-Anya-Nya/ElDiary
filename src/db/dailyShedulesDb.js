@@ -40,7 +40,13 @@ export const updateDailyScheduleLessonDB = async (
     doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`)
   );
   if (resp.exists()) {
-    const updateKey = `${data.date}.lessonsList.${data.number}.${data.updateKey}`;
+    let updateKey;
+    if (data.updateKey === "lesson") {
+      updateKey = `${data.date}.lessonsList.${data.number}`;
+    } else {
+      updateKey = `${data.date}.lessonsList.${data.number}.${data.updateKey}`;
+    }
+
     updateDoc(doc(db, `users/${userId}/dailyShedules/${currentStudyYear}`), {
       [updateKey]: data.updateValue,
     });

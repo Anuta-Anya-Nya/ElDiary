@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { openCloseModal, editModalData } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlice";
+import { updateDailyScheduleLessonThunk } from "../../store/slices/dailySchedulesSlice";
+import moment from "moment/min/moment-with-locales.min";
+import { findCurrentStudyYear } from "../../utils/services";
 
 export const ModalAddLesson = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
@@ -10,7 +12,7 @@ export const ModalAddLesson = () => {
   const modify = useSelector((state) => state.content.openModal.modify);
   const createMode = useSelector((state) => state.content.openModal.createMode);
   const editMode = useSelector((state) => state.content.openModal.editMode);
-
+  const userId = useSelector((state) => state.user.id);
   const [selectLessonId, setSelectLessonId] = useState(null);
   const [selectTeacher, setSelectTeacher] = useState(null);
   const [selectCabinet, setSelectCabinet] = useState(null);
@@ -37,16 +39,21 @@ export const ModalAddLesson = () => {
         return;
       } else {
         dispatch(
-          updateDailyScheduleLesson({
-            date: modalData.date,
-            number: modalData.number,
-            lesson: {
-              lessonId: selectLessonId,
-              homeworkId: null,
-              grade: null,
-              teacherId: selectTeacher || null,
-              cabinet: selectCabinet || null,
+          updateDailyScheduleLessonThunk({
+            userId,
+            data: {
+              date: modalData.date,
+              number: modalData.number,
+              updateKey: "lesson",
+              updateValue: {
+                lessonId: selectLessonId,
+                homework: null,
+                grade: null,
+                teacherId: selectTeacher || null,
+                cabinet: selectCabinet || null,
+              },
             },
+            currentStudyYear: findCurrentStudyYear(moment(modalData.date)),
           })
         );
         toCloseAndRefreshData();

@@ -7,8 +7,8 @@ import TableDayRowEdit from "./TableDayRowEdit";
 import { useDispatch, useSelector } from "react-redux";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 import {
-  addDailyScheduleLesson,
   updateDailyScheduleDayThunk,
+  updateDailyScheduleLessonThunk,
 } from "../../store/slices/dailySchedulesSlice";
 import { findCurrentStudyYear } from "../../utils/services";
 
@@ -38,15 +38,21 @@ const TableDayDiary = ({ day, position, modify }) => {
   };
   const addNewLessonArea = () => {
     dispatch(
-      addDailyScheduleLesson({
-        date: day.date,
-        lesson: {
-          lessonId: null,
-          homework: null,
-          grade: null,
-          teacherId: null,
-          cabinet: null,
+      updateDailyScheduleLessonThunk({
+        userId,
+        data: {
+          date: day.date,
+          number: Object.keys(day.lessonsList).length,
+          updateKey: "lesson",
+          updateValue: {
+            lessonId: null,
+            homework: null,
+            grade: null,
+            teacherId: null,
+            cabinet: null,
+          },
         },
+        currentStudyYear: findCurrentStudyYear(moment(day.date)),
       })
     );
   };

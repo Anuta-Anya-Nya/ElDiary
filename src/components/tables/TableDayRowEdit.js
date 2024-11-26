@@ -1,55 +1,67 @@
-import { buildTask } from "../../utils/services";
+import { buildTask, findCurrentStudyYear } from "../../utils/services";
 import { useSelector, useDispatch } from "react-redux";
 import add from "../../assets/icons/circle-plus.svg";
 import edit from "../../assets/icons/edit-pen.svg";
 import del from "../../assets/icons/delete.svg";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
-import { updateDailyScheduleLesson } from "../../store/slices/dailySchedulesSlice";
-import {
-  updateDailyScheduleHomework,
-  updateDailyScheduleGrade,
-} from "../../store/slices/dailySchedulesSlice";
+import { updateDailyScheduleLessonThunk } from "../../store/slices/dailySchedulesSlice";
+import moment from "moment/min/moment-with-locales.min";
 
 const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
     (state) => state.homeworks.homeworksList[lessonItem.homework]
   );
-
+  const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
 
   const delLesson = () => {
     dispatch(
-      updateDailyScheduleLesson({
-        date: sheduleDate,
-        number: currentNumber,
-        lesson: {
-          lessonId: null,
-          homework: null,
-          grade: null,
-          teacherId: null,
-          cabinets: null,
+      updateDailyScheduleLessonThunk({
+        userId,
+        data: {
+          date: sheduleDate,
+          number: currentNumber,
+          updateKey: "lesson",
+          updateValue: {
+            lessonId: null,
+            homework: null,
+            grade: null,
+            teacherId: null,
+            cabinet: null,
+          },
         },
+        currentStudyYear: findCurrentStudyYear(moment(sheduleDate)),
       })
     );
   };
 
-  const delHomeWork = (homeWorkId) => {
+  const delHomeWork = () => {
     dispatch(
-      updateDailyScheduleHomework({
-        date: sheduleDate,
-        number: currentNumber,
-        homework: null,
+      updateDailyScheduleLessonThunk({
+        userId,
+        data: {
+          date: sheduleDate,
+          number: currentNumber,
+          updateKey: "homework",
+          updateValue: null,
+        },
+        currentStudyYear: findCurrentStudyYear(moment(sheduleDate)),
       })
     );
   };
 
   const delGrade = () => {
     dispatch(
-      updateDailyScheduleGrade({
-        date: sheduleDate,
-        number: currentNumber,
-        grade: null,
+      updateDailyScheduleLessonThunk({
+        userId,
+        data: {
+          date: sheduleDate,
+          number: currentNumber,
+          updateKey: "grade",
+          updateValue: null,
+        },
+        currentStudyYear: findCurrentStudyYear(moment(sheduleDate)),
       })
     );
   };
@@ -154,7 +166,7 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
                 src={del}
                 alt="удалить"
                 onClick={() => {
-                  delHomeWork(homework.id);
+                  delHomeWork();
                 }}
               />
             </div>

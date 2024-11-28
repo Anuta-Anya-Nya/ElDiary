@@ -1,11 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import { changeDisplayHW } from "../../store/slices/settingSlice";
+import { updateSettingsThunk } from "../../store/slices/settingSlice";
+import { SETTINGS } from "../../utils/constants";
 
 const SettingDisplayHW = () => {
-  const currentHW = 0;
-  const nextHW = 1;
-  const userSelect = useSelector((state) => state.settings.displayHomeWork);
+  const currentHW = SETTINGS.CURRENT_HOMEWORK;
+  const nextHW = SETTINGS.NEXT_HOMEWORK;
+  const userSelect = useSelector(
+    (state) => state.settings.settings.displayHomeWork
+  );
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.id);
+
+  const changeDisplayHW = (el) => {
+    const data = { displayHomeWork: Number(el.target.value) };
+    dispatch(updateSettingsThunk({ userId, data }));
+  };
 
   return (
     <div className="settings__item">
@@ -18,7 +27,7 @@ const SettingDisplayHW = () => {
           value={currentHW}
           checked={Number(currentHW) === userSelect}
           onChange={(el) => {
-            dispatch(changeDisplayHW(Number(el.target.value)));
+            changeDisplayHW(el);
           }}
         />
         <label htmlFor="currentHW">На текущий день</label>
@@ -31,7 +40,7 @@ const SettingDisplayHW = () => {
           value={nextHW}
           checked={Number(nextHW) === userSelect}
           onChange={(el) => {
-            dispatch(changeDisplayHW(Number(el.target.value)));
+            changeDisplayHW(el);
           }}
         />
         <label htmlFor="nextHW">На завтрашний день</label>

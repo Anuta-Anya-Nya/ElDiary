@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getSettingsDB } from "../../db/settingsDb";
+import { getSettingsDB, updateSettingsDB } from "../../db/settingsDb";
 
 export const getSettingsThunk = createAsyncThunk(
   "settings/getSettingsThunk",
@@ -10,6 +10,17 @@ export const getSettingsThunk = createAsyncThunk(
     } catch (er) {
       console.log(er.code, er.message);
       return { loading: false, error: er.message, settings: {} };
+    }
+  }
+);
+export const updateSettingsThunk = createAsyncThunk(
+  "settings/updateSettingsThunk",
+  async ({ userId, data }, { rejectWithValue }) => {
+    try {
+      await updateSettingsDB(userId, data);
+      return data;
+    } catch (er) {
+      rejectWithValue({ error: er.message });
     }
   }
 );
@@ -45,6 +56,18 @@ const settingSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getSettingsThunk.fulfilled, (state, action) => {
       return (state = action.payload);
+    });
+    builder.addCase(updateSettingsThunk.fulfilled, (state, action) => {
+      return (state = {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.payload,
+        },
+      });
+    });
+    builder.addCase(updateSettingsThunk.rejected, (state, action) => {
+      return state;
     });
   },
 });

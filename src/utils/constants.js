@@ -1,0 +1,4 @@
+export const SETTINGS = {
+  CURRENT_HOMEWORK: 0,
+  NEXT_HOMEWORK: 1,
+};

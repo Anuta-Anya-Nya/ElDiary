@@ -11,6 +11,7 @@ import {
   updateDailyScheduleLessonThunk,
 } from "../../store/slices/dailySchedulesSlice";
 import { findCurrentStudyYear } from "../../utils/services";
+import { LESSONS } from "../../utils/constants";
 
 const TableDayDiary = ({ day, position, modify }) => {
   const userId = useSelector((state) => state.user.id);
@@ -44,13 +45,7 @@ const TableDayDiary = ({ day, position, modify }) => {
           date: day.date,
           number: Object.keys(day.lessonsList).length,
           updateKey: "lesson",
-          updateValue: {
-            lessonId: null,
-            homework: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
+          updateValue: LESSONS.DAILY_LESSON_ITEM,
         },
         currentStudyYear: findCurrentStudyYear(moment(day.date)),
       })

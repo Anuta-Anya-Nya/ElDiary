@@ -1,4 +1,5 @@
 import ScheduleRow from "./ScheduleRow";
+import { WEEKLY_SCHEDULE } from "../../utils/constants";
 
 const ScheduleTable = ({
   daySchedule,
@@ -7,19 +8,11 @@ const ScheduleTable = ({
   addString,
   editSchedule,
 }) => {
-  const dayOfWeek = [
-    "Понедельник",
-    "Вторник",
-    "Среда",
-    "Четверг",
-    "Пятница",
-    "Суббота",
-  ];
-  const title = dayOfWeek[index];
+  const dayOfWeek = WEEKLY_SCHEDULE.DAY_OF_WEEK;
 
   return (
     <div className="diary__day">
-      <h3 className="diary__title diary__title-box">{title}</h3>
+      <h3 className="diary__title diary__title-box">{dayOfWeek[index]}</h3>
       <div className="schedule__table">
         <div className="diary__cell table__cell-title"></div>
         <div className="diary__cell table__cell-title">Предмет</div>

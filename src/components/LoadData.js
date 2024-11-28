@@ -26,6 +26,7 @@ const LoadData = () => {
       dispatch(getDailySchedules({ userId, currentYear }));
       dispatch(getHomeworksThunk({ userId, currentYear }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 };
 

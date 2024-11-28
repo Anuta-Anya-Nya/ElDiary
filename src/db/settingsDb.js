@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase";
-import { setDoc, doc, getDoc, updateDoc, addDoc } from "firebase/firestore";
+import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
 export const settingsInit = async (userId) => {
   setDoc(doc(db, `users/${userId}/settings/${userId}`), {

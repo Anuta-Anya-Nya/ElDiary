@@ -1,5 +1,6 @@
 import moment from "moment/min/moment-with-locales.min";
 import shortid from "shortid";
+import { LESSONS } from "./constants";
 
 export const buildTask = (lessonItem) => {
   const taskArr = [];
@@ -11,6 +12,16 @@ export const buildTask = (lessonItem) => {
     );
   });
   return taskArr.join(", ");
+};
+
+export const renderDiaryTitle = (currentDateMoment) => {
+  return `Неделя с ${currentDateMoment
+    .clone()
+    .startOf("week")
+    .format("DD MMMM")} по ${currentDateMoment
+    .clone()
+    .endOf("week")
+    .format("DD MMMM YYYY")} года`;
 };
 
 export const findCurrentStudyYear = (currentDateMoment) => {
@@ -88,13 +99,7 @@ export function checkWeeklySchedule(
         );
       } else {
         lessonsList = {
-          0: {
-            lessonId: null,
-            homeworkId: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
+          0: LESSONS.DAILY_LESSON_ITEM,
         };
       }
       sheduleItems[date] = {

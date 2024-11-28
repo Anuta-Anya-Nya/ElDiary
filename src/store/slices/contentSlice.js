@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { MENU_CARDS } from "../../utils/constants";
 
 const contentSlice = createSlice({
   name: "content",
   initialState: {
     menuButtons: [
       {
-        id: 1,
+        id: MENU_CARDS.DIARY_ID,
         icon: {
           path: require("../../assets/icons/ic-book.svg").default,
           alt: "дневник",
@@ -15,7 +16,7 @@ const contentSlice = createSlice({
         link: "/diary",
       },
       {
-        id: 2,
+        id: MENU_CARDS.TEACHERS_ID,
         icon: {
           path: require("../../assets/icons/ic-tech.svg").default,
           alt: "учителя",
@@ -56,7 +57,7 @@ const contentSlice = createSlice({
         link: "/note",
       },
       {
-        id: 6,
+        id: MENU_CARDS.HOMEWORK_ID,
         icon: {
           path: require("../../assets/icons/ic-homework.svg").default,
           alt: "домашка",
@@ -66,7 +67,7 @@ const contentSlice = createSlice({
         link: "/",
       },
       {
-        id: 7,
+        id: MENU_CARDS.SCHEDULE_ID,
         icon: {
           path: require("../../assets/icons/ic-dino.svg").default,
           alt: "расписание",

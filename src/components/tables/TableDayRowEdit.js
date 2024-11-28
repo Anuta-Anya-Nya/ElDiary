@@ -6,6 +6,7 @@ import del from "../../assets/icons/delete.svg";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
 import { updateDailyScheduleLessonThunk } from "../../store/slices/dailySchedulesSlice";
 import moment from "moment/min/moment-with-locales.min";
+import { LESSONS } from "../../utils/constants";
 
 const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
   const { lessons } = useSelector((state) => state.lessons);
@@ -23,13 +24,7 @@ const TableDayRowEdit = ({ currentNumber, lessonItem, sheduleDate }) => {
           date: sheduleDate,
           number: currentNumber,
           updateKey: "lesson",
-          updateValue: {
-            lessonId: null,
-            homework: null,
-            grade: null,
-            teacherId: null,
-            cabinet: null,
-          },
+          updateValue: LESSONS.DAILY_LESSON_ITEM,
         },
         currentStudyYear: findCurrentStudyYear(moment(sheduleDate)),
       })

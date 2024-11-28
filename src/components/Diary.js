@@ -9,6 +9,7 @@ import {
   checkWeeklySchedule,
   filteredSchedules,
   getWeekDaysInStore,
+  renderDiaryTitle,
 } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addDailySchedulesThunk } from "../store/slices/dailySchedulesSlice";
@@ -16,10 +17,11 @@ import arrowLeft from "../assets/icons/arrow-left.svg";
 import arrowRight from "../assets/icons/arrow-right.svg";
 import { toChangeDate } from "../utils/services";
 import { CustomModal } from "./customModal/CustomModal";
+import { MENU_CARDS } from "../utils/constants";
 
 const Diary = () => {
   moment.locale("ru");
-  const titleCardId = 1;
+  const titleCardId = MENU_CARDS.DIARY_ID;
 
   const [currentDate, setCurrentDate] = useState(moment());
   const [diaryWeek, setDiaryWeek] = useState({});
@@ -42,20 +44,10 @@ const Diary = () => {
     const datesForSelect = getWeekDaysInStore(currentDate, schedules);
     setDiaryWeek(filteredSchedules(schedules, datesForSelect));
   };
-
-  const renderDiaryTitle = (currentDate) => {
-    return `Неделя с ${currentDate
-      .clone()
-      .startOf("week")
-      .format("DD MMMM")} по ${currentDate
-      .clone()
-      .endOf("week")
-      .format("DD MMMM YYYY")} года`;
-  };
+  const diatyTitle = renderDiaryTitle(currentDate);
 
   useEffect(() => {
     if (!loadingWeeklySchedule && !loadingDailySchedules) {
-      console.log("Проверить даты текущей недели и создать если нужно новые");
       checkWeeklySchedule(
         currentDate,
         schedules,
@@ -88,7 +80,7 @@ const Diary = () => {
                 }}
               />
             </div>
-            <h2 className="diary__title">{renderDiaryTitle(currentDate)}</h2>
+            <h2 className="diary__title">{diatyTitle}</h2>
             <div className="homework__icons">
               <img
                 className="icons"

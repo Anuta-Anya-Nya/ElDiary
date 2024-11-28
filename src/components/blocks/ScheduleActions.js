@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addWeeklyScheduleDB } from "../../db/weeklyScheduleDb";
 import { getWeeklySchedule } from "../../store/slices/weeklyScheduleSlice";
 import shortid from "shortid";
+import { WEEKLY_SCHEDULE } from "../../utils/constants";
 
 const ScheduleActions = ({
   period,
@@ -15,15 +16,7 @@ const ScheduleActions = ({
   setEditSchedule,
   editSchedule,
 }) => {
-  const [schedule, setSchedule] = useState([
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-    [{ lessonId: null, cabinet: null, teacherId: null }],
-  ]);
-
+  const [schedule, setSchedule] = useState(WEEKLY_SCHEDULE.EMPTY_LIST);
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.id);
@@ -48,14 +41,7 @@ const ScheduleActions = ({
     };
     addWeeklyScheduleDB(userId, newWeeklySchedule);
     dispatch(getWeeklySchedule({ userId, currentYear: period }));
-    setSchedule([
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-      [{ lessonId: null, cabinet: null, teacherId: null }],
-    ]);
+    setSchedule(WEEKLY_SCHEDULE.EMPTY_LIST);
   };
 
   useEffectAfterMount(() => {

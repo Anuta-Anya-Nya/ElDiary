@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addLessonThunk } from "../../store/slices/lessonsSlice";
 import del from "../../assets/icons/delete.svg";
 import shortid from "shortid";
+import { CONTENT } from "../../utils/constants";
 
 export const ModalLesson = () => {
   const modify = useSelector((state) => state.content.openModal.modify);
@@ -20,8 +21,8 @@ export const ModalLesson = () => {
   const [tempTitle, setTempTitle] = useState(null);
   const [error, setError] = useState(null);
 
-  const errorTitle = "Название урока обязательно к заполению!";
-  const errorAvail = "Введенное название урока уже существует! Выберите другое";
+  const errorTitle = CONTENT.ADD_LESSON_ER_TITLE;
+  const errorAvail = CONTENT.ADD_LESSON_ER_AVAIL;
 
   const dispatch = useDispatch();
 

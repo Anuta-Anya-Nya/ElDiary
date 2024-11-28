@@ -11,6 +11,7 @@ import { toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addDailySchedulesThunk } from "../store/slices/dailySchedulesSlice";
+import { LESSONS } from "../utils/constants";
 
 function Homework() {
   moment.locale("ru");
@@ -86,7 +87,13 @@ function Homework() {
                     }}
                   />
                 </div>
-                <TableHomework displaySchedule={displaySchedule} />
+                <TableHomework
+                  displaySchedule={
+                    displaySchedule || {
+                      lessonsList: { 0: LESSONS.DAILY_LESSON_ITEM },
+                    }
+                  }
+                />
                 <div className="homework__icons">
                   <img
                     className="icons"

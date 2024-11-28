@@ -15,15 +15,15 @@ import {
 } from "../store/slices/weeklyScheduleSlice";
 import Loading from "./blocks/Loading";
 import useEffectAfterMount from "../utils/useEffectAfterMount";
+import { MENU_CARDS } from "../utils/constants";
+import { findCurrentStudyYear } from "../utils/services";
 
 const Schedule = () => {
-  const titleCardId = 7;
+  const titleCardId = MENU_CARDS.SCHEDULE_ID;
   const location = useLocation();
   const currentDate = moment();
   const [currentStudyYear, setCurrentYear] = useState(
-    currentDate.isBefore(moment(`${currentDate.format("YYYY")}-09-01`))
-      ? Number(currentDate.format("YYYY")) - 1
-      : Number(currentDate.format("YYYY"))
+    findCurrentStudyYear(currentDate)
   );
   const loadingWeeklySchedule = useSelector(
     (state) => state.weeklySchedule.loading
@@ -32,7 +32,6 @@ const Schedule = () => {
   const schedule = useSelector((state) => state.weeklySchedule.scheduleForWeek);
   const isCreate = Object.keys(schedule).length > 0 ? true : false;
   const [editSchedule, setEditSchedule] = useState(false);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,19 +40,15 @@ const Schedule = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
-      console.log("Перезапись текущего расписания");
+      // Для поддержания актуального недельного расписания в сторе
       dispatch(
         getWeeklySchedule({
           userId,
-          currentYear: currentDate.isBefore(
-            moment(`${currentDate.format("YYYY")}-09-01`)
-          )
-            ? Number(currentDate.format("YYYY")) - 1
-            : Number(currentDate.format("YYYY")),
+          currentYear: findCurrentStudyYear(currentDate),
         })
       );
     };
-  }, []);
+  }, [currentDate, dispatch, location.state, userId]);
 
   useEffectAfterMount(() => {
     dispatch(

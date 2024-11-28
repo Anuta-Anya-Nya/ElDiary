@@ -7,6 +7,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { addTeacherThunk } from "../../store/slices/teachersSlice";
 import shortid from "shortid";
+import { CONTENT } from "../../utils/constants";
 
 export const ModalTeacher = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
@@ -21,9 +22,9 @@ export const ModalTeacher = () => {
   const [tempName, setTempName] = useState(null);
   const [error, setError] = useState(null);
 
-  const errorName = "Имя учителя обязательно к заполению!";
-  const errorLesson = "Уроки, которые ведет учитель обязательны к заполнению!";
-  const errorAvail = "Такой учитель уже существует!";
+  const errorName = CONTENT.ADD_TEACHER_ER_NAME;
+  const errorLesson = CONTENT.ADD_TEACHER_ER_LESSON;
+  const errorAvail = CONTENT.ADD_TEACHER_ER_AVAIL;
 
   const dispatch = useDispatch();
 

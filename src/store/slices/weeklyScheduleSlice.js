@@ -6,9 +6,7 @@ export const getWeeklySchedule = createAsyncThunk(
   "weeklySchedule/getWeeklySchedThunk",
   async ({ userId, currentYear }) => {
     try {
-      console.log("загружаем расписание уроков на неделю...");
       const scheduleForWeek = await getWeeklySheduleDB(userId, currentYear);
-      console.log(scheduleForWeek);
       // В firestore нельзя хранить массив с вложенными массивами, потому перед сохранением в firestore используется JSON.stringify(schedule), а после загрузки на клиенте используется метод parse()
       if (scheduleForWeek.schedule) {
         scheduleForWeek.schedule = JSON.parse(scheduleForWeek.schedule);

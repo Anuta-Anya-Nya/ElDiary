@@ -11,11 +11,12 @@ import { toChangeDate } from "../utils/services";
 import { checkWeeklySchedule } from "../utils/services";
 import { useDispatch } from "react-redux";
 import { addDailySchedulesThunk } from "../store/slices/dailySchedulesSlice";
+import { LESSONS, MENU_CARDS } from "../utils/constants";
 
 function Homework() {
   moment.locale("ru");
   const currentDate = moment();
-  const titleCardId = 6;
+  const titleCardId = MENU_CARDS.HOMEWORK_ID;
 
   const selectDisplay = useSelector(
     (state) => state.settings.settings.displayHomeWork
@@ -86,7 +87,13 @@ function Homework() {
                     }}
                   />
                 </div>
-                <TableHomework displaySchedule={displaySchedule} />
+                <TableHomework
+                  displaySchedule={
+                    displaySchedule || {
+                      lessonsList: { 0: LESSONS.DAILY_LESSON_ITEM },
+                    }
+                  }
+                />
                 <div className="homework__icons">
                   <img
                     className="icons"

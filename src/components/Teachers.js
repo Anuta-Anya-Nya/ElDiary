@@ -5,16 +5,14 @@ import PageTitle from "./blocks/PageTitle";
 import TeacherCard from "./cards/TeacherCard";
 import { CustomModal } from "./customModal/CustomModal";
 import Loading from "./blocks/Loading";
+import { MENU_CARDS } from "../utils/constants";
 
 function Teachers() {
-  const titleCardId = 2;
+  const titleCardId = MENU_CARDS.TEACHERS_ID;
 
   const teachersList = useSelector((state) => state.teachers.teachersList);
   const loadingTeachers = useSelector((state) => state.teachers.loading);
   const dispatch = useDispatch();
-  //   Object.values(teachersList)
-  //   .filter((teacher) => teacher.teachingLessons.includes(selectLessonId))
-  //   .reduce((arr, teacher) => [...arr, teacher.id], []);
 
   return (
     <main>

@@ -8,7 +8,6 @@ export const getWeeklySheduleDB = async (userId, currentYear) => {
   if (resp.exists()) {
     return resp.data();
   } else {
-    console.log("не создан");
     return {};
   }
 };

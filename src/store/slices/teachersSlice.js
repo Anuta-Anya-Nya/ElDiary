@@ -6,7 +6,6 @@ export const getTeachersThunk = createAsyncThunk(
   async (userId) => {
     try {
       const teachersList = await getTeachersDB(userId);
-      console.log(teachersList);
       return { teachersList, loading: false };
     } catch (er) {
       console.log(er.code, er.message);

@@ -7,8 +7,6 @@ export const getTeachersDB = async (userId) => {
     obj[el.data().id] = el.data();
     return obj;
   }, {});
-  console.log(arr);
-
   return arr;
 };
 

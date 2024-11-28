@@ -8,9 +8,7 @@ export const settingsInit = async (userId) => {
 };
 
 export const getSettingsDB = async (userId) => {
-  console.log(`users/${userId}/settings/${userId}`);
   const resp = await getDoc(doc(db, `users/${userId}/settings/${userId}`));
-  console.log(resp.exists());
   if (resp.exists()) {
     return resp.data();
   } else {

@@ -6,6 +6,7 @@ import {
 import { auth } from "../../firebase/firebase";
 import { addUserDb } from "../../db/userDb";
 import { lessonsInit } from "../../db/lessonsDb";
+import { settingsInit } from "../../db/settingsDb";
 
 // THUNK для создания пользователя при регистрации
 export const createUserThunk = createAsyncThunk(
@@ -25,6 +26,7 @@ export const createUserThunk = createAsyncThunk(
       };
       addUserDb(userData);
       lessonsInit(userCredit.user.uid);
+      settingsInit(userCredit.user.uid);
       return userData;
     } catch (er) {
       console.log(er.code, er.message);

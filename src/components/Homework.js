@@ -17,10 +17,10 @@ function Homework() {
   const currentDate = moment();
   const titleCardId = 6;
 
-  const selectDisplay = useSelector((state) => state.settings.displayHomeWork);
-  const [displayDate, setDisplayDate] = useState(
-    currentDate.clone().add(selectDisplay, "days")
+  const selectDisplay = useSelector(
+    (state) => state.settings.settings.displayHomeWork
   );
+  const [displayDate, setDisplayDate] = useState(currentDate);
 
   const loadingWeeklySchedule = useSelector(
     (state) => state.weeklySchedule.loading
@@ -28,6 +28,7 @@ function Homework() {
   const loadingDailySchedules = useSelector(
     (state) => state.dailySchedules.loading
   );
+  const loadingSettings = useSelector((state) => state.settings.loading);
 
   const userId = useSelector((state) => state.user.id);
   const weeklySchedule = useSelector(
@@ -55,42 +56,50 @@ function Homework() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayDate, loadingWeeklySchedule, loadingDailySchedules]);
 
+  useEffect(() => {
+    setDisplayDate(currentDate.clone().add(selectDisplay, "days"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingSettings]);
+
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />
       <section className="homework">
         <div className="container homework-container">
-          <h3 className="homework__title">
-            Домашнее задание на {displayDate.format("dddd")}
-          </h3>
+          {loadingWeeklySchedule || loadingSettings || loadingDailySchedules ? (
+            <Loading />
+          ) : (
+            <>
+              <h3 className="homework__title">
+                Домашнее задание на {displayDate.format("dddd")}
+                {displayDate.format(" DD MMMM")}
+              </h3>
 
-          <div className="homework__area">
-            <div className="homework__icons">
-              <img
-                className="icons"
-                src={arrowLeft}
-                alt="left"
-                onClick={() => {
-                  toChangeDate(-1, setDisplayDate, 1, displayDate);
-                }}
-              />
-            </div>
-            {loadingWeeklySchedule ? (
-              <Loading />
-            ) : (
-              <TableHomework displaySchedule={displaySchedule} />
-            )}
-            <div className="homework__icons">
-              <img
-                className="icons"
-                src={arrowRight}
-                alt="right"
-                onClick={() => {
-                  toChangeDate(1, setDisplayDate, 1, displayDate);
-                }}
-              />
-            </div>
-          </div>
+              <div className="homework__area">
+                <div className="homework__icons">
+                  <img
+                    className="icons"
+                    src={arrowLeft}
+                    alt="left"
+                    onClick={() => {
+                      toChangeDate(-1, setDisplayDate, 1, displayDate);
+                    }}
+                  />
+                </div>
+                <TableHomework displaySchedule={displaySchedule} />
+                <div className="homework__icons">
+                  <img
+                    className="icons"
+                    src={arrowRight}
+                    alt="right"
+                    onClick={() => {
+                      toChangeDate(1, setDisplayDate, 1, displayDate);
+                    }}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </section>
       <MenuCardBox titleCardId={titleCardId} />

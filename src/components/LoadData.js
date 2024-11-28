@@ -8,6 +8,7 @@ import { findCurrentStudyYear } from "../utils/services";
 import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 import { getDailySchedules } from "../store/slices/dailySchedulesSlice";
 import { getHomeworksThunk } from "../store/slices/homeworksSlice";
+import { getSettingsThunk } from "../store/slices/settingSlice";
 
 const LoadData = () => {
   const { loading } = useAuth();
@@ -20,6 +21,7 @@ const LoadData = () => {
     if (!loading) {
       dispatch(getLessonsThunk(userId));
       dispatch(getTeachersThunk(userId));
+      dispatch(getSettingsThunk(userId));
       dispatch(getWeeklySchedule({ userId, currentYear }));
       dispatch(getDailySchedules({ userId, currentYear }));
       dispatch(getHomeworksThunk({ userId, currentYear }));

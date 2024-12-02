@@ -48,8 +48,10 @@ const settingSlice = createSlice({
     // ],
   },
   reducers: {
-    changeDisplayHW: (state, action) => {
-      return { ...state, displayHomeWork: action.payload };
+    removeSettings: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.settings = {};
     },
   },
 
@@ -71,5 +73,5 @@ const settingSlice = createSlice({
     });
   },
 });
-export const { changeDisplayHW } = settingSlice.actions;
+export const { removeSettings } = settingSlice.actions;
 export const settingsReducer = settingSlice.reducer;

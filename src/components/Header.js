@@ -7,6 +7,12 @@ import { useAuth } from "../utils/AuthContext";
 import { useEffect, useState } from "react";
 import { removeUser } from "../store/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { removeDailySchedules } from "../store/slices/dailySchedulesSlice";
+import { removeHomeworks } from "../store/slices/homeworksSlice";
+import { removeLessons } from "../store/slices/lessonsSlice";
+import { removeTeachers } from "../store/slices/teachersSlice";
+import { removeSettings } from "../store/slices/settingSlice";
+import { removeWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 
 function Header() {
   const { user } = useAuth();
@@ -23,6 +29,15 @@ function Header() {
   const handleMouseLeave = () => {
     setTextButton(greeting);
   };
+  const cleanStores = () => {
+    dispatch(removeUser());
+    dispatch(removeDailySchedules());
+    dispatch(removeWeeklySchedule());
+    dispatch(removeHomeworks());
+    dispatch(removeLessons());
+    dispatch(removeTeachers());
+    dispatch(removeSettings());
+  };
   useEffect(() => {
     setTextButton(greeting);
   }, [greeting]);
@@ -38,8 +53,8 @@ function Header() {
             <li
               className="header__menu-item"
               onClick={() => {
-                dispatch(removeUser());
                 signOut(auth);
+                cleanStores();
               }}
               onMouseEnter={() => {
                 handleMouseEnter();

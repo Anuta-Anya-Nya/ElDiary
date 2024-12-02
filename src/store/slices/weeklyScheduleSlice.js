@@ -58,8 +58,11 @@ const weeklyScheduleSlice = createSlice({
     addWeeklySchedule: (state, action) => {
       return (state = action.payload);
     },
-    // updateDailySchedule: (state, action) => {
-    // },
+    removeWeeklySchedule: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.scheduleForWeek = {};
+    },
   },
   // редьюсеры для thunk функций
   extraReducers: (builder) => {
@@ -68,5 +71,6 @@ const weeklyScheduleSlice = createSlice({
     });
   },
 });
-export const { addWeeklySchedule } = weeklyScheduleSlice.actions;
+export const { addWeeklySchedule, removeWeeklySchedule } =
+  weeklyScheduleSlice.actions;
 export const weeklyScheduleReducer = weeklyScheduleSlice.reducer;

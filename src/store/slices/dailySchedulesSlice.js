@@ -114,41 +114,10 @@ const dailySchedulesSlice = createSlice({
     },
   },
   reducers: {
-    addSchedule: (state, action) => {
-      return {
-        ...state,
-        schedulesList: { ...state.schedulesList, ...action.payload },
-      };
-    },
-    updateDailyScheduleLesson: (state, action) => {
-      state.schedulesList[action.payload.date].lessonsList[
-        action.payload.number
-      ] = action.payload.lesson;
-    },
-    addDailyScheduleLesson: (state, action) => {
-      state.schedulesList[action.payload.date].lessonsList.push(
-        action.payload.lesson
-      );
-    },
-    updateDailyScheduleHomework: (state, action) => {
-      state.schedulesList[action.payload.date].lessonsList[
-        action.payload.number
-      ].homeworkId = action.payload.homeworkId;
-    },
-    updateDailyScheduleGrade: (state, action) => {
-      state.schedulesList[action.payload.date].lessonsList[
-        action.payload.number
-      ].grade = action.payload.grade;
-    },
-    updateDailyScheduleNote: (state, action) => {
-      state.schedulesList[action.payload.date].notes = action.payload.notes;
-    },
-    updateDailyScheduleVacation: (state, action) => {
-      state.schedulesList[action.payload.date].vacation =
-        action.payload.vacation;
-    },
-    updateDailyScheduleHoliday: (state, action) => {
-      state.schedulesList[action.payload.date].holiday = action.payload.holiday;
+    removeDailySchedules: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.schedulesList = {};
     },
   },
 
@@ -233,14 +202,5 @@ const dailySchedulesSlice = createSlice({
     });
   },
 });
-export const {
-  addSchedule,
-  updateDailyScheduleLesson,
-  addDailyScheduleLesson,
-  updateDailyScheduleHomework,
-  updateDailyScheduleGrade,
-  updateDailyScheduleNote,
-  updateDailyScheduleVacation,
-  updateDailyScheduleHoliday,
-} = dailySchedulesSlice.actions;
+export const { removeDailySchedules } = dailySchedulesSlice.actions;
 export const dailySchedulesReducer = dailySchedulesSlice.reducer;

@@ -88,27 +88,10 @@ const homeworksSlice = createSlice({
     },
   },
   reducers: {
-    addHomework: (state, action) => {
-      state.homeworksList[action.payload.id] = action.payload;
-    },
-    updateHomework: (state, action) => {
-      Object.assign(state.homeworksList[action.payload.id], action.payload);
-    },
-    deleteHomework: (state, action) => {
-      console.log(
-        Object.keys(state.homeworksList)
-          .filter((key) => Number(key) !== action.payload)
-          .reduce((obj, key) => {
-            obj[key] = state.homeworksList[key];
-            return obj;
-          }, {})
-      );
-      return Object.keys(state.homeworksList)
-        .filter((key) => Number(key) !== action.payload)
-        .reduce((obj, key) => {
-          obj[key] = state.homeworksList[key];
-          return obj;
-        }, {});
+    removeHomeworks: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.homeworksList = {};
     },
   },
   extraReducers: (builder) => {
@@ -141,6 +124,5 @@ const homeworksSlice = createSlice({
     });
   },
 });
-export const { addHomework, updateHomework, deleteHomework } =
-  homeworksSlice.actions;
+export const { removeHomeworks } = homeworksSlice.actions;
 export const homeworksReducer = homeworksSlice.reducer;

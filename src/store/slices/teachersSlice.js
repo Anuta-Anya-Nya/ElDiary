@@ -49,14 +49,10 @@ const teachersSlice = createSlice({
     },
   },
   reducers: {
-    addTeacher: (state, action) => {
-      return {
-        ...state,
-        teachersList: {
-          ...state.teachersList,
-          [action.payload.id]: action.payload,
-        },
-      };
+    removeTeachers: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.teachersList = {};
     },
   },
   extraReducers: (builder) => {
@@ -77,5 +73,5 @@ const teachersSlice = createSlice({
     });
   },
 });
-export const { addTeacher } = teachersSlice.actions;
+export const { removeTeachers } = teachersSlice.actions;
 export const teacherReducer = teachersSlice.reducer;

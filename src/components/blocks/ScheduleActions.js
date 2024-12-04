@@ -40,7 +40,9 @@ const ScheduleActions = ({
     };
     dispatch(addWeeklyScheduleThunk({ userId, newWeeklySchedule }));
     setSchedule(WEEKLY_SCHEDULE.EMPTY_LIST);
-    setCheckAvail(true);
+    if (!editSchedule) {
+      setCheckAvail(true);
+    }
   };
 
   useEffectAfterMount(() => {

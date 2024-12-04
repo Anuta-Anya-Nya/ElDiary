@@ -15,17 +15,13 @@ export const isCreateWeeklySheduleDB = async (userId, currentYear) => {
   const resp = await getDoc(
     doc(db, `users/${userId}/weeklyShedule/${currentYear}`)
   );
-  if (resp.exists()) {
-    return true;
-  } else {
-    return false;
-  }
+  return resp.exists();
 };
 
 export const addWeeklyScheduleDB = async (userId, data) => {
-  const result = setDoc(
-    doc(db, `users/${userId}/weeklyShedule/${data.year}`),
-    data
-  );
-  console.log(result);
+  try {
+    setDoc(doc(db, `users/${userId}/weeklyShedule/${data.year}`), data);
+  } catch (er) {
+    throw new Error(er.message);
+  }
 };

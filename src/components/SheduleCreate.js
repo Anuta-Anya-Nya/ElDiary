@@ -78,8 +78,8 @@ const ScheduleCreate = () => {
           {!checkAvail && (
             <ScheduleActions
               period={period}
-              checkAvail={checkAvail}
               editSchedule={editSchedule}
+              setCheckAvail={setCheckAvail}
             />
           )}
         </div>

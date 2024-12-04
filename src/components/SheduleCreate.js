@@ -8,13 +8,14 @@ import { findCurrentStudyYear } from "../utils/services";
 import { useEffect, useState } from "react";
 
 import { isCreateWeeklySheduleDB } from "../db/weeklyScheduleDb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 
 const ScheduleCreate = () => {
   const titleCardId = 7;
   const editSchedule = true;
   const userId = useSelector((state) => state.user.id);
-
+  const dispatch = useDispatch();
   const currentDate = moment();
   const currentStudyYear = findCurrentStudyYear(currentDate);
 
@@ -29,6 +30,17 @@ const ScheduleCreate = () => {
     isCreateWeeklySheduleDB(userId, period).then((data) => setCheckAvail(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
+  useEffect(() => {
+    return () => {
+      // Для поддержания актуального недельного расписания в сторе
+      dispatch(
+        getWeeklySchedule({
+          userId,
+          currentYear: currentStudyYear,
+        })
+      );
+    };
+  }, []);
 
   return (
     <main>

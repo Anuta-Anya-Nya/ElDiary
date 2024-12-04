@@ -26,6 +26,7 @@ export const addWeeklyScheduleThunk = createAsyncThunk(
   async ({ userId, newWeeklySchedule }) => {
     try {
       await addWeeklyScheduleDB(userId, newWeeklySchedule);
+      newWeeklySchedule.schedule = JSON.parse(newWeeklySchedule.schedule);
       return {
         loading: false,
         error: null,

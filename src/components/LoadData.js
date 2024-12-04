@@ -18,7 +18,8 @@ const LoadData = () => {
   const currentYear = findCurrentStudyYear(moment());
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && userId) {
+      console.log("Загружаем данные ");
       dispatch(getLessonsThunk(userId));
       dispatch(getTeachersThunk(userId));
       dispatch(getSettingsThunk(userId));
@@ -27,7 +28,7 @@ const LoadData = () => {
       dispatch(getHomeworksThunk({ userId, currentYear }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+  }, [loading, userId]);
 };
 
 export default LoadData;

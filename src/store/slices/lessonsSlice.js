@@ -41,19 +41,10 @@ const lessonsSlice = createSlice({
     },
   },
   reducers: {
-    addLesson: (state, action) => {
-      const lesson = action.payload;
-      console.log(lesson);
-      console.log(lesson.lessonId);
-      state.lessons[lesson.lessonId] = lesson;
-    },
-    removeLesson: (state, action) => {
-      const { lessonId } = action.payload;
-      delete state.lessons[lessonId];
-    },
-    updateNote(state, action) {
-      const { lessonId, data } = action.payload;
-      Object.assign(state.lessons[lessonId], data);
+    removeLessons: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.lessons = {};
     },
   },
   extraReducers: (builder) => {
@@ -75,5 +66,5 @@ const lessonsSlice = createSlice({
     });
   },
 });
-export const { addLesson, removeLesson, updateNote } = lessonsSlice.actions;
+export const { removeLessons } = lessonsSlice.actions;
 export const lessonsReducer = lessonsSlice.reducer;

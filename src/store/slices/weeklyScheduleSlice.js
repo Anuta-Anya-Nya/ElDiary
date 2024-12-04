@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getWeeklySheduleDB } from "../../db/weeklyScheduleDb";
+import {
+  addWeeklyScheduleDB,
+  getWeeklySheduleDB,
+} from "../../db/weeklyScheduleDb";
 
 // THUNK для записи недельного расписания из базы данных в стор
 export const getWeeklySchedule = createAsyncThunk(
@@ -14,7 +17,24 @@ export const getWeeklySchedule = createAsyncThunk(
       return { loading: false, error: null, scheduleForWeek };
     } catch (er) {
       console.log(er.code, er.message);
-      return { loading: false, error: er.message };
+      return { loading: false, error: er.message, scheduleForWeek: {} };
+    }
+  }
+);
+export const addWeeklyScheduleThunk = createAsyncThunk(
+  "weeklySchedule/addWeeklyScheduleThunk",
+  async ({ userId, newWeeklySchedule }) => {
+    try {
+      await addWeeklyScheduleDB(userId, newWeeklySchedule);
+      newWeeklySchedule.schedule = JSON.parse(newWeeklySchedule.schedule);
+      return {
+        loading: false,
+        error: null,
+        scheduleForWeek: newWeeklySchedule,
+      };
+    } catch (er) {
+      console.log(er.code, er.message);
+      return { loading: false, error: er.message, scheduleForWeek: {} };
     }
   }
 );
@@ -58,15 +78,22 @@ const weeklyScheduleSlice = createSlice({
     addWeeklySchedule: (state, action) => {
       return (state = action.payload);
     },
-    // updateDailySchedule: (state, action) => {
-    // },
+    removeWeeklySchedule: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.scheduleForWeek = {};
+    },
   },
   // редьюсеры для thunk функций
   extraReducers: (builder) => {
     builder.addCase(getWeeklySchedule.fulfilled, (state, action) => {
       return (state = action.payload);
     });
+    builder.addCase(addWeeklyScheduleThunk.fulfilled, (state, action) => {
+      return (state = action.payload);
+    });
   },
 });
-export const { addWeeklySchedule } = weeklyScheduleSlice.actions;
+export const { addWeeklySchedule, removeWeeklySchedule } =
+  weeklyScheduleSlice.actions;
 export const weeklyScheduleReducer = weeklyScheduleSlice.reducer;

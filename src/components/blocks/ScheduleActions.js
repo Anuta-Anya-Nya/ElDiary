@@ -4,17 +4,16 @@ import { setCreate, saveModalData } from "../../store/slices/contentSlice";
 import { useEffect, useState } from "react";
 import useEffectAfterMount from "../../utils/useEffectAfterMount";
 import { useDispatch, useSelector } from "react-redux";
-import { addWeeklyScheduleDB } from "../../db/weeklyScheduleDb";
-import { getWeeklySchedule } from "../../store/slices/weeklyScheduleSlice";
+import { addWeeklyScheduleThunk } from "../../store/slices/weeklyScheduleSlice";
 import shortid from "shortid";
 import { WEEKLY_SCHEDULE } from "../../utils/constants";
 
 const ScheduleActions = ({
   period,
-  checkAvail,
   scheduleForEdit,
   setEditSchedule,
   editSchedule,
+  setCheckAvail,
 }) => {
   const [schedule, setSchedule] = useState(WEEKLY_SCHEDULE.EMPTY_LIST);
   const modalData = useSelector((state) => state.content.openModal.modalData);
@@ -39,9 +38,11 @@ const ScheduleActions = ({
       endPeriod: `${period + 1}-06-01`,
       schedule: JSON.stringify(schedule),
     };
-    addWeeklyScheduleDB(userId, newWeeklySchedule);
-    dispatch(getWeeklySchedule({ userId, currentYear: period }));
+    dispatch(addWeeklyScheduleThunk({ userId, newWeeklySchedule }));
     setSchedule(WEEKLY_SCHEDULE.EMPTY_LIST);
+    if (!editSchedule) {
+      setCheckAvail(true);
+    }
   };
 
   useEffectAfterMount(() => {
@@ -86,7 +87,6 @@ const ScheduleActions = ({
 
       <button
         className="modal-submit-button"
-        disabled={checkAvail}
         onClick={() => {
           saveWeeklySchedule();
           if (setEditSchedule) {

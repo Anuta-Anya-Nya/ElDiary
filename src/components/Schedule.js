@@ -48,7 +48,7 @@ const Schedule = () => {
         })
       );
     };
-  }, [currentDate, dispatch, location.state, userId]);
+  }, []);
 
   useEffectAfterMount(() => {
     dispatch(

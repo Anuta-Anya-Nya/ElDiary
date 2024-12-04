@@ -13,7 +13,6 @@ import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 
 const ScheduleCreate = () => {
   const titleCardId = 7;
-  const editSchedule = true;
   const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
   const currentDate = moment();
@@ -23,7 +22,6 @@ const ScheduleCreate = () => {
   const handleChange = (e) => {
     setPeriod(Number(e.target.value));
   };
-  // const checkAvail = isCreateWeeklySheduleDB(userId, period);
   const [checkAvail, setCheckAvail] = useState(null);
 
   useEffect(() => {
@@ -89,11 +87,7 @@ const ScheduleCreate = () => {
           </div>
 
           {!checkAvail && (
-            <ScheduleActions
-              period={period}
-              editSchedule={editSchedule}
-              setCheckAvail={setCheckAvail}
-            />
+            <ScheduleActions period={period} setCheckAvail={setCheckAvail} />
           )}
         </div>
       </section>

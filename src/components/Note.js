@@ -34,7 +34,7 @@ const Note = () => {
   };
 
   return (
-    <div>
+    <main className="container">
       <h3>Блокнот</h3>
       <ul>
         {allIds.map((id) => (
@@ -58,7 +58,7 @@ const Note = () => {
       >
         Добавить запись
       </button>
-    </div>
+    </main>
   );
 };
 export default Note;

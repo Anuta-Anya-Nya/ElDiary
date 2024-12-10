@@ -621,6 +621,7 @@ input[type=checkbox] {
 .schedule__attent {
   color: #9a1d36;
   font-size: 1.5em;
+  text-align: center;
 }
 .schedule__table {
   display: grid;
@@ -635,6 +636,7 @@ input[type=checkbox] {
   align-items: center;
   gap: 2em;
   color: #3c3c3c;
+  text-align: center;
 }
 
 .settings__box {

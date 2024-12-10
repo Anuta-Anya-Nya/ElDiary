@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 import { isCreateWeeklySheduleDB } from "../db/weeklyScheduleDb";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
+import { MENU_CARDS } from "../utils/constants";
 
 const ScheduleCreate = () => {
-  const titleCardId = 7;
+  const titleCardId = MENU_CARDS.SCHEDULE_ID;
   const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
   const currentDate = moment();

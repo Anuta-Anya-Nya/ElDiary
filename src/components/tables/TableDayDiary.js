@@ -13,21 +13,9 @@ import {
 import { findCurrentStudyYear } from "../../utils/services";
 import { LESSONS } from "../../utils/constants";
 
-const TableDayDiary = ({ day, position, modify }) => {
+const TableDayDiary = ({ day, modify }) => {
   const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
-
-  const gridColumn = () => {
-    if (position === 1) {
-      return "diary__day diary__day-tuesday";
-    }
-    if (position === 2) {
-      return "diary__day diary__day-wednesday";
-    } else {
-      return "diary__day";
-    }
-  };
-
   const delNote = () => {
     dispatch(
       updateDailyScheduleDayThunk({
@@ -53,7 +41,7 @@ const TableDayDiary = ({ day, position, modify }) => {
   };
 
   return (
-    <div className={gridColumn()}>
+    <div className="diary__day">
       <div className="diary__title-box">
         <h3 className="diary__title">
           {moment(day?.date).format("dddd, DD MMMM")}

@@ -8,16 +8,16 @@
     }
 
     &__area {
-        margin-top: 70px;
+        margin-top: 4.3em;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
 
-        gap: 25px;
+        gap: 2em;
     }
 
     &__card {
         align-items: normal;
-        padding: 25px;
+        padding: 1.5em;
         cursor: auto;
         color: $colorText;
     }

@@ -25,7 +25,7 @@ export const LESSONS = {
 
 export const CONTENT = {
   LOAD_MES: "Загрузка...",
-  ER404_MES: "упс, такой страницы не найдено",
+  ER404_MES: "Ведутся технические работы, скоро все будет работать",
   ADD_LESSON_ER_TITLE: "Название урока обязательно к заполению!",
   ADD_LESSON_ER_AVAIL:
     "Введенное название урока уже существует! Выберите другое",
@@ -55,9 +55,12 @@ export const WEEKLY_SCHEDULE = {
 };
 
 export const MENU_CARDS = {
-  DIARY_ID: 1,
-  TEACHERS_ID: 2,
-  // LESSONS_ID: 5,
-  HOMEWORK_ID: 6,
-  SCHEDULE_ID: 7,
+  HOMEWORK_ID: 1,
+  DIARY_ID: 2,
+  SCHEDULE_ID: 3,
+  GRADES_ID: 4,
+  TEACHERS_ID: 5,
+  RINGS_ID: 6,
+  LESSONS_ID: 7,
+  NOTES_ID: 8,
 };

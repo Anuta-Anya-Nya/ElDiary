@@ -764,15 +764,19 @@ input[type=checkbox] {
   .homework-container {
     font-size: 16px;
   }
+  .homework__area {
+    flex-wrap: wrap;
+  }
+  .homework__icons {
+    font-size: 1.5em;
+  }
   .table {
+    order: -999;
     display: grid;
     grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, max-content) minmax(min-content, 70px);
   }
   .table__cell-task {
     padding: 2px;
-  }
-  .homework__icons {
-    display: none;
   }
   .buttons__box {
     gap: 8px;

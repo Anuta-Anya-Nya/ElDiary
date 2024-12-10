@@ -53,9 +53,18 @@
         &-container {
             font-size: 16px;
         }
+
+        &__area {
+            flex-wrap: wrap;
+        }
+
+        &__icons {
+            font-size: 1.5em;
+        }
     }
 
     .table {
+        order: -999;
         display: grid;
         grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, max-content) minmax(min-content, 70px);
 
@@ -66,9 +75,7 @@
         }
     }
 
-    .homework__icons {
-        display: none;
-    }
+
 
     .buttons__box {
         gap: 8px;

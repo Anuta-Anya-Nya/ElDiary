@@ -20,7 +20,7 @@ const TeacherCard = ({ teacher }) => {
         </ul>
       </div>
       <div className="card__block">
-        <h3 className="card__title">Преподает:</h3>
+        <h3 className="card__title card__title-lessons">Преподает:</h3>
         <ul>
           {teachingLessons.length
             ? teachingLessons.map((lessonId, ind) => (

@@ -63,6 +63,9 @@ html {
   cursor: pointer;
   transition: all 0.3s;
 }
+.header__menu-item-menu {
+  display: none;
+}
 .header__menu-item:hover {
   transform: scale(1.2);
 }
@@ -174,7 +177,7 @@ input[type=checkbox] {
   width: 85%;
   border-radius: 15px;
   box-shadow: 0px 5px 5px 2px rgba(30, 149, 155, 0.5);
-  background-color: #9a1d36;
+  background-color: #ffffff;
   top: 90%;
   right: 5%;
 }
@@ -734,6 +737,9 @@ input[type=checkbox] {
     align-items: center;
     font-size: 2em;
   }
+  .header__menu-item-menu {
+    display: block;
+  }
   .header__menu-item:first-child {
     grid-column: span 3;
     font-size: 1.2em;
@@ -746,6 +752,9 @@ input[type=checkbox] {
   }
   .card-title {
     display: none;
+  }
+  .card__title {
+    margin-bottom: 0;
   }
   .buttons {
     display: none;

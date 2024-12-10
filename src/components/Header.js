@@ -48,7 +48,7 @@ function Header() {
   return (
     <header className="header">
       <MenuCardBox
-        titleCardId={1}
+        titleCardId={999}
         menuMode={menuMode}
         setMenuMode={setMenuMode}
       />
@@ -59,7 +59,7 @@ function Header() {
         <nav>
           <ul className="header__menu">
             <li
-              className="header__menu-item"
+              className="header__menu-item "
               onClick={() => {
                 signOut(auth);
                 cleanStores();
@@ -74,7 +74,7 @@ function Header() {
               {textButton}
             </li>
             <li
-              className="header__menu-item"
+              className="header__menu-item header__menu-item-menu"
               onClick={() => {
                 setMenuMode(!menuMode);
               }}

@@ -356,6 +356,7 @@ input[type=checkbox] {
   border-color: #3c3c3c;
   border-style: solid;
   border-width: 1px 0px 0px 1px;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -761,6 +762,9 @@ input[type=checkbox] {
   .buttons {
     display: none;
   }
+  .buttons__box {
+    gap: 8px;
+  }
   .homework-container {
     font-size: 16px;
   }
@@ -773,13 +777,20 @@ input[type=checkbox] {
   .table {
     order: -999;
     display: grid;
-    grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, max-content) minmax(min-content, 70px);
+    width: 100%;
+    grid-template-columns: minmax(min-content, 2em) minmax(min-content, 6.3em) minmax(min-content, auto) minmax(min-content, max-content);
   }
   .table__cell-task {
     padding: 2px;
   }
-  .buttons__box {
-    gap: 8px;
+  .diary__area {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  .diary__table {
+    width: 100%;
+    grid-template-columns: minmax(min-content, 2em) minmax(min-content, 6.3em) minmax(min-content, auto) minmax(min-content, max-content);
   }
   .autoriz__form {
     font-size: 12px;

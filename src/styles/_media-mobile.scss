@@ -47,6 +47,10 @@
 
     .buttons {
         display: none;
+
+        &__box {
+            gap: 8px;
+        }
     }
 
     .homework {
@@ -66,7 +70,8 @@
     .table {
         order: -999;
         display: grid;
-        grid-template-columns: minmax(min-content, 70px) minmax(min-content, 140px) minmax(min-content, max-content) minmax(min-content, 70px);
+        width: 100%;
+        grid-template-columns: minmax(min-content, 2em) minmax(min-content, 6.3em) minmax(min-content, auto) minmax(min-content, max-content);
 
         &__cell {
             &-task {
@@ -75,14 +80,20 @@
         }
     }
 
+    .diary {
+        &__area {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        &__table {
+            width: 100%;
+            grid-template-columns: minmax(min-content, 2em) minmax(min-content, 6.3em) minmax(min-content, auto) minmax(min-content, max-content);
+        }
 
 
-    .buttons__box {
-        gap: 8px;
     }
-
-
-
 
     .autoriz {
 

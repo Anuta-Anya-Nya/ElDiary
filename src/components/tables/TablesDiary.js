@@ -19,7 +19,7 @@ const TablesDiary = ({ week, currentDate }) => {
   return (
     <div className="diary__area">
       {weekArr(currentDate).map((day, ind) => (
-        <TableDayDiary day={day} key={ind} position={ind} />
+        <TableDayDiary day={day} key={ind} />
       ))}
     </div>
   );

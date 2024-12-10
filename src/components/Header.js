@@ -51,6 +51,7 @@ function Header() {
         titleCardId={999}
         menuMode={menuMode}
         setMenuMode={setMenuMode}
+        classMenu={"menu-notvisible"}
       />
       <div className="container header-container">
         <Link to="/" className="header__logo">

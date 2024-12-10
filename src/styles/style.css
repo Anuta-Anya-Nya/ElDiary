@@ -186,6 +186,9 @@ input[type=checkbox] {
   flex-direction: column;
   gap: 5px;
 }
+.menu-notvisible {
+  display: none;
+}
 
 .card {
   text-decoration: none;
@@ -728,8 +731,7 @@ input[type=checkbox] {
   .header__menu {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: end;
+    justify-items: center;
     gap: 5px 0.5em;
   }
   .header__menu-item {

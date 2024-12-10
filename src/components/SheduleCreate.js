@@ -92,7 +92,7 @@ const ScheduleCreate = () => {
         </div>
       </section>
 
-      <MenuCardBox titleCardId={titleCardId} />
+      <MenuCardBox titleCardId={titleCardId} classMenu={"buttons"} />
     </main>
   );
 };

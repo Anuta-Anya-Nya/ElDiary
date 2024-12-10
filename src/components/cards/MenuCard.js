@@ -2,12 +2,15 @@ import { Link } from "react-router-dom";
 const MenuCard = ({ card, menuMode, setMenuMode }) => {
   const { title, text, icon, link } = card;
 
+  const closeMenu = () => {
+    if (menuMode) setMenuMode(false);
+  };
   return (
     <Link
       to={link}
       className={menuMode ? "card-menu card" : "card"}
       onClick={() => {
-        setMenuMode(false);
+        closeMenu();
       }}
     >
       <div className={menuMode ? "card-menu__pic" : "card__pic"}>

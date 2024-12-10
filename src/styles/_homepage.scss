@@ -77,6 +77,8 @@ html {
             }
         }
     }
+
+
 }
 
 main {
@@ -221,6 +223,10 @@ input[type=checkbox] {
         display: flex;
         flex-direction: column;
         gap: 5px;
+    }
+
+    &-notvisible {
+        display: none;
     }
 
 }

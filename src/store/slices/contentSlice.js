@@ -6,6 +6,16 @@ const contentSlice = createSlice({
   initialState: {
     menuButtons: [
       {
+        id: MENU_CARDS.HOMEWORK_ID,
+        icon: {
+          path: require("../../assets/icons/ic-homework.svg").default,
+          alt: "домашка",
+        },
+        title: "Домашняя работа",
+        text: "Здесь ты увидишь свою домашку и сможешь отметить то, что уже выполнено",
+        link: "/",
+      },
+      {
         id: MENU_CARDS.DIARY_ID,
         icon: {
           path: require("../../assets/icons/ic-book.svg").default,
@@ -14,6 +24,26 @@ const contentSlice = createSlice({
         title: "Дневник",
         text: "Здесь ты можешь просмотреть дневник, записать в него домашнее задание и поставить свои оценки",
         link: "/diary",
+      },
+      {
+        id: MENU_CARDS.SCHEDULE_ID,
+        icon: {
+          path: require("../../assets/icons/ic-dino.svg").default,
+          alt: "расписание",
+        },
+        title: "Расписание уроков",
+        text: "Здесь твое расписание на неделю",
+        link: "/weekShedule",
+      },
+      {
+        id: MENU_CARDS.GRADES_ID,
+        icon: {
+          path: require("../../assets/icons/grade.svg").default,
+          alt: "оценки",
+        },
+        title: "Итоговые оценки",
+        text: "Если ты выставляешь в свой дневник оценки, то тут найдешь свои оценки, которые могут получиться в четверти",
+        link: "/grades",
       },
       {
         id: MENU_CARDS.TEACHERS_ID,
@@ -26,7 +56,7 @@ const contentSlice = createSlice({
         link: "/teachers",
       },
       {
-        id: 3,
+        id: MENU_CARDS.RINGS_ID,
 
         icon: {
           path: require("../../assets/icons/ic-hands.svg").default,
@@ -36,18 +66,9 @@ const contentSlice = createSlice({
         text: "Здесь отображается расписание твоих звонков",
         link: "/rings",
       },
+
       {
-        id: 4,
-        icon: {
-          path: require("../../assets/icons/grade.svg").default,
-          alt: "оценки",
-        },
-        title: "Итоговые оценки",
-        text: "Если ты выставляешь в свой дневник оценки, то тут найдешь свои оценки, которые могут получиться в четверти",
-        link: "/grades",
-      },
-      {
-        id: 5,
+        id: MENU_CARDS.NOTES_ID,
         icon: {
           path: require("../../assets/icons/ic-pencil.svg").default,
           alt: "блокнот",
@@ -55,26 +76,6 @@ const contentSlice = createSlice({
         title: "Блокнот",
         text: "Здесь ты можешь хранить свои записи",
         link: "/note",
-      },
-      {
-        id: MENU_CARDS.HOMEWORK_ID,
-        icon: {
-          path: require("../../assets/icons/ic-homework.svg").default,
-          alt: "домашка",
-        },
-        title: "Домашняя работа",
-        text: "Здесь ты увидишь свою домашку и сможешь отметить то, что уже выполнено",
-        link: "/",
-      },
-      {
-        id: MENU_CARDS.SCHEDULE_ID,
-        icon: {
-          path: require("../../assets/icons/ic-dino.svg").default,
-          alt: "расписание",
-        },
-        title: "Расписание уроков",
-        text: "Здесь твое расписание на неделю",
-        link: "/weekShedule",
       },
     ],
     openModal: {

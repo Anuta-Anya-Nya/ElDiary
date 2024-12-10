@@ -100,7 +100,7 @@ const Diary = () => {
         </div>
         <CustomModal />
       </section>
-      <MenuCardBox titleCardId={titleCardId} />
+      <MenuCardBox titleCardId={titleCardId} classMenu={"buttons"} />
     </main>
   );
 };

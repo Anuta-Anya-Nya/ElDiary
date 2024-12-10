@@ -1,3 +1,4 @@
+import menu from "../assets/icons/logo.svg";
 import account from "../assets/icons/personal-account-account-svgrepo-com.svg";
 import settings from "../assets/icons/setting-svgrepo-com.svg";
 import { Link } from "react-router-dom";
@@ -13,11 +14,13 @@ import { removeLessons } from "../store/slices/lessonsSlice";
 import { removeTeachers } from "../store/slices/teachersSlice";
 import { removeSettings } from "../store/slices/settingSlice";
 import { removeWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
+import MenuCardBox from "./cards/MenuCardBox";
 
 function Header() {
   const { user } = useAuth();
   const greeting = `Привет, ${user?.email || "незнакомец"}!`;
   const [textButton, setTextButton] = useState(greeting);
+  const [menuMode, setMenuMode] = useState(false);
   const dispatch = useDispatch();
 
   const handleMouseEnter = () => {
@@ -44,6 +47,12 @@ function Header() {
 
   return (
     <header className="header">
+      <MenuCardBox
+        titleCardId={999}
+        menuMode={menuMode}
+        setMenuMode={setMenuMode}
+        classMenu={"menu-notvisible"}
+      />
       <div className="container header-container">
         <Link to="/" className="header__logo">
           <span className="header__logo-bold">EL</span>Diary
@@ -51,7 +60,7 @@ function Header() {
         <nav>
           <ul className="header__menu">
             <li
-              className="header__menu-item"
+              className="header__menu-item "
               onClick={() => {
                 signOut(auth);
                 cleanStores();
@@ -64,6 +73,14 @@ function Header() {
               }}
             >
               {textButton}
+            </li>
+            <li
+              className="header__menu-item header__menu-item-menu"
+              onClick={() => {
+                setMenuMode(!menuMode);
+              }}
+            >
+              <img className="icons" src={menu} alt="Меню" />
             </li>
             <li className="header__menu-item">
               <Link to="/profile">

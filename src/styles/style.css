@@ -32,6 +32,9 @@ html {
   height: 1em;
 }
 
+.header {
+  position: relative;
+}
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -59,6 +62,9 @@ html {
   font-size: 2em;
   cursor: pointer;
   transition: all 0.3s;
+}
+.header__menu-item-menu {
+  display: none;
 }
 .header__menu-item:hover {
   transform: scale(1.2);
@@ -157,11 +163,31 @@ input[type=checkbox] {
   transform: scale(1.5);
 }
 
-.buttons .buttons__box {
+.buttons__box {
   display: grid;
   grid-template-columns: repeat(6, minmax(1px, 250px));
   justify-content: space-between;
   gap: 10px;
+}
+
+.menu {
+  display: table;
+  position: absolute;
+  z-index: 999;
+  width: 85%;
+  border-radius: 15px;
+  box-shadow: 0px 5px 5px 2px rgba(30, 149, 155, 0.5);
+  background-color: #ffffff;
+  top: 90%;
+  right: 5%;
+}
+.menu__box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.menu-notvisible {
+  display: none;
 }
 
 .card {
@@ -175,6 +201,15 @@ input[type=checkbox] {
   padding: 5px;
   cursor: pointer;
   transition: all 0.3s;
+}
+.card-menu {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: repeat(2, auto);
+}
+.card-menu__pic {
+  grid-row-start: 1;
+  grid-row-end: 3;
 }
 .card:hover {
   box-shadow: 0px 0px 15px 5px rgba(30, 149, 155, 0.5);
@@ -275,6 +310,8 @@ input[type=checkbox] {
 .diary__area {
   display: grid;
   grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: column;
   gap: 5px 10px;
   justify-items: center;
 }
@@ -694,14 +731,16 @@ input[type=checkbox] {
   .header__menu {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: end;
+    justify-items: center;
     gap: 5px 0.5em;
   }
   .header__menu-item {
     display: flex;
     align-items: center;
     font-size: 2em;
+  }
+  .header__menu-item-menu {
+    display: block;
   }
   .header__menu-item:first-child {
     grid-column: span 3;
@@ -710,7 +749,16 @@ input[type=checkbox] {
     display: flex;
     justify-content: flex-end;
   }
+  main {
+    justify-content: flex-start;
+  }
   .card-title {
+    display: none;
+  }
+  .card__title {
+    margin-bottom: 0;
+  }
+  .buttons {
     display: none;
   }
   .homework-container {
@@ -729,9 +777,6 @@ input[type=checkbox] {
   .buttons__box {
     gap: 8px;
   }
-  .card__about {
-    display: none;
-  }
   .autoriz__form {
     font-size: 12px;
   }
@@ -741,5 +786,8 @@ input[type=checkbox] {
   .autoriz__buttons {
     width: 80%;
     gap: 0.5em;
+  }
+  .settings__item {
+    flex-direction: column;
   }
 }/*# sourceMappingURL=style.css.map */

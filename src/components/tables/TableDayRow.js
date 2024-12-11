@@ -2,6 +2,7 @@ import { buildTask } from "../../utils/services";
 import { useSelector, useDispatch } from "react-redux";
 import add from "../../assets/icons/circle-plus.svg";
 import { openCloseModal, saveModalData } from "../../store/slices/contentSlice";
+
 const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
   const { lessons } = useSelector((state) => state.lessons);
   const homework = useSelector(
@@ -26,7 +27,19 @@ const TableDayRow = ({ currentNumber, lessonItem, sheduleDate }) => {
             }}
           />
         ) : (
-          lessons[lessonItem.lessonId]?.title
+          <p
+            onClick={() => {
+              dispatch(openCloseModal({ lessonInfoModal: true }));
+              dispatch(
+                saveModalData({
+                  lesson: lessonItem,
+                  title: lessons[lessonItem.lessonId]?.title,
+                })
+              );
+            }}
+          >
+            {lessons[lessonItem.lessonId]?.title}
+          </p>
         )}
       </div>
       <div className="diary__cell table__cell-task">

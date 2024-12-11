@@ -91,6 +91,11 @@
         &-item {
             display: flex;
             align-items: center;
+
+            & span {
+                font-weight: 700;
+                margin-right: 0.5em;
+            }
         }
     }
 

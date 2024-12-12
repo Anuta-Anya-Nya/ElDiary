@@ -66,6 +66,20 @@ const Settings = () => {
             <button className="modal-submit-button">Добавить </button>
             <button className="modal-submit-button">Изменить </button>
           </div>
+          <div className="settings__item">
+            <h3 className="settings__title">Даты учебных четвертей</h3>
+            <button
+              className="modal-submit-button"
+              onClick={() => {
+                dispatch(openCloseModal({ quarterModal: true }));
+              }}
+            >
+              Добавить
+            </button>
+            <Link to="/quarters" className="modal-submit-button">
+              Просмотреть
+            </Link>
+          </div>
         </div>
         <CustomModal />
       </section>

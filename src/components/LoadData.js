@@ -9,6 +9,7 @@ import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 import { getDailySchedules } from "../store/slices/dailySchedulesSlice";
 import { getHomeworksThunk } from "../store/slices/homeworksSlice";
 import { getSettingsThunk } from "../store/slices/settingSlice";
+import { getQuartersThunk } from "../store/slices/quartersSlice";
 
 const LoadData = () => {
   const { loading } = useAuth();
@@ -26,6 +27,7 @@ const LoadData = () => {
       dispatch(getWeeklySchedule({ userId, currentYear }));
       dispatch(getDailySchedules({ userId, currentYear }));
       dispatch(getHomeworksThunk({ userId, currentYear }));
+      dispatch(getQuartersThunk({ userId, currentYear }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, userId]);

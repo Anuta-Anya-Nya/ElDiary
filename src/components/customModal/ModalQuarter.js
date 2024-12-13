@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   openCloseModal,
   saveModalData,
   setModify,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { addTeacherThunk } from "../../store/slices/teachersSlice";
-import shortid from "shortid";
 import { CONTENT } from "../../utils/constants";
+import QuartersInput from "../blocks/QuartersInput";
+import { addQuartersThunk } from "../../store/slices/quartersSlice";
+import { findCurrentStudyYear } from "../../utils/services";
+import moment from "moment/min/moment-with-locales.min";
 
 export const ModalQuarter = () => {
   const modify = useSelector((state) => state.content.openModal.modify);
   const modalData = useSelector((state) => state.content.openModal.modalData);
   const userId = useSelector((state) => state.user.id);
+  const currentYear = findCurrentStudyYear(moment());
+  const [quarter1, setQuarter1] = useState({});
+  const [quarter2, setQuarter2] = useState({});
+  const [quarter3, setQuarter3] = useState({});
+  const [quarter4, setQuarter4] = useState({});
+  const arrQuarters = [setQuarter1, setQuarter2, setQuarter3, setQuarter4];
 
   const [error, setError] = useState(null);
 
@@ -21,17 +29,15 @@ export const ModalQuarter = () => {
   const errorAvail = CONTENT.ADD_TEACHER_ER_AVAIL;
 
   const dispatch = useDispatch();
-
-  // const toCloseAndRefreshData = () => {
-  //   setError(null);
-  //   setLessonsIdList(null);
-  //   setTeacherName(null);
-  //   setTel(null);
-  //   setBirthdate(null);
-  //   dispatch(saveModalData({}));
-  //   dispatch(setModify(false));
-  //   dispatch(openCloseModal({ teacherModal: false }));
-  // };
+  const toClose = () => {
+    dispatch(openCloseModal({ quarterModal: false }));
+  };
+  const toRefreshData = () => {
+    setError(null);
+    arrQuarters.map((setQuarter) => setQuarter(null));
+    dispatch(saveModalData({}));
+    dispatch(setModify(false));
+  };
   // const checkValues = () => {
   //   if (!teacherName) {
   //     setError(errorName);
@@ -55,46 +61,30 @@ export const ModalQuarter = () => {
   //     }
   //   }
   // };
-  // const addTeacherToList = () => {
-  //   if (checkValues()) {
-  //     const id = modify ? modalData.teacher.id : shortid.generate();
-  //     const teacher = {
-  //       id: id,
-  //       name: teacherName,
-  //       tel: tel,
-  //       birthdate: birthdate,
-  //       teachingLessons: lessonsIdList,
-  //     };
-  //     dispatch(addTeacherThunk({ userId, teacher }));
-  //     toCloseAndRefreshData();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (modify) {
-  //     setTeacherName(modalData.teacher.name);
-  //     setTempName(modalData.teacher.name);
-  //     setTel(modalData.teacher.tel);
-  //     setBirthdate(modalData.teacher.birthdate);
-  //     setLessonsIdList(modalData.teacher.teachingLessons);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const addQuarter = () => {
+    const data = {
+      1: quarter1,
+      2: quarter2,
+      3: quarter3,
+      4: quarter4,
+    };
+    dispatch(addQuartersThunk({ userId, currentYear, data }));
+    toClose();
+    toRefreshData();
+  };
 
   return (
     <div className="modal-content">
       <div className="modal-content-box modal-content-box-center">
+        <div>Учебный год 2024 заголовок с выбором взять из расписания</div>
         <h3>{modify ? "Изменить" : "Добавить"} четверти учебного года:</h3>
+        {arrQuarters.map((setQuarter, ind) => {
+          return (
+            <QuartersInput setQuarter={setQuarter} number={ind + 1} key={ind} />
+          );
+        })}
 
-        {/* <input
-          className="modal-content-input"
-          type="date"
-          placeholder="Введите день рождения"
-          value={birthdate || ""}
-          onChange={(ev) => {
-            setBirthdate(ev.target.value);
-          }}
-        />
+        {/* 
         <input
           className="modal-content-input"
           type="tel"
@@ -132,14 +122,14 @@ export const ModalQuarter = () => {
 
       {/* <div className="modal-content-error">{error}</div> */}
 
-      {/* <button
+      <button
         className="modal-submit-button"
         onClick={() => {
-          addTeacherToList();
+          addQuarter();
         }}
       >
         {modify ? "Сохранить изменения" : "Сохранить"}
-      </button> */}
+      </button>
     </div>
   );
 };

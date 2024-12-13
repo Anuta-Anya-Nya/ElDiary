@@ -11,6 +11,7 @@ import { isCreateWeeklySheduleDB } from "../db/weeklyScheduleDb";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 import { MENU_CARDS } from "../utils/constants";
+import SetPeriod from "./blocks/SetPeriod";
 
 const ScheduleCreate = () => {
   const titleCardId = MENU_CARDS.SCHEDULE_ID;
@@ -20,7 +21,7 @@ const ScheduleCreate = () => {
   const currentStudyYear = findCurrentStudyYear(currentDate);
 
   const [period, setPeriod] = useState(currentStudyYear);
-  const handleChange = (e) => {
+  const changePeriod = (e) => {
     setPeriod(Number(e.target.value));
   };
   const [checkAvail, setCheckAvail] = useState(null);
@@ -49,37 +50,12 @@ const ScheduleCreate = () => {
         <div className="container diary-container">
           <div className="schedule__header">
             <h2 className="diary__title">Создать новое учебное расписание</h2>
-            <div className="schedule__setting">
-              <label htmlFor="periodSchedule">Период: </label>
-              <select
-                value={period}
-                onChange={(ev) => {
-                  handleChange(ev);
-                }}
-                name="selectPeriod"
-                id="periodSchedule"
-              >
-                <option
-                  value={currentStudyYear - 1}
-                  selected={period === currentStudyYear - 1}
-                >
-                  {currentStudyYear - 1}
-                </option>
-                <option
-                  value={currentStudyYear}
-                  selected={period === currentStudyYear}
-                >
-                  {currentStudyYear}
-                </option>
-                <option
-                  value={currentStudyYear + 1}
-                  selected={period === currentStudyYear + 1}
-                >
-                  {currentStudyYear + 1}
-                </option>
-              </select>
-              <span>- {period + 1}</span>
-            </div>
+            <SetPeriod
+              period={period}
+              changePeriod={changePeriod}
+              currentStudyYear={currentStudyYear}
+            />
+
             {checkAvail && (
               <div className="schedule__attent">
                 Расписание для выбранного периода создано!

@@ -18,3 +18,8 @@ export const addQuartersDb = async (userId, currentYear, data) => {
     throw new Error(er.message);
   }
 };
+
+export const isCreateQuarterDB = async (userId, currentYear) => {
+  const resp = await getDoc(doc(db, `users/${userId}/quarters/${currentYear}`));
+  return resp.exists();
+};

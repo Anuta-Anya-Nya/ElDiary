@@ -55,17 +55,14 @@ const ScheduleCreate = () => {
               changePeriod={changePeriod}
               currentStudyYear={currentStudyYear}
             />
-
-            {checkAvail && (
+            {checkAvail ? (
               <div className="schedule__attent">
                 Расписание для выбранного периода создано!
               </div>
+            ) : (
+              <ScheduleActions period={period} setCheckAvail={setCheckAvail} />
             )}
           </div>
-
-          {!checkAvail && (
-            <ScheduleActions period={period} setCheckAvail={setCheckAvail} />
-          )}
         </div>
       </section>
 

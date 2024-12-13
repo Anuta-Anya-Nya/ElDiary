@@ -1,7 +1,7 @@
 const SetPeriod = ({ period, changePeriod, currentStudyYear }) => {
   return (
     <div className="schedule__setting">
-      <label htmlFor="periodSchedule">Период: </label>
+      <label htmlFor="periodSchedule">Учебный год: </label>
       <select
         value={period}
         onChange={(ev) => {

@@ -524,6 +524,29 @@ input[type=checkbox] {
   flex-direction: row;
   gap: 10px;
 }
+.modal-content__dateBox {
+  width: 100%;
+  display: grid;
+  grid-template-columns: max-content 1fr 1fr;
+  align-items: baseline;
+  gap: 5px;
+}
+.modal-content__period {
+  display: flex;
+  align-items: baseline;
+  font-size: 1.2em;
+  color: #3c3c3c;
+  gap: 0.5em;
+}
+.modal-content__period select {
+  padding: 3px;
+  border-radius: 5px;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 1em;
+  color: #3c3c3c;
+}
 
 .ReactModal__Content--after-open {
   transform: scale(1);
@@ -732,6 +755,12 @@ input[type=checkbox] {
   gap: 5px;
 }
 
+.quarters__attent {
+  color: #9a1d36;
+  font-size: 1.5em;
+  text-align: center;
+}
+
 @media (max-width: 767px) {
   .header-container {
     display: flex;
@@ -828,5 +857,18 @@ input[type=checkbox] {
   }
   .card__block:last-of-type {
     margin-bottom: 1em;
+  }
+  .modal-content__dateBox {
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-content__period {
+    font-size: 1em;
+  }
+  .modal-content__period select {
+    font-size: 1em;
+  }
+  .quarters__attent {
+    font-size: 1em;
   }
 }/*# sourceMappingURL=style.css.map */

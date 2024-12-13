@@ -142,6 +142,33 @@
         }
     }
 
+    &__dateBox {
+        width: 100%;
+        display: grid;
+        grid-template-columns: max-content 1fr 1fr;
+        align-items: baseline;
+        gap: 5px;
+
+    }
+
+    &__period {
+        display: flex;
+        align-items: baseline;
+        font-size: 1.2em;
+        color: $colorText;
+        gap: 0.5em;
+
+        select {
+            padding: 3px;
+            border-radius: 5px;
+            font-family: "Oswald", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-size: 1em;
+            color: $colorText
+        }
+    }
+
 
 }
 

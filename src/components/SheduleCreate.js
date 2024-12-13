@@ -54,6 +54,7 @@ const ScheduleCreate = () => {
               period={period}
               changePeriod={changePeriod}
               currentStudyYear={currentStudyYear}
+              className={"schedule__setting"}
             />
             {checkAvail ? (
               <div className="schedule__attent">

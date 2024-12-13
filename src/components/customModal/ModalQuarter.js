@@ -91,9 +91,10 @@ export const ModalQuarter = () => {
           period={period}
           changePeriod={changePeriod}
           currentStudyYear={currentYear}
+          className={"modal-content__period"}
         />
         {checkAvail ? (
-          <div className="schedule__attent">
+          <div className="quarters__attent">
             Четверти для выбранного периода уже созданы!
           </div>
         ) : (

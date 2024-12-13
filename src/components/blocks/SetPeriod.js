@@ -1,6 +1,6 @@
-const SetPeriod = ({ period, changePeriod, currentStudyYear }) => {
+const SetPeriod = ({ period, changePeriod, currentStudyYear, className }) => {
   return (
-    <div className="schedule__setting">
+    <div className={className}>
       <label htmlFor="periodSchedule">Учебный год: </label>
       <select
         value={period}

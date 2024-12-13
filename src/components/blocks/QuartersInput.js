@@ -4,8 +4,8 @@ const QuartersInput = ({ setQuarter, number }) => {
   const [quarterStart, setQuarterStart] = useState("");
   const [quarterEnd, setQuarterEnd] = useState("");
   return (
-    <div>
-      {number} четверть
+    <div className="modal-content__dateBox">
+      <label>{number} четверть</label>
       <input
         className="modal-content-input"
         type="date"
@@ -16,8 +16,8 @@ const QuartersInput = ({ setQuarter, number }) => {
           setQuarterStart(ev.target.value);
           setQuarter({ start: ev.target.value, end: quarterEnd });
         }}
-      />{" "}
-      -
+      />
+
       <input
         className="modal-content-input"
         type="date"

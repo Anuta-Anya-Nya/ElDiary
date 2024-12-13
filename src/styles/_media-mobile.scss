@@ -143,6 +143,20 @@
         }
     }
 
+    .modal-content__dateBox {
+        display: flex;
+        flex-direction: column;
+    }
 
+    .modal-content__period {
+        font-size: 1em;
 
+        select {
+            font-size: 1em;
+        }
+    }
+
+    .quarters__attent {
+        font-size: 1em;
+    }
 }

@@ -32,6 +32,7 @@ export const ModalQuarter = () => {
   const errorAvail = CONTENT.ADD_TEACHER_ER_AVAIL;
 
   const dispatch = useDispatch();
+
   const changePeriod = (e) => {
     setPeriod(Number(e.target.value));
   };
@@ -48,6 +49,7 @@ export const ModalQuarter = () => {
     isCreateQuarterDB(userId, period).then((data) => setCheckAvail(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
+  const checkValues = () => {};
   // const checkValues = () => {
   //   if (!teacherName) {
   //     setError(errorName);
@@ -104,6 +106,8 @@ export const ModalQuarter = () => {
                 setQuarter={setQuarter}
                 number={ind + 1}
                 key={ind}
+                period={period}
+                setError={setError}
               />
             );
           })
@@ -150,6 +154,7 @@ export const ModalQuarter = () => {
       {!checkAvail && (
         <button
           className="modal-submit-button"
+          disabled={error}
           onClick={() => {
             addQuarter();
           }}

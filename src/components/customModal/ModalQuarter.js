@@ -15,7 +15,7 @@ import { isCreateQuarterDB } from "../../db/quartersDb";
 
 export const ModalQuarter = () => {
   const modify = useSelector((state) => state.content.openModal.modify);
-  const modalData = useSelector((state) => state.content.openModal.modalData);
+  // const modalData = useSelector((state) => state.content.openModal.modalData);
   const userId = useSelector((state) => state.user.id);
   const currentYear = findCurrentStudyYear(moment());
   const [period, setPeriod] = useState(currentYear);
@@ -26,64 +26,54 @@ export const ModalQuarter = () => {
   const arrQuarters = [setQuarter1, setQuarter2, setQuarter3, setQuarter4];
   const [checkAvail, setCheckAvail] = useState(null);
   const [error, setError] = useState(null);
-
-  const errorName = CONTENT.ADD_TEACHER_ER_NAME;
-  const errorLesson = CONTENT.ADD_TEACHER_ER_LESSON;
-  const errorAvail = CONTENT.ADD_TEACHER_ER_AVAIL;
-
   const dispatch = useDispatch();
+  const errorText = CONTENT.QUARTERS.ERR_DATES;
 
   const changePeriod = (e) => {
     setPeriod(Number(e.target.value));
   };
+
   const toClose = () => {
     dispatch(openCloseModal({ quarterModal: false }));
   };
+
   const toRefreshData = () => {
     setError(null);
     arrQuarters.map((setQuarter) => setQuarter(null));
     dispatch(saveModalData({}));
     dispatch(setModify(false));
   };
+
+  const validQuarterDates = () => {
+    if (
+      moment(quarter2.start).isBefore(moment(quarter1.end)) ||
+      moment(quarter3.start).isBefore(moment(quarter2.end)) ||
+      moment(quarter4.start).isBefore(moment(quarter3.end))
+    ) {
+      setError(errorText);
+      return false;
+    }
+    return true;
+  };
+
+  const addQuarter = () => {
+    if (validQuarterDates()) {
+      const data = {
+        1: quarter1,
+        2: quarter2,
+        3: quarter3,
+        4: quarter4,
+      };
+      dispatch(addQuartersThunk({ userId, currentYear, data }));
+      toClose();
+      toRefreshData();
+    }
+  };
+
   useEffect(() => {
     isCreateQuarterDB(userId, period).then((data) => setCheckAvail(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
-  const checkValues = () => {};
-  // const checkValues = () => {
-  //   if (!teacherName) {
-  //     setError(errorName);
-  //     return false;
-  //   } else if (!lessonsIdList.length) {
-  //     setError(errorLesson);
-  //     return false;
-  //   } else {
-  //     const avaiTeacherName = Object.values(teachers).filter(
-  //       (teacher) => teacher.name.toLowerCase() === teacherName.toLowerCase()
-  //     );
-  //     if (!avaiTeacherName.length) {
-  //       return true;
-  //     } else {
-  //       if (modify && tempName.toLowerCase() === teacherName.toLowerCase()) {
-  //         return true;
-  //       } else {
-  //         setError(errorAvail);
-  //         return false;
-  //       }
-  //     }
-  //   }
-  // };
-  const addQuarter = () => {
-    const data = {
-      1: quarter1,
-      2: quarter2,
-      3: quarter3,
-      4: quarter4,
-    };
-    dispatch(addQuartersThunk({ userId, currentYear, data }));
-    toClose();
-    toRefreshData();
-  };
 
   return (
     <div className="modal-content">
@@ -112,44 +102,9 @@ export const ModalQuarter = () => {
             );
           })
         )}
-
-        {/* 
-        <input
-          className="modal-content-input"
-          type="tel"
-          placeholder="Введите телефон"
-          value={tel || ""}
-          onChange={(ev) => {
-            setTel(ev.target.value);
-          }}
-        />
-        <h4>Выберите уроки, которые ведет учитель:</h4>
-        <div className="modal-content-choice">
-          {Object.values(lessons).map((lesson) => (
-            <div key={lesson.lessonId}>
-              <input
-                className="modal-content-radio"
-                type="checkbox"
-                name="selectLesson"
-                value={lesson.lessonId}
-                id={`lesson${lesson.lessonId}`}
-                checked={lessonsIdList.includes(lesson.lessonId)}
-                onChange={(ev) => {
-                  setLessonsIdList(
-                    lessonsIdList.includes(ev.target.value)
-                      ? lessonsIdList.filter((el) => el !== ev.target.value)
-                      : [...lessonsIdList, ev.target.value]
-                  );
-                  setError(null);
-                }}
-              />
-              <label htmlFor={`lesson${lesson.lessonId}`}>{lesson.title}</label>
-            </div>
-          ))}
-        </div> */}
       </div>
 
-      {/* <div className="modal-content-error">{error}</div> */}
+      <div className="modal-content-error">{error}</div>
 
       {!checkAvail && (
         <button

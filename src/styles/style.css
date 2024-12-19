@@ -761,6 +761,10 @@ input[type=checkbox] {
   text-align: center;
 }
 
+.invalid-date {
+  border: 3px solid #9a1d36;
+}
+
 @media (max-width: 767px) {
   .header-container {
     display: flex;

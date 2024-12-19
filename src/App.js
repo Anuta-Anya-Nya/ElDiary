@@ -14,6 +14,7 @@ import Error404 from "./components/Error404";
 import PrivateRoutes from "./router/PrivateRoutes";
 import { AuthProvider } from "../src/utils/AuthContext";
 import LoadData from "./components/LoadData";
+import Grades from "./components/Grades";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/scheduleCreate" element={<ScheduleCreate />} />
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/lessons" element={<Lessons />} />
+            <Route path="/grades" element={<Grades />} />
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>

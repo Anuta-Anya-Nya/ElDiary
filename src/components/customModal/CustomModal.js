@@ -11,6 +11,7 @@ import { ModalModifyDay } from "./ModalModifyDay";
 import { ModalTeacher } from "./ModalTeacher";
 import { ModalLesson } from "./ModalLesson";
 import { ModalLessonInfo } from "./ModalLessonInfo";
+import { ModalQuarter } from "./ModalQuarter";
 
 export const CustomModal = ({ data }) => {
   const modalList = useSelector((state) => state.content.openModal.modalList);
@@ -40,6 +41,8 @@ export const CustomModal = ({ data }) => {
         return <ModalLesson />;
       case "lessonInfoModal":
         return <ModalLessonInfo />;
+      case "quarterModal":
+        return <ModalQuarter />;
       default:
         return null;
     }

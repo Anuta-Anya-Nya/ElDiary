@@ -33,6 +33,12 @@ export const CONTENT = {
   ADD_TEACHER_ER_LESSON:
     "Уроки, которые ведет учитель обязательны к заполнению!",
   ADD_TEACHER_ER_AVAIL: "Такой учитель уже существует!",
+  QUARTERS: {
+    ERR_DATES: "Ошибка! Проверьте правильность введенных дат",
+    ERR_DATE_START: "Начальная дата введена неверно!",
+    ERR_DATE_END: "Конечная дата введена неверно!",
+    ERR_DATE_PERIOD: "Начальная дата больше, чем конечная дата!",
+  },
 };
 
 export const WEEKLY_SCHEDULE = {

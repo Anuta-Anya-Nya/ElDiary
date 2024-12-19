@@ -15,6 +15,7 @@ import PrivateRoutes from "./router/PrivateRoutes";
 import { AuthProvider } from "../src/utils/AuthContext";
 import LoadData from "./components/LoadData";
 import Grades from "./components/Grades";
+import Quarters from "./components/Quarters";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/lessons" element={<Lessons />} />
             <Route path="/grades" element={<Grades />} />
+            <Route path="/quarters" element={<Quarters />} />
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>

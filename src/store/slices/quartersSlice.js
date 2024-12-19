@@ -40,7 +40,6 @@ const quartersSlice = createSlice({
     error: null,
     quartersList: {
       // 1: {
-      //   id: "11212121212",
       //   start: "2024-09-02",
       //   end: "2024-11-02",
       // },

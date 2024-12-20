@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   openCloseModal,
   saveModalData,
+  setEditMode,
   setModify,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,8 +15,8 @@ import SetPeriod from "../blocks/SetPeriod";
 import { isCreateQuarterDB } from "../../db/quartersDb";
 
 export const ModalQuarter = () => {
-  const modify = useSelector((state) => state.content.openModal.modify);
-  // const modalData = useSelector((state) => state.content.openModal.modalData);
+  const edit = useSelector((state) => state.content.openModal.editMode);
+  const quarters = useSelector((state) => state.quarters.quartersList);
   const userId = useSelector((state) => state.user.id);
   const currentYear = findCurrentStudyYear(moment());
   const [period, setPeriod] = useState(currentYear);
@@ -41,7 +42,7 @@ export const ModalQuarter = () => {
     setError(null);
     arrQuarters.map((setQuarter) => setQuarter(null));
     dispatch(saveModalData({}));
-    dispatch(setModify(false));
+    dispatch(setEditMode(false));
   };
 
   const validQuarterDates = () => {
@@ -75,17 +76,26 @@ export const ModalQuarter = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
+  useEffect(() => {
+    if (edit) {
+      setQuarter1(quarters[1]);
+      setQuarter2(quarters[2]);
+      setQuarter3(quarters[3]);
+      setQuarter4(quarters[4]);
+    }
+  }, []);
+
   return (
     <div className="modal-content">
       <div className="modal-content-box modal-content-box-center">
-        <h3>{modify ? "Изменить" : "Добавить"} четверти </h3>
+        <h3>{edit ? "Изменить" : "Добавить"} четверти </h3>
         <SetPeriod
           period={period}
           changePeriod={changePeriod}
           currentStudyYear={currentYear}
           className={"modal-content__period"}
         />
-        {checkAvail ? (
+        {checkAvail && !edit ? (
           <div className="quarters__attent">
             Четверти для выбранного периода уже созданы!
           </div>
@@ -98,6 +108,9 @@ export const ModalQuarter = () => {
                 key={ind}
                 period={period}
                 setError={setError}
+                edit={edit}
+                start={edit ? quarters[ind + 1].start : ""}
+                end={edit ? quarters[ind + 1].end : ""}
               />
             );
           })
@@ -106,7 +119,7 @@ export const ModalQuarter = () => {
 
       <div className="modal-content-error">{error}</div>
 
-      {!checkAvail && (
+      {(!checkAvail || edit) && (
         <button
           className="modal-submit-button"
           disabled={error}
@@ -114,7 +127,7 @@ export const ModalQuarter = () => {
             addQuarter();
           }}
         >
-          {modify ? "Сохранить изменения" : "Сохранить"}
+          {edit ? "Сохранить изменения" : "Сохранить"}
         </button>
       )}
     </div>

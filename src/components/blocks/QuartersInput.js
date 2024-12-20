@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment/min/moment-with-locales.min";
 import useEffectAfterMount from "../../utils/useEffectAfterMount";
 import { CONTENT } from "../../utils/constants";
 
-const QuartersInput = ({ setQuarter, number, period, setError }) => {
+const QuartersInput = ({
+  setQuarter,
+  number,
+  period,
+  setError,
+  edit,
+  start,
+  end,
+}) => {
   const [quarterStart, setQuarterStart] = useState("");
   const [quarterEnd, setQuarterEnd] = useState("");
   const [errorStart, setErrorStart] = useState(null);
@@ -44,6 +52,12 @@ const QuartersInput = ({ setQuarter, number, period, setError }) => {
   useEffectAfterMount(() => {
     validDate({ start: quarterStart, end: quarterEnd });
   }, [period]);
+  useEffect(() => {
+    if (edit) {
+      setQuarterStart(start);
+      setQuarterEnd(end);
+    }
+  }, []);
 
   return (
     <div className="modal-content__dateBox">

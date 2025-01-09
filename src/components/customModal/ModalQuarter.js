@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   openCloseModal,
   saveModalData,
+  setCreate,
   setEditMode,
-  setModify,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { CONTENT } from "../../utils/constants";
@@ -16,6 +16,10 @@ import { isCreateQuarterDB } from "../../db/quartersDb";
 
 export const ModalQuarter = () => {
   const edit = useSelector((state) => state.content.openModal.editMode);
+  const createMode = useSelector((state) => state.content.openModal.createMode);
+  const tempPeriod = useSelector(
+    (state) => state.content.openModal.modalData.date
+  );
   const quarters = useSelector((state) => state.quarters.quartersList);
   const userId = useSelector((state) => state.user.id);
   const currentYear = findCurrentStudyYear(moment());
@@ -37,6 +41,8 @@ export const ModalQuarter = () => {
   const toClose = () => {
     dispatch(openCloseModal({ quarterModal: false }));
     dispatch(setEditMode(false));
+    dispatch(setCreate(false));
+    dispatch(saveModalData({}));
   };
 
   const toRefreshData = () => {
@@ -65,7 +71,7 @@ export const ModalQuarter = () => {
         3: quarter3,
         4: quarter4,
       };
-      dispatch(addQuartersThunk({ userId, currentYear, data }));
+      dispatch(addQuartersThunk({ userId, currentYear: period, data }));
       toClose();
       toRefreshData();
     }
@@ -83,18 +89,29 @@ export const ModalQuarter = () => {
       setQuarter3(quarters[3]);
       setQuarter4(quarters[4]);
     }
+    if (createMode || edit) {
+      setPeriod(tempPeriod);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="modal-content">
       <div className="modal-content-box modal-content-box-center">
         <h3>{edit ? "Изменить" : "Добавить"} четверти </h3>
-        <SetPeriod
-          period={period}
-          changePeriod={changePeriod}
-          currentStudyYear={currentYear}
-          className={"modal-content__period"}
-        />
+        {edit && (
+          <h3>
+            {period} - {period + 1}{" "}
+          </h3>
+        )}
+        {!edit && (
+          <SetPeriod
+            period={period}
+            changePeriod={changePeriod}
+            currentStudyYear={currentYear}
+            className={"modal-content__period"}
+          />
+        )}
         {checkAvail && !edit ? (
           <div className="quarters__attent">
             Четверти для выбранного периода уже созданы!

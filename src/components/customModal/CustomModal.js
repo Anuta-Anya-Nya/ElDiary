@@ -7,6 +7,8 @@ import { ModalAddHomework } from "./ModalAddHomework";
 import { ModalAddGrade } from "./ModalAddGrade";
 import {
   openCloseModal,
+  saveModalData,
+  setCreate,
   setEditMode,
   setModify,
 } from "../../store/slices/contentSlice";
@@ -77,6 +79,8 @@ export const CustomModal = ({ data }) => {
     dispatch(openCloseModal(payload()));
     dispatch(setModify(false));
     dispatch(setEditMode(false));
+    dispatch(setCreate(false));
+    dispatch(saveModalData({}));
   };
 
   useEffect(() => {

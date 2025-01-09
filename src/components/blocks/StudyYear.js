@@ -1,5 +1,7 @@
+import { useDispatch } from "react-redux";
 import arrowLeft from "../../assets/icons/arrow-left.svg";
 import arrowRight from "../../assets/icons/arrow-right.svg";
+import { saveModalData } from "../../store/slices/contentSlice";
 const StudyYear = ({
   currentStudyYear,
   setCurrentYear,
@@ -8,6 +10,7 @@ const StudyYear = ({
   isCreate,
   text,
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className="schedule__header">
       <div className="diary__header">
@@ -45,6 +48,7 @@ const StudyYear = ({
           className="modal-submit-button"
           onClick={() => {
             setEdit(true);
+            dispatch(saveModalData({ date: currentStudyYear }));
           }}
         >
           Изменить {text}

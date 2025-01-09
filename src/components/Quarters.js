@@ -9,7 +9,12 @@ import { MENU_CARDS } from "../utils/constants";
 import StudyYear from "./blocks/StudyYear";
 import QuartersTable from "./tables/QuartersTable";
 import { CustomModal } from "./customModal/CustomModal";
-import { openCloseModal, setEditMode } from "../store/slices/contentSlice";
+import {
+  openCloseModal,
+  saveModalData,
+  setCreate,
+  setEditMode,
+} from "../store/slices/contentSlice";
 import { getQuartersThunk } from "../store/slices/quartersSlice";
 import useEffectAfterMount from "../utils/useEffectAfterMount";
 
@@ -81,6 +86,8 @@ function Quarters() {
                       className="modal-submit-button"
                       onClick={() => {
                         dispatch(openCloseModal({ quarterModal: true }));
+                        dispatch(saveModalData({ date: currentStudyYear }));
+                        dispatch(setCreate(true));
                       }}
                     >
                       Добавить

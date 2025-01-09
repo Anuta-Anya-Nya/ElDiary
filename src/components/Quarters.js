@@ -27,18 +27,17 @@ function Quarters() {
   // const [editQuarters, setEditQuarters] = useState(false);
   const dispatch = useDispatch();
   const buttonText = "четверти";
-  const setEditQuarters = () => dispatch(setEditMode(false));
+  const setEditQuarters = (bool) => dispatch(setEditMode(bool));
 
   useEffect(() => {
     if (editQuarters) {
       dispatch(openCloseModal({ quarterModal: true }));
-      dispatch(setEditMode(true));
+      // dispatch(setEditMode(true));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editQuarters]);
   useEffectAfterMount(() => {
     dispatch(getQuartersThunk({ userId, currentYear: currentStudyYear }));
-    console.log("currentStudyYear: ", currentStudyYear);
   }, [currentStudyYear]);
 
   // Для поддержиная актуальности четвертей в сторе:

@@ -36,13 +36,13 @@ export const ModalQuarter = () => {
 
   const toClose = () => {
     dispatch(openCloseModal({ quarterModal: false }));
+    dispatch(setEditMode(false));
   };
 
   const toRefreshData = () => {
     setError(null);
     arrQuarters.map((setQuarter) => setQuarter(null));
     dispatch(saveModalData({}));
-    dispatch(setEditMode(false));
   };
 
   const validQuarterDates = () => {

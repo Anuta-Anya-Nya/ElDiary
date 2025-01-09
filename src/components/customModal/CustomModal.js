@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { ModalAddLesson } from "./ModalAddLesson";
 import { ModalAddHomework } from "./ModalAddHomework";
 import { ModalAddGrade } from "./ModalAddGrade";
-import { openCloseModal, setModify } from "../../store/slices/contentSlice";
+import {
+  openCloseModal,
+  setEditMode,
+  setModify,
+} from "../../store/slices/contentSlice";
 import { ModalAddNotes } from "./ModalAddNotes";
 import { ModalModifyDay } from "./ModalModifyDay";
 import { ModalTeacher } from "./ModalTeacher";
@@ -72,6 +76,7 @@ export const CustomModal = ({ data }) => {
   const onClose = () => {
     dispatch(openCloseModal(payload()));
     dispatch(setModify(false));
+    dispatch(setEditMode(false));
   };
 
   useEffect(() => {

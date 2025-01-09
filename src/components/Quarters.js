@@ -10,6 +10,8 @@ import StudyYear from "./blocks/StudyYear";
 import QuartersTable from "./tables/QuartersTable";
 import { CustomModal } from "./customModal/CustomModal";
 import { openCloseModal, setEditMode } from "../store/slices/contentSlice";
+import { getQuartersThunk } from "../store/slices/quartersSlice";
+import useEffectAfterMount from "../utils/useEffectAfterMount";
 
 function Quarters() {
   const [currentStudyYear, setCurrentYear] = useState(
@@ -18,8 +20,9 @@ function Quarters() {
   const titleCardId = MENU_CARDS.GRADES_ID;
   const loadingQuaterts = useSelector((state) => state.quarters.loading);
   const quarters = useSelector((state) => state.quarters.quartersList);
-  const isCreate = Object.keys(quarters).length > 0 ? true : false;
+  const isCreate = Object.keys(quarters).length > 0;
   const editQuarters = useSelector((state) => state.content.openModal.editMode);
+  const userId = useSelector((state) => state.user.id);
 
   // const [editQuarters, setEditQuarters] = useState(false);
   const dispatch = useDispatch();
@@ -33,6 +36,23 @@ function Quarters() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editQuarters]);
+  useEffectAfterMount(() => {
+    dispatch(getQuartersThunk({ userId, currentYear: currentStudyYear }));
+    console.log("currentStudyYear: ", currentStudyYear);
+  }, [currentStudyYear]);
+
+  // Для поддержиная актуальности четвертей в сторе:
+  useEffect(() => {
+    return () => {
+      dispatch(
+        getQuartersThunk({
+          userId,
+          currentYear: findCurrentStudyYear(moment()),
+        })
+      );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main>
@@ -53,7 +73,21 @@ function Quarters() {
               />
 
               <div className="homework__area">
-                <QuartersTable quarters={quarters} />
+                {isCreate ? (
+                  <QuartersTable quarters={quarters} />
+                ) : (
+                  <div className="schedule__message">
+                    <h3>На выбранный учебный год четверти не добавлены</h3>
+                    <button
+                      className="modal-submit-button"
+                      onClick={() => {
+                        dispatch(openCloseModal({ quarterModal: true }));
+                      }}
+                    >
+                      Добавить
+                    </button>
+                  </div>
+                )}
               </div>
             </>
           )}

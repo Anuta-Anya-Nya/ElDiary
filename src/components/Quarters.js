@@ -9,12 +9,7 @@ import { MENU_CARDS } from "../utils/constants";
 import StudyYear from "./blocks/StudyYear";
 import QuartersTable from "./tables/QuartersTable";
 import { CustomModal } from "./customModal/CustomModal";
-import {
-  editModalData,
-  openCloseModal,
-  saveModalData,
-  setEditMode,
-} from "../store/slices/contentSlice";
+import { openCloseModal, setEditMode } from "../store/slices/contentSlice";
 
 function Quarters() {
   const [currentStudyYear, setCurrentYear] = useState(

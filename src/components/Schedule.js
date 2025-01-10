@@ -2,8 +2,6 @@ import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import ScheduleView from "./blocks/ScheduleView";
 import ScheduleActions from "./blocks/ScheduleActions";
-import arrowLeft from "../assets/icons/arrow-left.svg";
-import arrowRight from "../assets/icons/arrow-right.svg";
 import { useSelector } from "react-redux";
 import moment from "moment/min/moment-with-locales.min";
 import { useEffect, useState } from "react";
@@ -17,6 +15,7 @@ import Loading from "./blocks/Loading";
 import useEffectAfterMount from "../utils/useEffectAfterMount";
 import { MENU_CARDS } from "../utils/constants";
 import { findCurrentStudyYear } from "../utils/services";
+import StudyYear from "./blocks/StudyYear";
 
 const Schedule = () => {
   const titleCardId = MENU_CARDS.SCHEDULE_ID;
@@ -33,6 +32,7 @@ const Schedule = () => {
   const isCreate = Object.keys(schedule).length > 0 ? true : false;
   const [editSchedule, setEditSchedule] = useState(false);
   const dispatch = useDispatch();
+  const buttonText = "расписание";
 
   useEffect(() => {
     if (location.state === "/settings") {
@@ -68,48 +68,15 @@ const Schedule = () => {
       <PageTitle titleCardId={titleCardId} />
       <section className="schedule">
         <div className="container diary-container">
-          <div className="schedule__header">
-            <div className="diary__header">
-              {!editSchedule && (
-                <div className="homework__icons">
-                  <img
-                    className="icons"
-                    src={arrowLeft}
-                    alt="left"
-                    onClick={() => {
-                      setCurrentYear(currentStudyYear - 1);
-                    }}
-                  />
-                </div>
-              )}
-              <h2 className="diary__title">
-                Учебный год {currentStudyYear} - {currentStudyYear + 1}
-              </h2>
-              {!editSchedule && (
-                <div className="homework__icons">
-                  <img
-                    className="icons"
-                    src={arrowRight}
-                    alt="right"
-                    onClick={() => {
-                      setCurrentYear(currentStudyYear + 1);
-                    }}
-                  />
-                </div>
-              )}
-            </div>
+          <StudyYear
+            currentStudyYear={currentStudyYear}
+            setCurrentYear={setCurrentYear}
+            edit={editSchedule}
+            setEdit={setEditSchedule}
+            isCreate={isCreate}
+            text={buttonText}
+          />
 
-            {!editSchedule && isCreate && (
-              <button
-                className="modal-submit-button"
-                onClick={() => {
-                  setEditSchedule(true);
-                }}
-              >
-                Изменить расписание
-              </button>
-            )}
-          </div>
           {loadingWeeklySchedule ? (
             <Loading />
           ) : editSchedule ? (

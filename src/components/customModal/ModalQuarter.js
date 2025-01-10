@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   openCloseModal,
   saveModalData,
-  setModify,
+  setCreate,
+  setEditMode,
 } from "../../store/slices/contentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { CONTENT } from "../../utils/constants";
@@ -14,8 +15,12 @@ import SetPeriod from "../blocks/SetPeriod";
 import { isCreateQuarterDB } from "../../db/quartersDb";
 
 export const ModalQuarter = () => {
-  const modify = useSelector((state) => state.content.openModal.modify);
-  // const modalData = useSelector((state) => state.content.openModal.modalData);
+  const edit = useSelector((state) => state.content.openModal.editMode);
+  const createMode = useSelector((state) => state.content.openModal.createMode);
+  const tempPeriod = useSelector(
+    (state) => state.content.openModal.modalData.date
+  );
+  const quarters = useSelector((state) => state.quarters.quartersList);
   const userId = useSelector((state) => state.user.id);
   const currentYear = findCurrentStudyYear(moment());
   const [period, setPeriod] = useState(currentYear);
@@ -35,13 +40,15 @@ export const ModalQuarter = () => {
 
   const toClose = () => {
     dispatch(openCloseModal({ quarterModal: false }));
+    dispatch(setEditMode(false));
+    dispatch(setCreate(false));
+    dispatch(saveModalData({}));
   };
 
   const toRefreshData = () => {
     setError(null);
     arrQuarters.map((setQuarter) => setQuarter(null));
     dispatch(saveModalData({}));
-    dispatch(setModify(false));
   };
 
   const validQuarterDates = () => {
@@ -64,7 +71,7 @@ export const ModalQuarter = () => {
         3: quarter3,
         4: quarter4,
       };
-      dispatch(addQuartersThunk({ userId, currentYear, data }));
+      dispatch(addQuartersThunk({ userId, currentYear: period, data }));
       toClose();
       toRefreshData();
     }
@@ -75,17 +82,37 @@ export const ModalQuarter = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
+  useEffect(() => {
+    if (edit) {
+      setQuarter1(quarters[1]);
+      setQuarter2(quarters[2]);
+      setQuarter3(quarters[3]);
+      setQuarter4(quarters[4]);
+    }
+    if (createMode || edit) {
+      setPeriod(tempPeriod);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="modal-content">
       <div className="modal-content-box modal-content-box-center">
-        <h3>{modify ? "Изменить" : "Добавить"} четверти </h3>
-        <SetPeriod
-          period={period}
-          changePeriod={changePeriod}
-          currentStudyYear={currentYear}
-          className={"modal-content__period"}
-        />
-        {checkAvail ? (
+        <h3>{edit ? "Изменить" : "Добавить"} четверти </h3>
+        {edit && (
+          <h3>
+            {period} - {period + 1}{" "}
+          </h3>
+        )}
+        {!edit && (
+          <SetPeriod
+            period={period}
+            changePeriod={changePeriod}
+            currentStudyYear={currentYear}
+            className={"modal-content__period"}
+          />
+        )}
+        {checkAvail && !edit ? (
           <div className="quarters__attent">
             Четверти для выбранного периода уже созданы!
           </div>
@@ -98,6 +125,9 @@ export const ModalQuarter = () => {
                 key={ind}
                 period={period}
                 setError={setError}
+                edit={edit}
+                start={edit ? quarters[ind + 1].start : ""}
+                end={edit ? quarters[ind + 1].end : ""}
               />
             );
           })
@@ -106,7 +136,7 @@ export const ModalQuarter = () => {
 
       <div className="modal-content-error">{error}</div>
 
-      {!checkAvail && (
+      {(!checkAvail || edit) && (
         <button
           className="modal-submit-button"
           disabled={error}
@@ -114,7 +144,7 @@ export const ModalQuarter = () => {
             addQuarter();
           }}
         >
-          {modify ? "Сохранить изменения" : "Сохранить"}
+          {edit ? "Сохранить изменения" : "Сохранить"}
         </button>
       )}
     </div>

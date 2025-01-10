@@ -6,10 +6,14 @@ const QuartersRow = ({ quarterDate, number }) => {
     <>
       <div className="quarters__cell">{number}.</div>
       <div className="quarters__cell">
-        {moment(quarterDate.start).format("DD MMMM YYYY")}
+        {quarterDate.start
+          ? moment(quarterDate.start).format("DD MMMM YYYY")
+          : "Дата не записана"}
       </div>
       <div className="quarters__cell">
-        {moment(quarterDate.end).format("DD MMMM YYYY")}
+        {quarterDate.end
+          ? moment(quarterDate.end).format("DD MMMM YYYY")
+          : "Дата не записана"}
       </div>
     </>
   );

@@ -10,21 +10,9 @@ const SetPeriod = ({ period, changePeriod, currentStudyYear, className }) => {
         name="selectPeriod"
         id="periodSchedule"
       >
-        <option
-          value={currentStudyYear - 1}
-          selected={period === currentStudyYear - 1}
-        >
-          {currentStudyYear - 1}
-        </option>
-        <option value={currentStudyYear} selected={period === currentStudyYear}>
-          {currentStudyYear}
-        </option>
-        <option
-          value={currentStudyYear + 1}
-          selected={period === currentStudyYear + 1}
-        >
-          {currentStudyYear + 1}
-        </option>
+        <option value={currentStudyYear - 1}>{currentStudyYear - 1}</option>
+        <option value={currentStudyYear}>{currentStudyYear}</option>
+        <option value={currentStudyYear + 1}>{currentStudyYear + 1}</option>
       </select>
       <span>- {period + 1}</span>
     </div>

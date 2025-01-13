@@ -88,7 +88,11 @@ function Grades() {
                     .map((el, ind) => (
                       <button
                         key={ind}
-                        className="modal-submit-button"
+                        className={
+                          ind + 1 === currentQuarter
+                            ? "modal-submit-button modal-submit-button-active"
+                            : "modal-submit-button"
+                        }
                         onClick={() => {
                           setCurrentQuarter(ind + 1);
                         }}

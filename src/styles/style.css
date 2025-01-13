@@ -603,6 +603,11 @@ input[type=checkbox] {
   background-color: #9a1d36;
   border-color: #9a1d36;
 }
+.modal-submit-button-active {
+  color: #9a1d36;
+  background-color: #ffffff;
+  border-color: #9a1d36;
+}
 
 .modal-button {
   align-self: center;

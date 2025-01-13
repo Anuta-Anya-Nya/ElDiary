@@ -232,6 +232,12 @@
         background-color: $colorButton;
         border-color: $colorButton;
     }
+
+    &-active {
+        color: $colorButton;
+        background-color: $colorBackgroundSecond;
+        border-color: $colorButton;
+    }
 }
 
 .modal-button {

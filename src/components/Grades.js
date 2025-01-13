@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment/min/moment-with-locales.min";
 import { useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
@@ -23,7 +23,16 @@ function Grades() {
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const quarters = useSelector((state) => state.quarters.quartersList);
 
-  const [currentQuarter, setCurrentQuarter] = useState(2);
+  const findCurrentQuarter = (currentDate) => {
+    return +Object.keys(quarters).filter((quarterNumber) =>
+      currentDate.isBetween(
+        moment(quarters[quarterNumber].start).subtract(1, "days"),
+        moment(quarters[quarterNumber].end).add(1, "d")
+      )
+    )[0];
+  };
+
+  const [currentQuarter, setCurrentQuarter] = useState();
   const [currentSchedules, setCurrentSchedules] = useState({});
   const [gradesQuarter, setGradesQuarter] = useState({});
 
@@ -40,8 +49,13 @@ function Grades() {
     }, {});
   };
 
-  useEffectAfterMount(() => {
-    if (!loadingQuarters) {
+  useEffect(() => {
+    setCurrentQuarter(findCurrentQuarter(currentDate));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!loadingQuarters && !loadingDailySchedules && currentQuarter) {
       const currentSchedules = Object.keys(schedules)
         .filter((el) =>
           moment(el).isBetween(
@@ -55,6 +69,7 @@ function Grades() {
         }, {});
       setCurrentSchedules(currentSchedules);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingQuarters, currentQuarter]);
 
   useEffectAfterMount(() => {
@@ -64,7 +79,6 @@ function Grades() {
       },
       {}
     );
-    console.log("grades: ", grades);
     setGradesQuarter(grades);
   }, [currentSchedules]);
 

@@ -15,7 +15,7 @@ function Grades() {
   moment.locale("ru");
   const titleCardId = MENU_CARDS.GRADES_ID;
 
-  const currentDate = moment("2025-05-25");
+  const currentDate = moment();
   const currentYear = findCurrentStudyYear(currentDate);
   const quartersNotExist = 999;
 
@@ -104,8 +104,8 @@ function Grades() {
   return (
     <main>
       <PageTitle titleCardId={titleCardId} />
-      <section className="homework">
-        <div className="container homework-container">
+      <section className="grades">
+        <div className="container grades__container">
           {loadingDailySchedules && loadingQuarters ? (
             <Loading />
           ) : (
@@ -114,48 +114,46 @@ function Grades() {
                 Оценки за {currentYear} - {currentYear + 1} учебный год
               </h3>
 
-              <div>
-                <div>
-                  {Object.keys(quarters)
-                    .sort()
-                    .map((el, ind) => (
-                      <button
-                        key={ind}
-                        className={
-                          ind + 1 === currentQuarter
-                            ? "modal-submit-button modal-submit-button-active"
-                            : "modal-submit-button"
-                        }
-                        onClick={() => {
-                          setCurrentQuarter(ind + 1);
-                        }}
-                      >
-                        {ind + 1} четверть <br />c{" "}
-                        {moment(quarters[el].start).format("D MMMM")} по{" "}
-                        {moment(quarters[el].end).format("D MMMM")}
-                      </button>
-                    ))}
-                </div>
-
-                {currentQuarter === quartersNotExist && (
-                  <div>
-                    <p>
-                      Если хотите видеть оценки на текущую четверть, введите
-                      даты начала и окончания четвертей
-                    </p>
+              <div className="homework__buttons">
+                {Object.keys(quarters)
+                  .sort()
+                  .map((el, ind) => (
                     <button
-                      className="modal-submit-button"
+                      key={ind}
+                      className={
+                        ind + 1 === currentQuarter
+                          ? "modal-submit-button modal-submit-button-active"
+                          : "modal-submit-button"
+                      }
                       onClick={() => {
-                        dispatch(openCloseModal({ quarterModal: true }));
+                        setCurrentQuarter(ind + 1);
                       }}
                     >
-                      Добавить
+                      {ind + 1} четверть <br />c{" "}
+                      {moment(quarters[el].start).format("D MMMM")} по{" "}
+                      {moment(quarters[el].end).format("D MMMM")}
                     </button>
-                  </div>
-                )}
-
-                <GradesTable grades={gradesQuarter} />
+                  ))}
               </div>
+
+              {currentQuarter === quartersNotExist && (
+                <div>
+                  <p>
+                    Если хотите видеть оценки на текущую четверть, введите даты
+                    начала и окончания четвертей
+                  </p>
+                  <button
+                    className="modal-submit-button"
+                    onClick={() => {
+                      dispatch(openCloseModal({ quarterModal: true }));
+                    }}
+                  >
+                    Добавить
+                  </button>
+                </div>
+              )}
+
+              <GradesTable grades={gradesQuarter} />
             </>
           )}
         </div>

@@ -4,7 +4,7 @@ import GradesRow from "./GradesRow";
 const GradesTable = ({ grades }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
 
-  return (
+  return Object.keys(grades).length ? (
     <div className="schedule__table">
       <div className="diary__cell table__cell-title"></div>
       <div className="diary__cell table__cell-title">Предмет</div>
@@ -19,6 +19,8 @@ const GradesTable = ({ grades }) => {
         />
       ))}
     </div>
+  ) : (
+    <div>Оценок в этой четверти еще нет</div>
   );
 };
 export default GradesTable;

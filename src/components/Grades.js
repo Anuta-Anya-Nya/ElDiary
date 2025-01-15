@@ -13,8 +13,9 @@ function Grades() {
   moment.locale("ru");
   const titleCardId = MENU_CARDS.GRADES_ID;
 
-  const currentDate = moment();
+  const currentDate = moment("2025-05-25");
   const currentYear = findCurrentStudyYear(currentDate);
+  const quartersNotExist = 999;
 
   const loadingDailySchedules = useSelector(
     (state) => state.dailySchedules.loading
@@ -23,18 +24,28 @@ function Grades() {
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const quarters = useSelector((state) => state.quarters.quartersList);
 
-  const findCurrentQuarter = (currentDate) => {
-    return +Object.keys(quarters).filter((quarterNumber) =>
-      currentDate.isBetween(
-        moment(quarters[quarterNumber].start).subtract(1, "days"),
-        moment(quarters[quarterNumber].end).add(1, "d")
-      )
-    )[0];
-  };
-
   const [currentQuarter, setCurrentQuarter] = useState();
   const [currentSchedules, setCurrentSchedules] = useState({});
   const [gradesQuarter, setGradesQuarter] = useState({});
+
+  const findCurrentQuarter = (currentDate) => {
+    const quartersNumbers = Object.keys(quarters);
+    if (quartersNumbers.length) {
+      for (let i = 0; i < quartersNumbers.length - 1; i++) {
+        if (
+          currentDate.isBetween(
+            moment(quarters[quartersNumbers[i]].start),
+            moment(quarters[quartersNumbers[i + 1]].start)
+          )
+        ) {
+          return +quartersNumbers[i];
+        }
+      }
+      return +quartersNumbers[quartersNumbers.length - 1];
+    } else {
+      return quartersNotExist;
+    }
+  };
 
   const gradesOfDay = (day) => {
     return Object.values(day.lessonsList).reduce((lessonsList, lesson) => {
@@ -50,27 +61,32 @@ function Grades() {
   };
 
   useEffect(() => {
-    setCurrentQuarter(findCurrentQuarter(currentDate));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!loadingQuarters && !loadingDailySchedules && currentQuarter) {
-      const currentSchedules = Object.keys(schedules)
-        .filter((el) =>
-          moment(el).isBetween(
-            moment(quarters[currentQuarter].start).subtract(1, "days"),
-            moment(quarters[currentQuarter].end).add(1, "d")
-          )
-        )
-        .reduce((obj, date) => {
-          obj[date] = schedules[date];
-          return obj;
-        }, {});
-      setCurrentSchedules(currentSchedules);
+    if (!loadingQuarters) {
+      setCurrentQuarter(findCurrentQuarter(currentDate));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingQuarters, currentQuarter]);
+  }, [loadingQuarters]);
+
+  useEffectAfterMount(() => {
+    if (!loadingQuarters && !loadingDailySchedules && currentQuarter) {
+      if (currentQuarter === quartersNotExist) {
+        setCurrentSchedules(schedules);
+      } else {
+        const currentSchedules = Object.keys(schedules)
+          .filter((el) =>
+            moment(el).isBetween(
+              moment(quarters[currentQuarter].start).subtract(1, "days"),
+              moment(quarters[currentQuarter].end).add(1, "d")
+            )
+          )
+          .reduce((obj, date) => {
+            obj[date] = schedules[date];
+            return obj;
+          }, {});
+        setCurrentSchedules(currentSchedules);
+      }
+    }
+  }, [currentQuarter, loadingQuarters, loadingDailySchedules]);
 
   useEffectAfterMount(() => {
     const grades = Object.values(currentSchedules).reduce(

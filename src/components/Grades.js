@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import moment from "moment/min/moment-with-locales.min";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MenuCardBox from "./cards/MenuCardBox";
 import PageTitle from "./blocks/PageTitle";
 import Loading from "./blocks/Loading";
@@ -8,6 +8,8 @@ import { findCurrentStudyYear, mergeObjects } from "../utils/services";
 import { MENU_CARDS } from "../utils/constants";
 import GradesTable from "./tables/GradesTable";
 import useEffectAfterMount from "../utils/useEffectAfterMount";
+import { openCloseModal } from "../store/slices/contentSlice";
+import { CustomModal } from "./customModal/CustomModal";
 
 function Grades() {
   moment.locale("ru");
@@ -23,6 +25,7 @@ function Grades() {
   const loadingQuarters = useSelector((state) => state.quarters.loading);
   const schedules = useSelector((state) => state.dailySchedules.schedulesList);
   const quarters = useSelector((state) => state.quarters.quartersList);
+  const dispatch = useDispatch();
 
   const [currentQuarter, setCurrentQuarter] = useState();
   const [currentSchedules, setCurrentSchedules] = useState({});
@@ -134,11 +137,29 @@ function Grades() {
                     ))}
                 </div>
 
+                {currentQuarter === quartersNotExist && (
+                  <div>
+                    <p>
+                      Если хотите видеть оценки на текущую четверть, введите
+                      даты начала и окончания четвертей
+                    </p>
+                    <button
+                      className="modal-submit-button"
+                      onClick={() => {
+                        dispatch(openCloseModal({ quarterModal: true }));
+                      }}
+                    >
+                      Добавить
+                    </button>
+                  </div>
+                )}
+
                 <GradesTable grades={gradesQuarter} />
               </div>
             </>
           )}
         </div>
+        <CustomModal />
       </section>
       <MenuCardBox titleCardId={titleCardId} classMenu={"buttons"} />
     </main>

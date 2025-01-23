@@ -168,4 +168,10 @@
             grid-template-columns: repeat(1, 1fr);
         }
     }
+
+    .buttons-group {
+        gap: 0.7em;
+        margin-top: 0;
+        flex-direction: column;
+    }
 }

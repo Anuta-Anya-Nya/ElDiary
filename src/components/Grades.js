@@ -137,8 +137,8 @@ function Grades() {
               </div>
 
               {currentQuarter === quartersNotExist && (
-                <div>
-                  <p>
+                <>
+                  <p className="grades__message">
                     Если хотите видеть оценки на текущую четверть, введите даты
                     начала и окончания четвертей
                   </p>
@@ -150,7 +150,7 @@ function Grades() {
                   >
                     Добавить
                   </button>
-                </div>
+                </>
               )}
 
               <GradesTable grades={gradesQuarter} />

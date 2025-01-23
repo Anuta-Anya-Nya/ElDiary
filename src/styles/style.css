@@ -808,6 +808,9 @@ input[type=checkbox] {
   gap: 1em;
   grid-template-columns: repeat(4, 1fr);
 }
+.grades__message {
+  text-align: center;
+}
 
 @media (max-width: 767px) {
   .header-container {
@@ -921,5 +924,10 @@ input[type=checkbox] {
   }
   .grades__buttons {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .buttons-group {
+    gap: 0.7em;
+    margin-top: 0;
+    flex-direction: column;
   }
 }/*# sourceMappingURL=style.css.map */

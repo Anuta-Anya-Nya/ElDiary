@@ -13,4 +13,8 @@
         gap: 1em;
         grid-template-columns: repeat(4, 1fr);
     }
+
+    &__message {
+        text-align: center;
+    }
 }

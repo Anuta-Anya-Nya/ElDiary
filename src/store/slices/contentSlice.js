@@ -98,6 +98,7 @@ const contentSlice = createSlice({
       createMode: false,
       editMode: false,
     },
+    menuMode: false,
   },
   reducers: {
     addMenuButton: (state, action) => {
@@ -139,6 +140,9 @@ const contentSlice = createSlice({
         openModal: { ...state.openModal, editMode: action.payload },
       };
     },
+    openCloseMenu: (state, action) => {
+      return { ...state, menuMode: action.payload };
+    },
   },
   //   редьюсеры для thunk функций
   //   extraReducers: (builder) => {
@@ -158,5 +162,6 @@ export const {
   setModify,
   setCreate,
   setEditMode,
+  openCloseMenu,
 } = contentSlice.actions;
 export const contentReducer = contentSlice.reducer;

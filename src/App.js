@@ -16,8 +16,31 @@ import { AuthProvider } from "../src/utils/AuthContext";
 import LoadData from "./components/LoadData";
 import Grades from "./components/Grades";
 import Quarters from "./components/Quarters";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { openCloseMenu } from "./store/slices/contentSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  const menuMode = useSelector((state) => state.content.menuMode);
+
+  const handleClickOutside = (e) => {
+    if (!e.target.closest(".menu")) {
+      if (menuMode) {
+        console.log("закрытие меню");
+        dispatch(openCloseMenu(false));
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [menuMode]);
+
   return (
     <div className="App">
       <AuthProvider>

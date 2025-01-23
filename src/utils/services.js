@@ -50,15 +50,23 @@ export function filteredSchedules(schedules, datesForfilter) {
 
 export const findMissingDates = (currentDateMoment, schedules) => {
   const findingDates = getWeekDaysInStore(currentDateMoment, schedules);
-  if (findingDates.length !== 7) {
+  if (findingDates.length !== 6) {
     const missingDates = [];
     const startWeekDate = currentDateMoment.clone().startOf("week");
-    const endWeekDate = currentDateMoment.clone().endOf("week");
+    const endWeekDate = currentDateMoment
+      .clone()
+      .endOf("week")
+      .subtract(1, "d");
     while (startWeekDate.isBefore(endWeekDate)) {
+      console.log(
+        startWeekDate.format("YYYY-MM-DD"),
+        endWeekDate.format("YYYY-MM-DD")
+      );
       if (!findingDates.includes(startWeekDate.format("YYYY-MM-DD"))) {
         missingDates.push(startWeekDate.format("YYYY-MM-DD"));
       }
       startWeekDate.add(1, "days");
+      console.log(missingDates);
     }
     return missingDates;
   }
@@ -123,8 +131,14 @@ export function checkWeeklySchedule(
 
 export const toChangeDate = (count, setter, step, dateMoment) => {
   if (count > 0) {
+    if (dateMoment.clone().add(step, "days").day() === 0) {
+      step += 1;
+    }
     setter(dateMoment.clone().add(step, "days"));
   } else {
+    if (dateMoment.clone().subtract(step, "days").day() === 0) {
+      step += 1;
+    }
     setter(dateMoment.clone().subtract(step, "days"));
   }
 };

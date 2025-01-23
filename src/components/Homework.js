@@ -43,6 +43,14 @@ function Homework() {
 
   const dispatch = useDispatch();
 
+  const dayOfTheWeekText = (dateMoment) => {
+    const text = dateMoment.format("dddd");
+    if (text.substr(-1) === "а") {
+      return text.slice(0, -1) + "у";
+    }
+    return text;
+  };
+
   useEffect(() => {
     if (!loadingWeeklySchedule && !loadingDailySchedules) {
       checkWeeklySchedule(
@@ -72,7 +80,7 @@ function Homework() {
           ) : (
             <>
               <h3 className="homework__title">
-                Домашнее задание на {displayDate.format("dddd")}
+                Домашнее задание на {dayOfTheWeekText(displayDate)}
                 {displayDate.format(" DD MMMM")}
               </h3>
 

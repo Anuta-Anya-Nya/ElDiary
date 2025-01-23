@@ -4,9 +4,10 @@ import MenuCardBox from "./cards/MenuCardBox";
 import LessonCard from "./cards/LessonCard";
 import { CustomModal } from "./customModal/CustomModal";
 import Loading from "./blocks/Loading";
+import { MENU_CARDS } from "../utils/constants";
 
 function Lessons() {
-  const titleCardId = 5;
+  const titleCardId = MENU_CARDS.TEACHERS_ID;
   const lessonsList = useSelector((state) => state.lessons.lessons);
   const loadingLessons = useSelector((state) => state.lessons.loading);
   const dispatch = useDispatch();

@@ -69,4 +69,5 @@ export const MENU_CARDS = {
   RINGS_ID: 6,
   LESSONS_ID: 7,
   NOTES_ID: 8,
+  QUARTERS_ID: 9,
 };

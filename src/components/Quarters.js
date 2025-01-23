@@ -22,7 +22,7 @@ function Quarters() {
   const [currentStudyYear, setCurrentYear] = useState(
     findCurrentStudyYear(moment())
   );
-  const titleCardId = MENU_CARDS.GRADES_ID;
+  const titleCardId = MENU_CARDS.TEACHERS_ID_ID;
   const loadingQuaterts = useSelector((state) => state.quarters.loading);
   const quarters = useSelector((state) => state.quarters.quartersList);
   const isCreate = Object.keys(quarters).length > 0;
@@ -60,7 +60,11 @@ function Quarters() {
 
   return (
     <main>
-      <PageTitle titleCardId={titleCardId} />
+      <section className="title">
+        <div className="container title-container">
+          <h2>Четверти</h2>
+        </div>
+      </section>
       <section className="quarters">
         <div className="container homework-container">
           {loadingQuaterts ? (

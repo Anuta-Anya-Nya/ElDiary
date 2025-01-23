@@ -114,7 +114,7 @@ function Grades() {
                 Оценки за {currentYear} - {currentYear + 1} учебный год
               </h3>
 
-              <div className="homework__buttons">
+              <div className="grades__buttons">
                 {Object.keys(quarters)
                   .sort()
                   .map((el, ind) => (

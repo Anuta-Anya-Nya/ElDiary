@@ -5,13 +5,12 @@
         gap: 1em;
         flex-direction: column;
         align-items: center;
+        color: $colorText
     }
 
     &__buttons {
         display: grid;
-        flex-wrap: wrap;
         gap: 1em;
-        justify-content: center;
         grid-template-columns: repeat(4, 1fr);
     }
 }

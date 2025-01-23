@@ -159,4 +159,13 @@
     .quarters__attent {
         font-size: 1em;
     }
+
+    .grades {
+
+
+        &__buttons {
+
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
 }

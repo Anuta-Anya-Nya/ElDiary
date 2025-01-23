@@ -94,6 +94,7 @@ main {
 .homework__title {
   color: #1E959B;
   margin-bottom: 10px;
+  text-align: center;
 }
 .homework__area {
   display: flex;
@@ -800,12 +801,11 @@ input[type=checkbox] {
   gap: 1em;
   flex-direction: column;
   align-items: center;
+  color: #3c3c3c;
 }
 .grades__buttons {
   display: grid;
-  flex-wrap: wrap;
   gap: 1em;
-  justify-content: center;
   grid-template-columns: repeat(4, 1fr);
 }
 
@@ -918,5 +918,8 @@ input[type=checkbox] {
   }
   .quarters__attent {
     font-size: 1em;
+  }
+  .grades__buttons {
+    grid-template-columns: repeat(1, 1fr);
   }
 }/*# sourceMappingURL=style.css.map */

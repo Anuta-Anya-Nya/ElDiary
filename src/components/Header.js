@@ -16,6 +16,7 @@ import { removeSettings } from "../store/slices/settingSlice";
 import { removeWeeklySchedule } from "../store/slices/weeklyScheduleSlice";
 import MenuCardBox from "./cards/MenuCardBox";
 import { openCloseMenu } from "../store/slices/contentSlice";
+import { removeQuarters } from "../store/slices/quartersSlice";
 
 function Header() {
   const { user } = useAuth();
@@ -42,6 +43,7 @@ function Header() {
     dispatch(removeLessons());
     dispatch(removeTeachers());
     dispatch(removeSettings());
+    dispatch(removeQuarters());
   };
   useEffect(() => {
     setTextButton(greeting);

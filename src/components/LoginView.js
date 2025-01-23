@@ -31,7 +31,7 @@ const LoginView = () => {
               type="password"
               name="password"
               id="password"
-              placeholder="Password"
+              placeholder="Пароль не менее 6 символов"
               value={pass}
               onChange={(e) => {
                 setPass(e.target.value);

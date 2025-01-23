@@ -3,9 +3,15 @@ import MenuCard from "./MenuCard";
 
 const MenuCardBox = ({ titleCardId, menuMode, setMenuMode, classMenu }) => {
   const { menuButtons } = useSelector((state) => state.content);
+  const handleMenuClick = (e) => {
+    e.stopPropagation();
+  };
 
   return (
-    <section className={menuMode ? "menu" : classMenu}>
+    <section
+      className={menuMode ? "menu" : classMenu}
+      onClick={handleMenuClick}
+    >
       <div
         className={menuMode ? "container menu__box" : "container buttons__box"}
       >

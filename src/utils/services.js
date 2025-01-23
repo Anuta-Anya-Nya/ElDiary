@@ -143,3 +143,10 @@ export const findTeacherForSelectLesson = (
     return teachersThisLesson;
   }
 };
+
+export function mergeObjects(obj1, obj2) {
+  return Object.keys({ ...obj1, ...obj2 }).reduce((merged, key) => {
+    merged[key] = [...(obj1[key] || []), ...(obj2[key] || [])];
+    return merged;
+  }, {});
+}

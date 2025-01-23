@@ -1,9 +1,10 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 const MenuCard = ({ card, menuMode, setMenuMode }) => {
   const { title, text, icon, link } = card;
-
+  const dispatch = useDispatch();
   const closeMenu = () => {
-    if (menuMode) setMenuMode(false);
+    if (menuMode) dispatch(setMenuMode(false));
   };
   return (
     <Link

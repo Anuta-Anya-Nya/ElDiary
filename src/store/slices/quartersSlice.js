@@ -56,15 +56,23 @@ const quartersSlice = createSlice({
     builder.addCase(getQuartersThunk.fulfilled, (state, action) => {
       return (state = action.payload);
     });
+    builder.addCase(addQuartersThunk.pending, (state, action) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    });
     builder.addCase(addQuartersThunk.fulfilled, (state, action) => {
       return {
         ...state,
         quartersList: action.payload,
+        loading: false,
       };
     });
     builder.addCase(addQuartersThunk.rejected, (state, action) => {
       return {
         ...state,
+        loading: false,
         ...action.payload,
       };
     });
